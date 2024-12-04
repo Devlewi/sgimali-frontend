@@ -128,7 +128,7 @@ const BigSlider = () => {
               <div className="carousel-caption">
                 <h3>LA SGI-MALI VOUS SOUHAITE</h3>
                 <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit...
+                  Lorem ipsum dolor sit amet consectet adipisicing elit...
                 </p>
                 <a href="#" className="btn btn-primary">
                   Détails

@@ -122,13 +122,7 @@ export default function RootLayout({
         />
         {/* REVOLUTION NAVIGATION STYLES */}
 
-        {/*
-              <link
-                rel="stylesheet"
-                type="text/css"
-                href="/revolution/css/navigation.css"
-              />
-          */}
+       
 
         {/* Main Style */}
         {/*
@@ -137,14 +131,7 @@ export default function RootLayout({
         {/* color scheme */}
         <link rel="stylesheet" href="/switcher/demo.css" type="text/css" />
 
-        {/*
-          <link
-            rel="stylesheet"
-            href="/switcher/colors/#"
-            type="text/css"
-            id="colors"
-          />
-          */}
+       
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
