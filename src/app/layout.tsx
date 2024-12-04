@@ -125,9 +125,7 @@ export default function RootLayout({
        
 
         {/* Main Style */}
-        {/*
-          <link rel="stylesheet" href="/style.css" />
-          */}
+        
         {/* color scheme */}
         <link rel="stylesheet" href="/switcher/demo.css" type="text/css" />
 
