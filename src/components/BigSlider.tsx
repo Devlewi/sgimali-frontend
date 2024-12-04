@@ -112,6 +112,30 @@ const BigSlider = () => {
                 </a>
               </div>
             </div>
+
+            {/* Slide 4 */}
+            <div className="item">
+              <div className="carousel-image">
+                <Image
+                  src="/images/Slider/slide2.png"
+                  alt="Image 4"
+                  width={1200}
+                  height={800}
+                  className="img-responsive"
+                />
+                <div className="overlay"></div> {/* Overlay */}
+              </div>
+              <div className="carousel-caption">
+                <h3>LA SGI-MALI VOUS SOUHAITE</h3>
+                <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit...
+                </p>
+                <a href="#" className="btn btn-primary">
+                  Détails
+                </a>
+              </div>
+            </div>
+
           </OwlCarousel>
         </section>
       )}
