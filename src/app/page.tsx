@@ -23,10 +23,7 @@ export const metadata: Metadata = {
     siteName: "SGI Mali", // Nom du site
     images: [
       {
-        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph
-        width: 120, // Largeur de l'image
-        height: 120, // Hauteur de l'image
-        alt: "Logo SGI Mali", // Texte alternatif pour l'image
+        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph        
       },
     ],
     locale: "fr_FR", // Langue et région
