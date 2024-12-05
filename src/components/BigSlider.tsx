@@ -83,8 +83,8 @@ const BigSlider = () => {
                   <Image
                     src={slide.image}
                     alt={slide.alt}
-                    width={1200}
-                    height={800}
+                    width={2560}
+                    height={1280}
                     className="img-responsive"
                   />
                   <div className="overlay"></div>
