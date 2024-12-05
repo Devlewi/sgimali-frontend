@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: [
-      { url: "https://frontend-weld-three.vercel.app/images/favicon.png" },
+      { url: "https://sgimali-frontend.vercel.app/images/favicon.png" },
     ],
   },
   manifest: "/site.webmanifest",
@@ -43,7 +43,7 @@ export default function Home() {
         <meta property="og:description" content="Page d'accueil de SGI Mali" />
         <meta
           property="og:url"
-          content="https://frontend-weld-three.vercel.app/"
+          content="https://sgimali-frontend.vercel.app/"
         />
         <meta property="og:site_name" content="SGI Mali" />
         <meta property="og:image" content="/images/logo-og.png" />

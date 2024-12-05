@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
@@ -10,42 +9,51 @@ import "animate.css";
 // Charger OwlCarousel uniquement côté client
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), { ssr: false });
 
-type Slide = {
-  id: number;
-  title: { rendered: string };
-  description: string;
-  button_text: string;
-  button_link: string;
-  alt_text: string;
-  featured_image_url: string; // URL de l'image directement exposée via l'API
-};
-
 const BigSlider = () => {
-  const [slides, setSlides] = useState<Slide[]>([]);
   const [isBrowser, setIsBrowser] = useState(false);
-
-  // Récupérer les données de l'API
-  const fetchSlides = async () => {
-    try {
-      const res = await fetch(
-        "https://sgi.cynomedia-africa.com/wp-json/wp/v2/slides"
-      );
-      if (!res.ok) {
-        throw new Error("Failed to fetch slides");
-      }
-      const data = await res.json();
-      setSlides(data);
-    } catch (error) {
-      console.error("Error fetching slides:", error);
-    }
-  };
 
   useEffect(() => {
     setIsBrowser(true);
-    fetchSlides();
   }, []);
 
-  // Options pour OwlCarousel
+  
+
+  
+  const slides = [
+    {
+      image: "/images/Slider/s00.png",
+      alt: "Image 1",
+      title: "LA SGI-MALI VOUS SOUHAITE SUR LE NOUVEAU SITE ...",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/Slider/slide2.png",
+      alt: "Image 2",
+      title: "LA SGI-MALI VOUS SOUHAITE",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/Slider/s00.png",
+      alt: "Image 3",
+      title: "LA SGI-MALI VOUS SOUHAITE",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/Slider/slide2.png",
+      alt: "Image 4",
+      title: "LA SGI-MALI VOUS SOUHAITE",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+  ];
+
   const options = {
     loop: true,
     margin: 10,
@@ -69,15 +77,15 @@ const BigSlider = () => {
 
   return (
     <>
-      {isBrowser && slides.length > 0 && (
+      {isBrowser && (
         <section id="slider" className="no-padding">
           <OwlCarousel className="owl-theme" {...options}>
-            {slides.map((slide) => (
-              <div className="item" key={slide.id}>
+            {slides.map((slide, index) => (
+              <div className="item" key={index}>
                 <div className="carousel-image">
                   <Image
-                    src={slide.featured_image_url || "/placeholder.png"}
-                    alt={slide.alt_text || "Slide Image"}
+                    src={slide.image}
+                    alt={slide.alt}
                     width={2560}
                     height={1280}
                     className="img-responsive"
@@ -85,17 +93,13 @@ const BigSlider = () => {
                   <div className="overlay"></div>
                 </div>
                 <div className="carousel-caption">
-                  <h3>{slide.title.rendered}</h3>
-                  <p
-                    className="sl-s3"
-                    style={{ fontFamily: '"Roboto Slab", serif' }}
-                    dangerouslySetInnerHTML={{ __html: slide.description }}
-                  />
-                  {slide.button_text && (
-                    <a target="_blank" href={slide.button_link} className="btn btn-primary">
-                      {slide.button_text}
-                    </a>
-                  )}
+                  <h3>{slide.title}</h3>
+                  <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
+                    {slide.description}
+                  </p>
+                  <a href={slide.buttonLink} className="btn btn-primary">
+                    {slide.buttonText}
+                  </a>
                 </div>
               </div>
             ))}
