@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "FORME JURIDIQUE | SGI Mali",
     description: "Page Forme juridique de SGI Mali",
-    url: "https://frontend-weld-three.vercel.app/forme-juridique", // URL canonique de la page
+    url: "https://sgimali-frontend.vercel.app/forme-juridique", // URL canonique de la page
     siteName: "SGI Mali",
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph
+        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph
         width: 120,
         height: 120,
         alt: "Logo SGI Mali",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image", // Type de carte Twitter
     title: "FORME JURIDIQUE | SGI Mali",
     description: "Page Forme juridique de SGI Mali",
-    images: ["https://frontend-weld-three.vercel.app/images/favicon.png"], // Image partagée sur Twitter
+    images: ["https://sgimali-frontend.vercel.app/images/favicon.png"], // Image partagée sur Twitter
   },
   manifest: "/site.webmanifest", // Fichier manifeste
 };
@@ -62,10 +62,10 @@ export default function FormeJuridique() {
         <meta property="og:description" content="Page Forme juridique de SGI Mali" />
         <meta
           property="og:url"
-          content="https://frontend-weld-three.vercel.app/forme-juridique"
+          content="https://sgimali-frontend.vercel.app/forme-juridique"
         />
         <meta property="og:site_name" content="SGI Mali" />
-        <meta property="og:image" content="https://frontend-weld-three.vercel.app/images/logo-og.png" />
+        <meta property="og:image" content="https://sgimali-frontend.vercel.app/images/logo-og.png" />
         <meta property="og:image:width" content="120" />
         <meta property="og:image:height" content="120" />
 
@@ -73,7 +73,7 @@ export default function FormeJuridique() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="FORME JURIDIQUE | SGI Mali" />
         <meta name="twitter:description" content="Page Forme juridique de SGI Mali" />
-        <meta name="twitter:image" content="https://frontend-weld-three.vercel.app/images/logo-og.png" />
+        <meta name="twitter:image" content="https://sgimali-frontend.vercel.app/images/logo-og.png" />
         <title>FORME JURIDIQUE | SGI Mali</title>
       </Head>
 

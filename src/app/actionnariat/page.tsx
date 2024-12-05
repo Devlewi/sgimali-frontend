@@ -12,11 +12,11 @@ export const metadata = {
   openGraph: {
     title: "ACTIONNARIAT | SGI Mali",
     description: "Actionnariat",
-    url: "https://frontend-weld-three.vercel.app/",
+    url: "https://sgimali-frontend.vercel.app/",
     siteName: "SGI Mali",
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/logo-og.png",
+        url: "https://sgimali-frontend.vercel.app/images/logo-og.png",
         width: 120,
         height: 120,
       },
@@ -26,7 +26,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "HISTORIQUE | SGI Mali",
     description: "Page d'accueil de SGI Mali",
-    images: ["https://frontend-weld-three.vercel.app/images/logo-og.png"],
+    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],
   },
   manifest: "/site.webmanifest",
 };

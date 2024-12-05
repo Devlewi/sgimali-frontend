@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     images: [
-      { url: "https://frontend-weld-three.vercel.app/images/favicon.png" },
+      { url: "https://sgimali-frontend.vercel.app/images/favicon.png" },
     ],
   },
   manifest: "/site.webmanifest",

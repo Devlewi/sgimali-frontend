@@ -14,11 +14,11 @@ export const metadata = {
     title: "NOUS CONTACTER | SGI Mali",
     description:
       "Découvrez comment nous joindre pour toute assistance ou demande d'information. Retrouvez nos coordonnées complètes.",
-    url: "https://frontend-weld-three.vercel.app/contact",
+    url: "https://sgimali-frontend.vercel.app/contact",
     siteName: "SGI Mali",
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/logo-og.png",
+        url: "https://sgimali-frontend.vercel.app/images/logo-og.png",
         width: 120,
         height: 120,
         alt: "Logo SGI Mali",
@@ -32,7 +32,7 @@ export const metadata = {
     title: "NOUS CONTACTER | SGI Mali",
     description:
       "Besoin d'aide ou d'informations supplémentaires ? Retrouvez ici toutes nos coordonnées pour nous joindre.",
-    images: ["https://frontend-weld-three.vercel.app/images/logo-og.png"],
+    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],
   },
   manifest: "/site.webmanifest",
 };

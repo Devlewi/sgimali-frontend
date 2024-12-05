@@ -14,11 +14,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ACTUALITE | SGI Mali", // Titre de la page pour Open Graph
     description: "Les dernières actualités et événements de SGI Mali. Découvrez les mises à jour et nouvelles informations.",
-    url: "https://frontend-weld-three.vercel.app/actualite", // URL canonique de la page des actualités
+    url: "https://sgimali-frontend.vercel.app/actualite", // URL canonique de la page des actualités
     siteName: "SGI Mali", // Nom du site pour Open Graph
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/favicon.png", // Image utilisée pour la prévisualisation sur les réseaux sociaux
+        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image utilisée pour la prévisualisation sur les réseaux sociaux
         width: 120, // Largeur de l'image
         height: 120, // Hauteur de l'image
         alt: "Logo SGI Mali", // Texte alternatif pour l'image
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image", // Type de carte Twitter (avec une grande image)
     title: "ACTUALITE | SGI Mali", // Titre sur Twitter
     description: "Les dernières actualités et événements de SGI Mali. Découvrez nos nouvelles informations.",
-    images: ["https://frontend-weld-three.vercel.app/images/favicon.png"], // Image partagée sur Twitter
+    images: ["https://sgimali-frontend.vercel.app/images/favicon.png"], // Image partagée sur Twitter
   },
   manifest: "/site.webmanifest", // Lien vers le manifeste pour la Progressive Web App (PWA)
 };

@@ -14,11 +14,11 @@ export const metadata = {
     title: "SOUSCRIPTION | SGI Mali",
     description:
       "Découvrez les offres de souscription et choisissez celle qui répond à vos besoins. SGI Mali vous offre des solutions adaptées.",
-    url: "https://frontend-weld-three.vercel.app/souscription",
+    url: "https://sgimali-frontend.vercel.app/souscription",
     siteName: "SGI Mali",
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/logo-og.png",
+        url: "https://sgimali-frontend.vercel.app/images/logo-og.png",
         width: 120,
         height: 120,
         alt: "Logo SGI Mali",
@@ -32,7 +32,7 @@ export const metadata = {
     title: "SOUSCRIPTION | SGI Mali",
     description:
       "Souscrivez à l'offre de SGI Mali pour bénéficier d'une expérience sur mesure et adaptée à vos besoins.",
-    images: ["https://frontend-weld-three.vercel.app/images/logo-og.png"],
+    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],
   },
   manifest: "/site.webmanifest",
 };

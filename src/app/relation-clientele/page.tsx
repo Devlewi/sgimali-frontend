@@ -24,11 +24,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "RELATION CLIENTELE | SGI Mali", // Titre de la page pour Open Graph
     description: "Nous mettons tout en œuvre pour répondre à vos demandes et assurer une relation clientèle de qualité.",
-    url: "https://frontend-weld-three.vercel.app/relation-clientele", // URL canonique de la page
+    url: "https://sgimali-frontend.vercel.app/relation-clientele", // URL canonique de la page
     siteName: "SGI Mali", // Nom du site
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph
+        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph
         width: 120, // Largeur de l'image
         height: 120, // Hauteur de l'image
         alt: "Logo SGI Mali", // Texte alternatif pour l'image
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image", // Type de carte Twitter
     title: "RELATION CLIENTELE | SGI Mali", // Titre sur Twitter
     description: "Découvrez comment SGI Mali prend soin de sa clientèle avec des services de qualité.",
-    images: ["https://frontend-weld-three.vercel.app/images/favicon.png"], // Image partagée sur Twitter
+    images: ["https://sgimali-frontend.vercel.app/images/favicon.png"], // Image partagée sur Twitter
   },
   manifest: "/site.webmanifest", // Fichier manifeste pour PWA
 };

@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MISSION | SGI Mali",
     description: "Page Mission de SGI Mali",
-    url: "https://frontend-weld-three.vercel.app/mission", // URL de la page de la mission
+    url: "https://sgimali-frontend.vercel.app/mission", // URL de la page de la mission
     siteName: "SGI Mali",
     images: [
       {
-        url: "https://frontend-weld-three.vercel.app/images/logo-og.png", // Image pour l'Open Graph
+        url: "https://sgimali-frontend.vercel.app/images/logo-og.png", // Image pour l'Open Graph
         width: 120,
         height: 120,
         alt: "Logo SGI Mali",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image", // Type de carte Twitter
     title: "MISSION | SGI Mali",
     description: "Page Mission de SGI Mali",
-    images: ["https://frontend-weld-three.vercel.app/images/logo-og.png"], // Image pour Twitter
+    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"], // Image pour Twitter
   },
   manifest: "/site.webmanifest", // Manifest du site
 };
