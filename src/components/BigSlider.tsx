@@ -1,7 +1,6 @@
-// src/components/BigSlider.tsx
 "use client";
 import React, { useEffect, useState } from "react";
-import dynamic from "next/dynamic"; // Import dynamique pour charger OwlCarousel côté client
+import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "next/image";
@@ -17,6 +16,41 @@ const BigSlider = () => {
     setIsBrowser(true);
   }, []);
 
+  const slides = [
+    {
+      image: "/images/Slider/s00.png",
+      alt: "Image 1",
+      title: "LA SGI-MALI VOUS SOUHAITE SUR LE NOUVEAU SITE ...",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/Slider/slide2.png",
+      alt: "Image 2",
+      title: "LA SGI-MALI VOUS SOUHAITE",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/Slider/s00.png",
+      alt: "Image 3",
+      title: "LA SGI-MALI VOUS SOUHAITE",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+    {
+      image: "/images/Slider/slide2.png",
+      alt: "Image 4",
+      title: "LA SGI-MALI VOUS SOUHAITE",
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+      buttonText: "Détails",
+      buttonLink: "#",
+    },
+  ];
+
   const options = {
     loop: true,
     margin: 10,
@@ -29,113 +63,43 @@ const BigSlider = () => {
       "<div class='nav-prev'>&#10094;</div>",
       "<div class='nav-next'>&#10095;</div>",
     ],
-    animateOut: "fadeOut", // Animation pour la sortie
-    animateIn: "fadeIn",   // Animation pour l'entrée
+    animateOut: "fadeOut",
+    animateIn: "fadeIn",
     responsive: {
       0: { items: 1 },
       600: { items: 1 },
       1000: { items: 1 },
     },
   };
-  
 
   return (
     <>
       {isBrowser && (
         <section id="slider" className="no-padding">
           <OwlCarousel className="owl-theme" {...options}>
-            {/* Slide 1 */}
-            <div className="item">
-              <div className="carousel-image">
-                <Image
-                  src="/images/Slider/s00.png"
-                  alt="Image 1"
-                  width={1200}
-                  height={800}
-                  className="img-responsive"
-                />
-                <div className="overlay"></div> {/* Overlay */}
+            {slides.map((slide, index) => (
+              <div className="item" key={index}>
+                <div className="carousel-image">
+                  <Image
+                    src={slide.image}
+                    alt={slide.alt}
+                    width={1200}
+                    height={800}
+                    className="img-responsive"
+                  />
+                  <div className="overlay"></div>
+                </div>
+                <div className="carousel-caption">
+                  <h3>{slide.title}</h3>
+                  <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
+                    {slide.description}
+                  </p>
+                  <a href={slide.buttonLink} className="btn btn-primary">
+                    {slide.buttonText}
+                  </a>
+                </div>
               </div>
-              <div className="carousel-caption">
-                <h3>LA SGI-MALI VOUS SOUHAITE SUR LE NOUVEAU SITE ...</h3>
-                <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit...
-                </p>
-                <a href="#" className="btn btn-primary">
-                  Détails
-                </a>
-              </div>
-            </div>
-
-            {/* Slide 2 */}
-            <div className="item">
-              <div className="carousel-image">
-                <Image
-                  src="/images/Slider/slide2.png"
-                  alt="Image 2"
-                  width={1200}
-                  height={800}
-                  className="img-responsive"
-                />
-                <div className="overlay"></div> {/* Overlay */}
-              </div>
-              <div className="carousel-caption">
-                <h3>LA SGI-MALI VOUS SOUHAITE</h3>
-                <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit...
-                </p>
-                <a href="#" className="btn btn-primary">
-                  Détails
-                </a>
-              </div>
-            </div>
-
-            {/* Slide 3 */}
-            <div className="item">
-              <div className="carousel-image">
-                <Image
-                  src="/images/Slider/s00.png"
-                  alt="Image 3"
-                  width={1200}
-                  height={800}
-                  className="img-responsive"
-                />
-                <div className="overlay"></div> {/* Overlay */}
-              </div>
-              <div className="carousel-caption">
-                <h3>LA SGI-MALI VOUS SOUHAITE</h3>
-                <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit...
-                </p>
-                <a href="#" className="btn btn-primary">
-                  Détails
-                </a>
-              </div>
-            </div>
-
-            {/* Slide 4 */}
-            <div className="item">
-              <div className="carousel-image">
-                <Image
-                  src="/images/Slider/slide2.png"
-                  alt="Image 4"
-                  width={1200}
-                  height={800}
-                  className="img-responsive"
-                />
-                <div className="overlay"></div> {/* Overlay */}
-              </div>
-              <div className="carousel-caption">
-                <h3>LA SGI-MALI VOUS SOUHAITE</h3>
-                <p className="sl-s3" style={{ fontFamily: '"Roboto Slab", serif' }}>
-                  Lorem ipsum dolor sit amet consectet adipisicing elit...
-                </p>
-                <a href="#" className="btn btn-primary">
-                  Détails
-                </a>
-              </div>
-            </div>
-
+            ))}
           </OwlCarousel>
         </section>
       )}
