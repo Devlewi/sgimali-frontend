@@ -15,27 +15,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico", // Icône générale pour le site
     apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
     shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
-  },
-  openGraph: {
-    title: "ACCUEIL | SGI Mali", // Titre de la page pour Open Graph
-    description: "Page d'accueil de SGI Mali, découvrez nos services et nos dernières actualités.",
-    url: "https://sgimali-frontend.vercel.app/", // URL canonique de la page d'accueil
-    siteName: "SGI Mali", // Nom du site
-    images: [
-      {
-        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph        
-      },
-    ],
-    locale: "fr_FR", // Langue et région
-    type: "website", // Type de contenu
-  },
-  twitter: {
-    card: "summary_large_image", // Type de carte Twitter
-    title: "ACCUEIL | SGI Mali", // Titre sur Twitter
-    description: "Page d'accueil de SGI Mali, découvrez nos services et nos dernières actualités.",
-    images: ["https://sgimali-frontend.vercel.app/images/favicon.png"], // Image partagée sur Twitter
-  },
-  manifest: "/site.webmanifest", // Fichier manifeste pour PWA
+  }
 };
 
 
