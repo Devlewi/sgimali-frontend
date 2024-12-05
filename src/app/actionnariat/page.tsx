@@ -8,7 +8,9 @@ export const metadata = {
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
-  },
+  }
+  /*
+  ,
   openGraph: {
     title: "ACTIONNARIAT | SGI Mali",
     description: "Actionnariat",
@@ -29,6 +31,7 @@ export const metadata = {
     images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],
   },
   manifest: "/site.webmanifest",
+  */
 };
 
 
