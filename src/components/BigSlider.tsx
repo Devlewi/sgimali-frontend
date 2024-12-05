@@ -24,6 +24,14 @@ const BigSlider = () => {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [isBrowser, setIsBrowser] = useState(false);
 
+
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
   // Récupérer les données de l'API
   const fetchSlides = async () => {
     try {
@@ -87,12 +95,15 @@ const BigSlider = () => {
                   <div className="overlay"></div>
                 </div>
                 <div className="carousel-caption">
-                  <h3>{slide.title.rendered}</h3>
-                  <p
-                    className="sl-s3"
-                    style={{ fontFamily: '"Roboto Slab", serif' }}
-                    dangerouslySetInnerHTML={{ __html: slide.description }}
-                  />
+                      <h3>{truncateText(slide.title.rendered, 25)}</h3> 
+
+                      <p
+                  className="sl-s3"
+                  style={{ fontFamily: '"Roboto Slab", serif' }}
+                  dangerouslySetInnerHTML={{
+                    __html: truncateText(slide.description, 55) // Limiter la description à 55 caractères
+                  }}
+                />
                   {slide.button_text && (
                     <a target="_blank" href={slide.button_link} className="btn btn-primary">
                       {slide.button_text}

@@ -10,19 +10,37 @@ import MotPresident from "@/components/MotPresident";
 
 export const metadata: Metadata = {
   title: "ACCUEIL | SGI Mali",
-  description: "Page d'accueil de SGI Mali",
+  description: "Page d'accueil de SGI Mali, découvrez nos services et nos dernières actualités.",
   icons: {
-    icon: ["/favicon.ico"],
-    apple: ["/apple-touch-icon.png"],
-    shortcut: ["/apple-touch-icon.png"],
+    icon: "/favicon.ico", // Icône générale pour le site
+    apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
+    shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
   },
   openGraph: {
+    title: "ACCUEIL | SGI Mali", // Titre de la page pour Open Graph
+    description: "Page d'accueil de SGI Mali, découvrez nos services et nos dernières actualités.",
+    url: "https://sgimali-frontend.vercel.app/", // URL canonique de la page d'accueil
+    siteName: "SGI Mali", // Nom du site
     images: [
-      { url: "https://sgimali-frontend.vercel.app/images/favicon.png" },
+      {
+        url: "https://sgimali-frontend.vercel.app/images/favicon.png", // Image de prévisualisation pour Open Graph
+        width: 120, // Largeur de l'image
+        height: 120, // Hauteur de l'image
+        alt: "Logo SGI Mali", // Texte alternatif pour l'image
+      },
     ],
+    locale: "fr_FR", // Langue et région
+    type: "website", // Type de contenu
   },
-  manifest: "/site.webmanifest",
+  twitter: {
+    card: "summary_large_image", // Type de carte Twitter
+    title: "ACCUEIL | SGI Mali", // Titre sur Twitter
+    description: "Page d'accueil de SGI Mali, découvrez nos services et nos dernières actualités.",
+    images: ["https://sgimali-frontend.vercel.app/images/favicon.png"], // Image partagée sur Twitter
+  },
+  manifest: "/site.webmanifest", // Fichier manifeste pour PWA
 };
+
 
 
 export default function Home() {
