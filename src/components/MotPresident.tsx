@@ -1,33 +1,63 @@
+
+
 import React from 'react';
 import Image from 'next/image';
 
-const MotPresident = () => {
-  // Données du contenu
-  const contentData = {
-    title: "Mot du Président",
-    subtitle: "Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text",
-    imageSrc: "/images/president.jpg",
-    imageAlt: "President",
-    missionVision: {
-      title: "Notre mission et vision",
-      content: [
-        "Notre société la SGI-Mali a été créée grâce à l'impulsion de l'Association professionnelle des banques et établissements financiers (APBEF), le 11 décembre 1996, et en partenariat avec la Chambre de commerce et d'industrie.",
-        "La SGI-Mali bénéficie du monopole de la négociation des titres (actions, obligations…) à la Bourse régionale des valeurs mobilières (BRVM), de la tenue des comptes-titres, ainsi que de façon générale, de l'exécution de tout appel public à l'épargne dans la zone UEMOA.",
-        "Nous sommes engagés à accompagner les PME/PMI du Mali et de l'UEMOA à financer leur croissance par le marché. Une équipe jeune, professionnelle et dynamique est à votre disposition pour analyser vos objectifs d'investissements, et vous accompagner dans leur réalisation."
-      ]
-    },
-    buttonLink: "about.html",
-    buttonText: "En savoir plus",
+// Définir les types pour les données récupérées
+type MissionVision = {
+  titre: string;
+  description: string;
+};
+
+type ContentData = {
+    bloc_mot_du_president: {
+    titre: string;
+    sous_titre: string;
+    image: string;
+    texte_alternatif_de_limage: string;
+    missions_et_visions: MissionVision;
+    lien_du_bouton: string;
   };
+};
+
+// Fonction pour récupérer les données à partir de l'API
+async function getMotPresident(): Promise<ContentData[]> {
+  
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const res = await fetch(`${baseUrl}/api/acf-options`); // Requête vers l'API distante
+  
+  //const res = await fetch("http://localhost:3000/api/acf-options");
+  //const res = await fetch("/api/slides"); // Requête vers l'API Next.js (qui est en fait un proxy)
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+
+  return res.json();
+}
+
+
+export default async function MotPresident() {
+  
+  const dataMotPresident = await getMotPresident();
+  //console.log(dataMotPresident);
+
+  if (!dataMotPresident || dataMotPresident.length === 0) {
+    return <p>Pas de données disponibles</p>;
+  }
+
+  // Accédez à la clé bloc_mot_du_president à l'intérieur des données récupérées
+  const contentData = dataMotPresident[0].bloc_mot_du_president;
+
 
   return (
     <section className="bg-case-h9 py-5">
       <div className="container">
         {/* Titre de la section */}
         <div className="title-block text-center title-pd" style={{ marginTop: "-70px" }}>
-          <h3 style={{ fontSize: 28, color: "#021039" }}>{contentData.title}</h3>
+          <h3 style={{ fontSize: 28, color: "#021039" }}>{contentData.titre}</h3>
           <p className="sub-title" style={{ fontSize: 15, lineHeight: 2 }}>
-            {contentData.subtitle}
+            {contentData.sous_titre}
           </p>
           <span className="bottom-title" />
         </div>
@@ -37,8 +67,8 @@ const MotPresident = () => {
           {/* Colonne gauche : image */}
           <div className="col-lg-6 col-md-12 mb-4 mb-lg-0">
             <Image
-              src={contentData.imageSrc}
-              alt={contentData.imageAlt}
+              src={contentData.image}
+              alt={contentData.texte_alternatif_de_limage}
               className="img-responsive img-thumbnail"
               style={{ marginBottom: 20, borderColor: "#f8f8f8 !important" }}
               width={1024}
@@ -50,21 +80,28 @@ const MotPresident = () => {
           <div className="col-lg-6 col-md-12">
             <div className="content-container">
               <h3 className="text-title" style={{ fontSize: 22, fontWeight: "bold", color: "#333" }}>
-                {contentData.missionVision.title}
+              {contentData.missions_et_visions.titre}
               </h3>
-              {contentData.missionVision.content.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-details"
-                  style={{ fontSize: 14, color: "#555", lineHeight: "1.8" }}
-                >
-                  {paragraph}
-                </p>
-              ))}
+          
+              <div
+  className="mission-description"
+  style={{
+    fontSize: 14, 
+    color: "#555", 
+    lineHeight: 1.8,
+  }}
+  dangerouslySetInnerHTML={{
+    __html: contentData.missions_et_visions.description,
+  }}
+/>
+          </div>
+
+
+          
               <center>
                 <a
-                  href={contentData.buttonLink}
-                  className="btn btn-primary mt-3"
+                  href={contentData.lien_du_bouton}
+                  className="btn btn-primary mt-3 mission-description"
                   style={{
                     padding: "10px 20px",
                     fontSize: 14,
@@ -73,15 +110,14 @@ const MotPresident = () => {
                     backgroundColor: "#00a0e2",
                   }}
                 >
-                  {contentData.buttonText}
+                  En savoir plus
                 </a>
               </center>
             </div>
           </div>
         </div>
-      </div>
     </section>
   );
 };
 
-export default MotPresident;
+

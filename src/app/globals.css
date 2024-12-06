@@ -12939,3 +12939,10 @@ padding: 15px;
   border: none;
   transition: all 0.3s ease;
 }
+
+
+.mission-description p{
+  font-size: 14px !important;
+  color: #555;
+  line-height: 1.8;
+}

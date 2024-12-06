@@ -38,22 +38,28 @@ const BigSlider = () => {
   // Récupérer les données de l'API
   const fetchSlides = async () => {
     try {
-      // Remplacer l'URL de l'API WordPress par celle du proxy interne
-      const res = await fetch("/api/slides"); // Requête vers l'API Next.js (qui est en fait un proxy)
-      
-      if (!res.ok) {
-        throw new Error("Failed to fetch slides");
+      // Lire l'URL de base à partir de la variable d'environnement
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  
+      if (!baseUrl) {
+        throw new Error("L'URL de base de l'API n'est pas définie");
       }
-      
+  
+      // Construire l'URL complète pour les slides
+      const res = await fetch(`${baseUrl}/api/slides`); // Requête vers l'API distante
+  
+      if (!res.ok) {
+        throw new Error(`Failed to fetch slides, status: ${res.status}`);
+      }
+  
       const data = await res.json();
-      setSlides(data); // Mettez à jour l'état avec les données récupérées
+      setSlides(data); // Mettre à jour l'état avec les données récupérées
       setLoading(false); // Fin du chargement
     } catch (error) {
       console.error("Error fetching slides:", error); // Gérer les erreurs de requête
-
     }
   };
-  
+   
 
   useEffect(() => {
     setIsBrowser(true);

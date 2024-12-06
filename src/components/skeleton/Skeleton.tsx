@@ -9,10 +9,10 @@ const SkeletonSliderLoading = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center', // Centrer verticalement
-        alignItems: 'center',
-        minHeight: '100vh', // Assure que la hauteur soit toujours 100vh
+        alignItems: 'center',        
         backgroundColor: '#f9f9f9',
         padding: '10px', // Réduit le padding pour mieux s'adapter aux petits écrans
+        minHeight: '100vh', // Assure que la hauteur soit toujours 100vh        
       }}
     >
       {/* Conteneur pour les lignes animées */}
@@ -45,7 +45,7 @@ const SkeletonSliderLoading = () => {
         style={{
           width: '100%', // Assure que l'image occupe toute la largeur disponible
           height: 'auto', // Laisse l'image s'ajuster en fonction de son ratio
-          maxHeight: '300px', // Limite la hauteur de l'image pour les petits écrans
+          maxHeight: '350px', // Limite la hauteur de l'image à 350px pour mobile
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -77,7 +77,7 @@ const SkeletonSliderLoading = () => {
           }}
         />
         <Skeleton
-          width="60%" // Même largeur que le premier titre
+          width="60%" // Même largeur que pour le premier titre
           height={30}
           style={{
             marginBottom: '15px',
@@ -87,7 +87,7 @@ const SkeletonSliderLoading = () => {
 
         {/* Skeleton pour la description */}
         <Skeleton
-          width="80%" // Plus large pour la description
+          width="70%"
           height={20}
           style={{
             marginBottom: '10px',
@@ -95,7 +95,7 @@ const SkeletonSliderLoading = () => {
           }}
         />
         <Skeleton
-          width="70%" // Réduit la largeur pour la deuxième description
+          width="60%"
           height={20}
           style={{
             marginBottom: '10px',
@@ -106,7 +106,7 @@ const SkeletonSliderLoading = () => {
         {/* Skeleton pour le bouton */}
         <div style={{ marginTop: '20px' }}>
           <Skeleton
-            width={120} // Réduit la taille du bouton pour mobile
+            width={150}
             height={40}
             borderRadius={20}
             style={{
