@@ -6,6 +6,7 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "next/image";
 import "animate.css";
+import SkeletonSliderLoading from "./skeleton/Skeleton";
 
 // Charger OwlCarousel uniquement côté client
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), { ssr: false });
@@ -23,6 +24,8 @@ type Slide = {
 const BigSlider = () => {
   const [slides, setSlides] = useState<Slide[]>([]);
   const [isBrowser, setIsBrowser] = useState(false);
+  const [loading, setLoading] = useState(true); // État de chargement
+
 
 
   const truncateText = (text: string, maxLength: number) => {
@@ -44,8 +47,10 @@ const BigSlider = () => {
       
       const data = await res.json();
       setSlides(data); // Mettez à jour l'état avec les données récupérées
+      setLoading(false); // Fin du chargement
     } catch (error) {
       console.error("Error fetching slides:", error); // Gérer les erreurs de requête
+
     }
   };
   
@@ -79,8 +84,12 @@ const BigSlider = () => {
 
   return (
     <>
-      {isBrowser && slides.length > 0 && (
-        <section id="slider" className="no-padding">
+    {isBrowser && (
+      <section id="slider" className="no-padding">
+        {loading ? (
+          // Affichage du Skeleton pendant le chargement
+          <SkeletonSliderLoading />
+        ) : (
           <OwlCarousel className="owl-theme" {...options}>
             {slides.map((slide) => (
               <div className="item" key={slide.id}>
@@ -95,17 +104,21 @@ const BigSlider = () => {
                   <div className="overlay"></div>
                 </div>
                 <div className="carousel-caption">
-                      <h3>{truncateText(slide.title.rendered, 25)}</h3> 
+                  <h3>{truncateText(slide.title.rendered, 25)}</h3>
 
-                      <p
-                  className="sl-s3"
-                  style={{ fontFamily: '"Roboto Slab", serif' }}
-                  dangerouslySetInnerHTML={{
-                    __html: truncateText(slide.description, 55) // Limiter la description à 55 caractères
-                  }}
-                />
+                  <p
+                    className="sl-s3"
+                    style={{ fontFamily: '"Roboto Slab", serif' }}
+                    dangerouslySetInnerHTML={{
+                      __html: truncateText(slide.description, 55),
+                    }}
+                  />
                   {slide.button_text && (
-                    <a target="_blank" href={slide.button_link} className="btn btn-primary">
+                    <a
+                      target="_blank"
+                      href={slide.button_link}
+                      className="btn btn-primary"
+                    >
                       {slide.button_text}
                     </a>
                   )}
@@ -113,9 +126,10 @@ const BigSlider = () => {
               </div>
             ))}
           </OwlCarousel>
-        </section>
-      )}
-    </>
+        )}
+      </section>
+    )}
+  </>
   );
 };
 
