@@ -23,9 +23,11 @@ type ContentData = {
 // Fonction pour récupérer les données à partir de l'API
 async function getMotPresident(): Promise<ContentData[]> {
   
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const res = await fetch(`${baseUrl}/api/acf-options`); // Requête vers l'API distante
-  console.log(`${baseUrl}/api/acf-options`);
+  //const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+
+  const res = await fetch(`${apiUrl}`); // Requête vers l'API distante
+  console.log(`${apiUrl}`);
   //console.log(res);
   //const res = await fetch("http://localhost:3000/api/acf-options");
   //const res = await fetch("/api/slides"); // Requête vers l'API Next.js (qui est en fait un proxy)

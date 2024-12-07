@@ -6,6 +6,7 @@ export async function GET() {
   const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides`; // L'URL de l'API backend
 
 
+
   try {
     // Faire une requête GET vers l'API WordPress
     const response = await fetch(apiUrl, {
