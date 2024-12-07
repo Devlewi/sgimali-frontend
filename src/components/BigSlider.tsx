@@ -39,12 +39,14 @@ const BigSlider = () => {
   const fetchSlides = async () => {
     try {
       // Lire l'URL de base à partir de la variable d'environnement
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
+      // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+      // const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
+      const apiUrl = "/api/slides";
       console.log(apiUrl);
+      /*
       if (!baseUrl) {
         throw new Error("L'URL de base de l'API n'est pas définie");
-      }
+      }*/
   
       // Construire l'URL complète pour les slides
       const res = await fetch(`${apiUrl}`); // Requête vers l'API distante

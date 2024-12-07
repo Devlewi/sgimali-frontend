@@ -24,7 +24,9 @@ type ContentData = {
 async function getMotPresident(): Promise<ContentData[]> {
   
   //const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/acf-options";
+  // const apiUrl = "http://localhost:3000/api/acf-options";
+  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
 
   const res = await fetch(`${apiUrl}`); // Requête vers l'API distante
   console.log(`${apiUrl}`);
