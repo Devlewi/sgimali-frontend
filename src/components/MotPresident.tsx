@@ -1,7 +1,6 @@
-
-
 import React from 'react';
 import Image from 'next/image';
+import SkeletonMotPresident from './skeleton/SkeletonMotPresident';
 
 // Définir les types pour les données récupérées
 type MissionVision = {
@@ -23,10 +22,14 @@ type ContentData = {
 // Fonction pour récupérer les données à partir de l'API
 async function getMotPresident(): Promise<ContentData[]> {
   
+  
+  
+  //await new Promise(resolve => setTimeout(resolve, 12000));
+
   //const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  // const apiUrl = "https://sgimali-frontend.vercel.app/api/acf-options";
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/acf-options";
   // const apiUrl = "http://localhost:3000/api/acf-options";
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
+  // const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
   //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
   //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
 
@@ -45,12 +48,14 @@ async function getMotPresident(): Promise<ContentData[]> {
 
 
 export default async function MotPresident() {
+
   
   const dataMotPresident = await getMotPresident();
   //console.log(dataMotPresident);
 
+
   if (!dataMotPresident || dataMotPresident.length === 0) {
-    return <p>Pas de données disponibles</p>;
+    return <SkeletonMotPresident />;
   }
 
   // Accédez à la clé bloc_mot_du_president à l'intérieur des données récupérées
@@ -123,6 +128,7 @@ export default async function MotPresident() {
             </div>
           </div>
         </div>
+      
     </section>
   );
 };
