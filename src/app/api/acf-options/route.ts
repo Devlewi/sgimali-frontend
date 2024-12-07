@@ -5,8 +5,15 @@ export async function GET() {
   //const apiUrl = 'https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/'; // L'URL de l'API WordPress  
   // NEXT_PUBLIC_BACKEND_API_URL=https://sgi.cynomedia-africa.com/wp-json/wp/v2
 
-  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/acf/v2/options/`; // Utilisation de la variable d'environnement pour l'URL de l'API
+  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/acf/v2/options/`; // Utilisation de la variable d'environnement pour l'URL de l'API
 
+  if (!process.env.NEXT_PUBLIC_BACKEND_API_URL) {
+    throw new Error("NEXT_PUBLIC_BACKEND_API_URL n'est pas défini");
+  }
+  
+  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/acf/v2/options/`;
+  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
+  
 
   try {
     // Faire une requête GET vers l'API WordPress
