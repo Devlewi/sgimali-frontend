@@ -25,7 +25,8 @@ async function getMotPresident(): Promise<ContentData[]> {
   
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const res = await fetch(`${baseUrl}/api/acf-options`); // Requête vers l'API distante
-  
+  console.log(`${baseUrl}/api/acf-options`);
+  //console.log(res);
   //const res = await fetch("http://localhost:3000/api/acf-options");
   //const res = await fetch("/api/slides"); // Requête vers l'API Next.js (qui est en fait un proxy)
 
