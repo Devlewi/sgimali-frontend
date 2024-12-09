@@ -3,7 +3,6 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonFormeJuridique from "@/components/skeleton/SkeletonFormeJuridique";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import { Metadata } from "next";
-import Head from "next/head";
 import Image from "next/image";
 
 
