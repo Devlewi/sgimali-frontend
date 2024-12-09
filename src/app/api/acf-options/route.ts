@@ -20,7 +20,7 @@ export async function GET() {
     // Faire une requête GET vers l'API WordPress
     const response = await fetch(apiUrl, {
       next: {
-        revalidate:0, //actualise les données du slide après 1h => 3600 
+        revalidate:3600, //actualise les données du slide après 1h => 3600 
       }
     });
 
