@@ -6,7 +6,6 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 
-
 // Type de données
 type MissionData = {
   title: string;
@@ -25,8 +24,6 @@ interface Page {
   featured_image_url?: string;
   slug: string;
 }
-
-
 
 
 export const metadata: Metadata = {
