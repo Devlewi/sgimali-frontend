@@ -12941,7 +12941,7 @@ padding: 15px;
 }
 
 
-.mission-description p{
+.mission-description p, .historique-description p{
   font-size: 14px !important;
   color: #555;
   line-height: 1.8;

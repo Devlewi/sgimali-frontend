@@ -2,19 +2,11 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  //const apiUrl = 'https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/'; // L'URL de l'API WordPress  
-  // NEXT_PUBLIC_BACKEND_API_URL=https://sgi.cynomedia-africa.com/wp-json/wp/v2
+  //const apiUrl = 'https://sgi.cynomedia-africa.com/wp-json/wp/v2/slides'; // L'URL de l'API WordPress
+  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides`; // L'URL de l'API backend
+  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages"; // L'URL de l'API backend
 
-  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/acf/v2/options/`; // Utilisation de la variable d'environnement pour l'URL de l'API
 
-  /*
-  if (!process.env.NEXT_PUBLIC_BACKEND_API_URL) {
-    throw new Error("NEXT_PUBLIC_BACKEND_API_URL n'est pas défini");
-  }
-  */
-  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/acf/v2/options/`;
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
-  
 
   try {
     // Faire une requête GET vers l'API WordPress
@@ -35,4 +27,3 @@ export async function GET() {
     return NextResponse.json({ error: 'Erreur du serveur' }, { status: 500 });
   }
 }
-

@@ -1,18 +1,17 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
+import SkeletonHistorique from "@/components/skeleton/SkeletonHistorique";
 import { Metadata } from "next";
 import Image from "next/image";
 
 
-// Tableau contenant les données dynamiques pour la page
-const contentData = [
-  {
-    title: "Historique",
-    description:
-      "Créée grâce à l'impulsion de l'Association professionnelle des banques et établissements financiers (APBEF) le 11 décembre 1996, et en partenariat avec la Chambre de commerce et d'industrie, la Société de Gestion et d'Intermédiation du Mali (SGI-Mali SA) détient le monopole de la négociation des titres (actions, obligations, etc.) à la Bourse régionale des valeurs mobilières (BRVM). Elle est également responsable de la gestion des comptes-titres ainsi que, de façon générale, de l'exécution de tout appel public à l'épargne dans la zone UEMOA. À sa création, la société a été dotée d'un capital de 200 millions de francs CFA et a réellement démarré ses activités le 2 janvier 1999. Son objectif principal est d'accroître les capacités de collecte de l'épargne tout en améliorant les structures et les conditions de financement des entreprises.",
-    image: "/images/graph-cfa.jpg", // Lien de l'image
-  },
-];
+// Type de données
+type HistoriqueData = {
+  title: string;
+  description: string;
+  image: string;
+  slug: string;
+};
 
 export const metadata: Metadata = {
   title: "HISTORIQUE | SGI Mali",
@@ -47,14 +46,40 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest", // Fichier manifeste pour PWA
 };
 
+// Fonction pour récupérer les données de l'historique
+async function getHistorique(): Promise<HistoriqueData[]> {
+  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages";
+  const res = await fetch(apiUrl);
 
-export default function Historique() {
-  // Accès aux données depuis le tableau contentData
-  const { title, description, image } = contentData[0];
+  if (!res.ok) {
+    throw new Error("Failed to fetch historique data");
+  }
 
+  const pages = await res.json();
+  return pages.map((page: any) => ({
+    title: page.title.rendered,
+    description: page.content.rendered, // Récupération du contenu HTML
+    image: page.featured_image_url || "/images/default-image.jpg", // Récupération de l'URL de l'image mise en avant
+    slug: page.slug,
+
+  }));
+}
+
+export default async function Historique() {
+  // Récupérer les données depuis l'API
+  const dataHistorique = await getHistorique();
+  //si le slug
+  if (!dataHistorique || dataHistorique.length === 0) {
+    return <SkeletonHistorique />;
+  }
+
+  // Si une des pages a un slug égal à "historique", cette page sera retournée par la méthode find() et assignée à la variable historique.
+  const historique = dataHistorique.find(page => page.slug === "historique");
+
+    
   return (
     <div>
-      <HeaderPageSection title={title} />
+      <HeaderPageSection title={historique.title} />
 
       <section style={{ padding: "39px 0" }}>
         <div className="container">
@@ -62,28 +87,33 @@ export default function Historique() {
             {/* Bloc gauche : Texte */}
             <div className="col-md-6">
               <div className="main-page">
-                <SectionTitle title={title} />
-                <p style={{ fontSize: "14px", lineHeight: "1.8", color: "#555" }}>
-                  {description}
-                </p>
+                <SectionTitle title={historique.title} />
+                <div
+                  className="historique-description"
+                  style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
+                  dangerouslySetInnerHTML={{ __html: historique.description }} // Affichage du contenu HTML
+                />
+
+
+
               </div>
             </div>
 
             {/* Bloc droit : Image */}
             <div className="col-md-6">
               <div className="main-page">
-              <Image
-      src={image}         // source de l'image
-      alt={'historique sgi mali'}           // texte alternatif
-      className="img-responsive"    // classe CSS pour la fluidité
-      style={{
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-      }}
-      width={500}              // largeur de l'image (à ajuster selon vos besoins)
-      height={300}             // hauteur de l'image (à ajuster selon vos besoins)
-      layout="intrinsic"       // option pour ajuster automatiquement la taille
-    />
+                <Image
+                  src={historique.image} // Source de l'image
+                  alt="Historique SGI Mali" // Texte alternatif
+                  className="img-responsive"
+                  style={{
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
+                  width={500}
+                  height={300}
+                  layout="intrinsic"
+                />
               </div>
             </div>
           </div>
