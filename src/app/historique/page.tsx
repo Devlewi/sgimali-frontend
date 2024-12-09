@@ -13,6 +13,18 @@ type HistoriqueData = {
   slug: string;
 };
 
+interface Page {
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  featured_image_url?: string;
+  slug: string;
+}
+
+
 export const metadata: Metadata = {
   title: "HISTORIQUE | SGI Mali",
   description: "Page d'historique de SGI Mali",
@@ -56,7 +68,7 @@ async function getHistorique(): Promise<HistoriqueData[]> {
   }
 
   const pages = await res.json();
-  return pages.map((page: any) => ({
+  return pages.map((page: Page) => ({
     title: page.title.rendered,
     description: page.content.rendered, // Récupération du contenu HTML
     image: page.featured_image_url || "/images/default-image.jpg", // Récupération de l'URL de l'image mise en avant
@@ -68,13 +80,13 @@ async function getHistorique(): Promise<HistoriqueData[]> {
 export default async function Historique() {
   // Récupérer les données depuis l'API
   const dataHistorique = await getHistorique();
-  //si le slug
-  if (!dataHistorique || dataHistorique.length === 0) {
-    return <SkeletonHistorique />;
-  }
-
+  //si le slug  
   // Si une des pages a un slug égal à "historique", cette page sera retournée par la méthode find() et assignée à la variable historique.
   const historique = dataHistorique.find(page => page.slug === "historique");
+
+  if ((!dataHistorique || dataHistorique.length === 0) || !historique) {
+    return <SkeletonHistorique />;
+  }
 
     
   return (
