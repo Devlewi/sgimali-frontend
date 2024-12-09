@@ -1,6 +1,5 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
-import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonHistorique from "@/components/skeleton/SkeletonHistorique";
 import { Metadata } from "next";
 import Image from "next/image";
