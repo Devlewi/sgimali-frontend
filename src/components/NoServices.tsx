@@ -5,39 +5,45 @@ const NoServices = () => {
   // Définir le contenu dynamique avec les couleurs de fond et autres détails
   const contentData = [
     {
-      title: "Professionnel",
+      title: "GESTION DE PORTEFEUILLE",
       icon: "lnr-briefcase",
+      image: "/images/img4.png",
       description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptates nihil ducimus.",
       backgroundColor: "#021039",
     },
     {
-      title: "Accumulation",
+      title: "INGENIERIE FINANCIERE",
       icon: "lnr-arrow-up",
+      image: "/images/img22.png",
       description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptates nihil ducimus.",
       backgroundColor: "#00a0e2",
     },
     {
-      title: "Business Planning",
+      title: "EMPRUNTS OBLIGATAIRES",
       icon: "lnr-chart-bars",
+      image: "/images/img1.png",
       description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptates nihil ducimus.",
       backgroundColor: "#021039",
     },
     {
-      title: "Risk Management",
+      title: "BILLETS DE TRESORERIE",
       icon: "lnr-layers",
+      image: "/images/img4.png",
       description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptates nihil ducimus.",
       backgroundColor: "#00a0e2",
     },
     {
-      title: "Taxation",
+      title: "PRIVATISATIONS",
       icon: null, // Pas d'icône mais une image
+      image: "/images/img4.png",
+      //image: "/images/money.png", // Image spécifique pour ce service
       description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptates nihil ducimus.",
       backgroundColor: "#021039",
-      image: "/images/money.png", // Image spécifique pour ce service
     },
     {
       title: "Accumulation",
       icon: "lnr-arrow-up",
+      image: "/images/img4.png",
       description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores voluptates nihil ducimus.",
       backgroundColor: "#00a0e2",
     }
@@ -66,9 +72,9 @@ const NoServices = () => {
                         <center>
                           <Image
                             src={service.image}
-                            className="img img-responsive"
-                            width={65}
-                            height={65}
+                            className="img img-responsive img-circle"
+                            width={105}
+                            height={20}
                             alt={service.title}
                           />
                         </center>
@@ -85,6 +91,8 @@ const NoServices = () => {
                   </div>
                 </div>
               ))}
+
+                
             </div>
           </div>
         </div>
