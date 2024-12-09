@@ -1,113 +1,125 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
+import SkeletonActionnariat from "@/components/skeleton/SkeletonActionnariat";
+import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
+import { Metadata } from "next";
 import Image from "next/image";
 
-export const metadata = {
-  title: "ACTIONNARIAT | SGI Mali",
-  description: "Actionnariat",
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  }
-  /*
-  ,
-  openGraph: {
-    title: "ACTIONNARIAT | SGI Mali",
-    description: "Actionnariat",
-    url: "https://sgimali-frontend.vercel.app/",
-    siteName: "SGI Mali",
-    images: [
-      {
-        url: "https://sgimali-frontend.vercel.app/images/logo-og.png",
-        width: 120,
-        height: 120,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "HISTORIQUE | SGI Mali",
-    description: "Page d'accueil de SGI Mali",
-    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],
-  },
-  manifest: "/site.webmanifest",
-  */
+
+// Type de données
+type ActionnariatData = {
+  title: string;
+  description: string;
+  image: string;
+  slug: string;
 };
 
+interface Page {
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  featured_image_url?: string;
+  slug: string;
+}
+
+
+
+export const metadata: Metadata = {
+  title: "ACTIONNARIAT | SGI Mali",
+  description: "Page actionnariat SGI Mali",
+  icons: {
+    icon: "/favicon.ico", // Icône générale pour le site
+    apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
+    shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
+  }
+}
+
+
+// Fonction pour récupérer les données de l'Actionnariat
+async function getActionnariat(): Promise<ActionnariatData[]> {
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch Actionnariat data");
+  }
+
+  const pages = await res.json();
+  return pages.map((page: Page) => ({
+    title: page.title.rendered,
+    description: page.content.rendered, // Récupération du contenu HTML
+    image: page.featured_image_url || "", // Récupération de l'URL de l'image mise en avant
+    slug: page.slug,
+
+  }));
+}
 
 // Données statiques simulant une réponse d'API
-const actionnariatData = [
-  {
-    title: "Actionnariat",
-    description: `
-      La SGI-Mali est une société anonyme régie par les dispositions
-      légales édictées par le Conseil Régional de l'épargne Publique
-      et des Marchés Financiers de l’Union Economique et Monétaire
-      Ouest Africain (UEMOA). Elle est un établissement financier de
-      statut et de fonctionnement dérogatoire à la réglementation
-      bancaire, exclusivement soumise aux dispositions de la
-      convention portant réglementation du Marché Financier Régional
-      de l’UEMOA. En général, les Sociétés de Gestion et
-      d’Intermédiation (SGI) sont une catégorie d’établissements
-      financiers expressément soustraite de la règlementation bancaire. 
-      Les SGI sont autorisées, à titre exclusif, à exercer les activités 
-      de négociateur-compensateur de valeurs mobilières cotées pour le 
-      compte de tiers. Elles sont, en conséquence, habilitées à recevoir 
-      et à détenir des fonds du public dans le cadre de cette activité. 
-      Toutes les cessions sur titres cotés à la BRVM sont effectuées par 
-      l’entremise d’une SGI, sauf cas de dérogation accordée par la BRVM. 
-      Les SGI sont habilitées à exercer l'activité de teneur de compte 
-      de valeurs mobilières. Toutefois, les émetteurs pourront détenir 
-      leurs propres titres pour le compte de tiers. Le capital minimum 
-      des SGI est fixé par une instruction du Conseil Régional. Il est 
-      actuellement de 150 millions de FCFA. Les SGI sont obligatoirement 
-      constituées sous la forme juridique de Sociétés Anonymes. Les 
-      conditions d’agrément des SGI sont définies dans le Règlement Général 
-      du CREPMF et par l’Instruction 4/97 du CREPMF relative à l’agrément 
-      des Sociétés de Gestion et d’Intermédiation (SGI).
-    `,
-    image: "/images/img2.jpg",
-    alt: "Description de l'image",
-  },
-];
 
 
 
 
-export default function Actionnariat() {
-  const data = actionnariatData[0]; // On récupère la première entrée pour cet exemple
+export default async function Actionnariat() {
+
+
+    // Récupérer les données depuis l'API
+    const dataActionnariat = await getActionnariat();
+    //si le slug
+    if (!dataActionnariat || dataActionnariat.length === 0) {
+      return <SkeletonActionnariat />;
+    }
+  
+    // Si une des pages a un slug égal à "Actionnariat", cette page sera retournée par la méthode find() et assignée à la variable Actionnariat.
+    const actionnariat = dataActionnariat.find(page => page.slug === "actionnariat");
+  
+    if (!actionnariat) {
+      return (
+        <SkeletonHeaderPageSection/>
+      );
+    }
+  
+
+  //const data = actionnariatData[0]; // On récupère la première entrée pour cet exemple
 
   return (
-    <div>
-      <HeaderPageSection title={data.title} />
+    <div>            
+      <HeaderPageSection title={actionnariat.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
             <div className="col-md-6">
               <div className="main-page">
-                <SectionTitle title={data.title} />
-                <p
-                  style={{ fontSize: "14px", lineHeight: "1.8", color: "#555" }}
-                  dangerouslySetInnerHTML={{ __html: data.description }}
-                ></p>
+                <SectionTitle title={actionnariat.title} />
+                <div
+                  className="actionnariat-description"
+                  style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
+                  dangerouslySetInnerHTML={{ __html: actionnariat.description }} // Affichage du contenu HTML
+                />
+
               </div>
             </div>
+
             {/* Bloc droit : Image */}
             <div className="col-md-6">
               <div className="main-page">
-<Image
-      src={data.image}         // source de l'image
-      alt={data.alt}           // texte alternatif
-      className="img img-responsive"    // classe CSS pour la fluidité
-      style={{
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-      }}
-      width={500}              // largeur de l'image (à ajuster selon vos besoins)
-      height={200}             // hauteur de l'image (à ajuster selon vos besoins)
-      layout="intrinsic"       // option pour ajuster automatiquement la taille
-    />
+                <Image
+                  src={actionnariat.image} // Source de l'image
+                  alt="Actionnariat SGI Mali" // Texte alternatif
+                  className="img-responsive"
+                  style={{
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
+                  width={500}
+                  height={300}
+                  layout="intrinsic"
+                />
               </div>
             </div>
           </div>

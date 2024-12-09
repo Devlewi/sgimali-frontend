@@ -53,7 +53,7 @@ async function getHistorique(): Promise<HistoriqueData[]> {
   return pages.map((page: Page) => ({
     title: page.title.rendered,
     description: page.content.rendered, // Récupération du contenu HTML
-    image: page.featured_image_url || "/images/default.png", // Récupération de l'URL de l'image mise en avant
+    image: page.featured_image_url || "", // Récupération de l'URL de l'image mise en avant
     slug: page.slug,
 
   }));
@@ -78,8 +78,7 @@ export default async function Historique() {
   
     
   return (
-    <div>
-            
+    <div>            
       <HeaderPageSection title={historique.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">

@@ -1,75 +1,108 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
+import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
+import SkeletonMission from "@/components/skeleton/SkeletonMission";
 import { Metadata } from "next";
 import Image from "next/image";
 
 
+
+// Type de données
+type MissionData = {
+  title: string;
+  description: string;
+  image: string;
+  slug: string;
+};
+
+interface Page {
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  featured_image_url?: string;
+  slug: string;
+}
+
+
+
+
 export const metadata: Metadata = {
   title: "MISSION | SGI Mali",
-  description: "Page Mission de SGI Mali",
+  description: "Page mission SGI Mali",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "MISSION | SGI Mali",
-    description: "Page Mission de SGI Mali",
-    url: "https://sgimali-frontend.vercel.app/mission", // URL de la page de la mission
-    siteName: "SGI Mali",
-    images: [
-      {
-        url: "https://sgimali-frontend.vercel.app/images/logo-og.png", // Image pour l'Open Graph
-        width: 120,
-        height: 120,
-        alt: "Logo SGI Mali",
-      },
-    ],
-    locale: "fr_FR", // Langue française
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image", // Type de carte Twitter
-    title: "MISSION | SGI Mali",
-    description: "Page Mission de SGI Mali",
-    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"], // Image pour Twitter
-  },
-  manifest: "/site.webmanifest", // Manifest du site
-};
+    icon: "/favicon.ico", // Icône générale pour le site
+    apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
+    shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
+  }
+}
 
 
-const contentData = {
-  title: "Mission",
-  text: `La SGI-Mali a pour mission l’intermédiation entre les capacités de financement et
-           les besoins en financement en vue du développement économique et l’accroissement de
-           la richesse des actionnaires des entreprises, celle des investisseurs particuliers
-           et institutionnels ainsi que toutes les autres parties prenantes.
 
-           Elle se veut donc être l’intermédiaire de ses clients pour accéder au marché
-           financier. Elle peut acheter et/ou vendre des titres (actions, obligations, billets,
-           etc.) pour le compte de ses clients, personnes physiques ou morales, soit à la
-           Bourse régionale des valeurs mobilières (BRVM), soit lors de nouvelles émissions de
-           titres par appel public à l'épargne sur le marché dans la zone UEMOA.`,
-  imageSrc: "/images/default1.png",
-  imageAlt: "Description de l'image",
-};
+// Fonction pour récupérer les données de l'Mission
+async function getMission(): Promise<MissionData[]> {
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
 
-export default function Mission() {
+  if (!res.ok) {
+    throw new Error("Failed to fetch Mission data");
+  }
+
+  const pages = await res.json();
+  return pages.map((page: Page) => ({
+    title: page.title.rendered,
+    description: page.content.rendered, // Récupération du contenu HTML
+    image: page.featured_image_url || "", // Récupération de l'URL de l'image mise en avant
+    slug: page.slug,
+
+  }));
+}
+
+
+
+
+
+
+
+export default async function Mission() {
+
+  // Récupérer les données depuis l'API
+  const dataMission = await getMission();
+  //si le slug
+  if (!dataMission || dataMission.length === 0) {
+    return <SkeletonMission />;
+  }
+
+  // Si une des pages a un slug égal à "mission", cette page sera retournée par la méthode find() et assignée à la variable Mission.
+  const datamission = dataMission.find(page => page.slug === "mission");
+
+  if (!datamission) {
+    return (
+      <SkeletonHeaderPageSection/>
+    );
+  }
+  
+  
+
   return (
-    <div>
-      
-      <HeaderPageSection title={contentData.title} />
-
+    <div>            
+      <HeaderPageSection title={datamission.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
             <div className="col-md-6">
               <div className="main-page">
-                <SectionTitle title={contentData.title} />
-                <p style={{ fontSize: "14px", lineHeight: "1.8", color: "#555" }}>
-                  {contentData.text}
-                </p>
+                <SectionTitle title={datamission.title} />
+                <div
+                  className="mission-description"
+                  style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
+                  dangerouslySetInnerHTML={{ __html: datamission.description }} // Affichage du contenu HTML
+                />
               </div>
             </div>
 
@@ -77,17 +110,16 @@ export default function Mission() {
             <div className="col-md-6">
               <div className="main-page">
                 <Image
-                  src={contentData.imageSrc}
-                  alt={contentData.imageAlt}
+                  src={datamission.image} // Source de l'image
+                  alt="Mission SGI Mali" // Texte alternatif
+                  className="img-responsive"
+                  style={{
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
                   width={500}
                   height={300}
-                  className="img-fluid"
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  }}
+                  layout="intrinsic"
                 />
               </div>
             </div>
