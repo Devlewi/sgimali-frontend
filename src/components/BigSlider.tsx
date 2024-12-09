@@ -50,8 +50,9 @@ const BigSlider = () => {
       }*/
   
       // Construire l'URL complète pour les slides
-      const res = await fetch(apiUrl
-        
+      const res = await fetch(apiUrl, {
+        next: { revalidate: 60 },
+      }        
       ); // Requête vers l'API distante
   
       if (!res.ok) {

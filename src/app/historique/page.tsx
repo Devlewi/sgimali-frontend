@@ -1,5 +1,6 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
+import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonHistorique from "@/components/skeleton/SkeletonHistorique";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -61,7 +62,9 @@ export const metadata: Metadata = {
 // Fonction pour récupérer les données de l'historique
 async function getHistorique(): Promise<HistoriqueData[]> {
   const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages";
-  const res = await fetch(apiUrl);
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch historique data");
@@ -71,7 +74,7 @@ async function getHistorique(): Promise<HistoriqueData[]> {
   return pages.map((page: Page) => ({
     title: page.title.rendered,
     description: page.content.rendered, // Récupération du contenu HTML
-    image: page.featured_image_url || "/images/default-image.jpg", // Récupération de l'URL de l'image mise en avant
+    image: page.featured_image_url || "/images/default.png", // Récupération de l'URL de l'image mise en avant
     slug: page.slug,
 
   }));
@@ -80,19 +83,24 @@ async function getHistorique(): Promise<HistoriqueData[]> {
 export default async function Historique() {
   // Récupérer les données depuis l'API
   const dataHistorique = await getHistorique();
-  //si le slug  
-  // Si une des pages a un slug égal à "historique", cette page sera retournée par la méthode find() et assignée à la variable historique.
-  const historique = dataHistorique.find(page => page.slug === "historique");
-
-  if ((!dataHistorique || dataHistorique.length === 0) || !historique) {
+  //si le slug
+  if (!dataHistorique || dataHistorique.length === 0) {
     return <SkeletonHistorique />;
   }
 
+  // Si une des pages a un slug égal à "historique", cette page sera retournée par la méthode find() et assignée à la variable historique.
+  const historique = dataHistorique.find(page => page.slug === "historique");
+
+  if (!historique) {
+    return (
+      <></>
+    );
+  }
+  
     
   return (
     <div>
-      <HeaderPageSection title={historique.title} />
-
+      <HeaderPageSection title={historique.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">

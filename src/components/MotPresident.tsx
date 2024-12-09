@@ -33,7 +33,9 @@ async function getMotPresident(): Promise<ContentData[]> {
   //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
   //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
 
-  const res = await fetch(apiUrl); // Requête vers l'API distante
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  }); // Requête vers l'API distante
   //console.log(`${apiUrl}`);
   //console.log(res);
   //const res = await fetch("http://localhost:3000/api/acf-options");
