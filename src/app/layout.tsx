@@ -350,31 +350,31 @@ export default function RootLayout({
                           <a href="#">Activités </a>
                           <ul>
                             <li>
-                              <a href="#">
+                              <Link href="/privatisation">
                                 <span>Privatisation</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/financement-des-entreprises">
                                 <span>Financement des entreprises</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/gestion-des-portefeuilles">
                                 <span>Gestion des portefeuilles</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/gestion-du-registre-des-actionnaires">
                                 <span>
                                   Gestion du registre des actionnaires
                                 </span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/intermediation">
                                 <span>Intermediation</span>
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>
@@ -462,32 +462,32 @@ export default function RootLayout({
                         <li>
                           <a href="#">Activités</a>
                           <ul className="navi-level-2">
-                            <li>
-                              <a href="#">
+                          <li>
+                              <Link href="/privatisation">
                                 <span>Privatisation</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/financement-des-entreprises">
                                 <span>Financement des entreprises</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/gestion-des-portefeuilles">
                                 <span>Gestion des portefeuilles</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/gestion-du-registre-des-actionnaires">
                                 <span>
                                   Gestion du registre des actionnaires
                                 </span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/intermediation">
                                 <span>Intermediation</span>
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>

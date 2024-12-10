@@ -109,7 +109,7 @@ export default async function Actionnariat() {
             <div className="col-md-6">
               <div className="main-page">
                 <Image
-                  src={actionnariat.image} // Source de l'image
+                  src={actionnariat.image || "/images/default.webp"} // Source de l'image
                   alt="Actionnariat SGI Mali" // Texte alternatif
                   className="img-responsive"
                   style={{

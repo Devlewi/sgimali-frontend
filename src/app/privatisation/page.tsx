@@ -1,13 +1,14 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
-import SkeletonHistorique from "@/components/skeleton/SkeletonHistorique";
+import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
+
 import { Metadata } from "next";
 import Image from "next/image";
 
 
 // Type de données
-type HistoriqueData = {
+type PrivatisationData = {
   title: string;
   description: string;
   image: string;
@@ -28,8 +29,8 @@ interface Page {
 
 
 export const metadata: Metadata = {
-  title: "HISTORIQUE | SGI Mali",
-  description: "Page historique SGI Mali",
+  title: "PRIVATISATION | SGI Mali",
+  description: "Page privatisation SGI Mali",
   icons: {
     icon: "/favicon.ico", // Icône générale pour le site
     apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
@@ -38,16 +39,16 @@ export const metadata: Metadata = {
 }
 
 
-// Fonction pour récupérer les données de l'historique
-async function getHistorique(): Promise<HistoriqueData[]> {
-  // https://sgimali-frontend.vercel.app/api/pages
+// Fonction pour récupérer les données de l'privatisation
+async function getHistorique(): Promise<PrivatisationData[]> {
+  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
   const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch historique data");
+    throw new Error("Failed to fetch privatisation data");
   }
 
   const pages = await res.json();
@@ -60,18 +61,18 @@ async function getHistorique(): Promise<HistoriqueData[]> {
   }));
 }
 
-export default async function Historique() {
+export default async function Privatisation() {
   // Récupérer les données depuis l'API
   const dataHistorique = await getHistorique();
   //si le slug
   if (!dataHistorique || dataHistorique.length === 0) {
-    return <SkeletonHistorique />;
+    return <SkeletonTemplatePages />;
   }
 
-  // Si une des pages a un slug égal à "historique", cette page sera retournée par la méthode find() et assignée à la variable historique.
-  const historique = dataHistorique.find(page => page.slug === "historique");
+  // Si une des pages a un slug égal à "privatisation", cette page sera retournée par la méthode find() et assignée à la variable privatisation.
+  const privatisation = dataHistorique.find(page => page.slug === "privatisation");
 
-  if (!historique) {
+  if (!privatisation) {
     return (
       <SkeletonHeaderPageSection/>
     );
@@ -80,29 +81,29 @@ export default async function Historique() {
     
   return (
     <div>            
-      <HeaderPageSection title={historique.title} />      
+      <HeaderPageSection title={privatisation.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
-            <div className="col-md-6">
+            <div className="col-md-8">
               <div className="main-page">
-                <SectionTitle title={historique.title} />
+                <SectionTitle title={privatisation.title} />
                 <div
-                  className="historique-description"
+                  className="privatisation-description"
                   style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
-                  dangerouslySetInnerHTML={{ __html: historique.description }} // Affichage du contenu HTML
+                  dangerouslySetInnerHTML={{ __html: privatisation.description }} // Affichage du contenu HTML
                 />
 
               </div>
             </div>
 
             {/* Bloc droit : Image */}
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="main-page">
                 <Image
-                  src={historique.image || "/images/default.webp"} // Source de l'image
-                  alt="Historique SGI Mali" // Texte alternatif
+                  src={privatisation.image || "/images/default.webp"} // Source de l'image
+                  alt="Privatisation SGI Mali" // Texte alternatif
                   className="img-responsive"
                   style={{
                     borderRadius: "8px",

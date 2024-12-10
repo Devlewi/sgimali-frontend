@@ -1,86 +1,99 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
+import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
+import SkeletonOrganisation from "@/components/skeleton/SkeletonOrganisation";
 import { Metadata } from "next";
 import Image from "next/image";
+
+
+// Type de données
+type OrganisationData = {
+  title: string;
+  description: string;
+  image: string;
+  slug: string;
+};
+
+interface Page {
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  featured_image_url?: string;
+  slug: string;
+}
 
 // Définition des métadonnées
 export const metadata: Metadata = {
   title: "ORGANISATION | SGI Mali",
-  description: "Découvrez l'organisation de SGI Mali et son équipe de professionnels.",
+  description: "Page Organisation SGI Mali",
   icons: {
-    icon: ["/favicon.ico"],
-    apple: ["/apple-touch-icon.png"],
-    shortcut: ["/apple-touch-icon.png"],
-  },
-  openGraph: {
-    title: "ORGANISATION | SGI Mali",
-    description: "Découvrez l'organisation de SGI Mali et son équipe de professionnels.",
-    url: "https://sgimali-frontend.vercel.app/organisation", // URL de la page de l'organisation
-    siteName: "SGI Mali",
-    images: [
-      {
-        url: "https://sgimali-frontend.vercel.app/images/logo-og.png", // URL de l'image d'aperçu
-        width: 120,
-        height: 120,
-        alt: "Logo SGI Mali",
-      },
-    ],
-    locale: "fr_FR",  // Langue et région
-    type: "website",  // Type de contenu
-  },
-  twitter: {
-    card: "summary_large_image",  // Type de carte Twitter
-    title: "ORGANISATION | SGI Mali",
-    description: "Découvrez l'organisation de SGI Mali et son équipe de professionnels.",
-    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],  // Image pour Twitter
-  },
-  manifest: "/site.webmanifest",  // Chemin vers le manifeste
-};
+    icon: "/favicon.ico", // Icône générale pour le site
+    apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
+    shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
+  }
+}
 
 
-const contentData = {
-  leftImage: {
-    src: "/images/default1.png",
-    alt: "Image de l'organisation SGI Mali",
-    width: 600,  // Largeur spécifiée
-    height: 400, // Hauteur spécifiée
-  },
-  rightImage: {
-    src: "/images/default1.png",
-    alt: "Autre vue de l'organisation SGI Mali",
-    width: 600,  // Largeur spécifiée
-    height: 400, // Hauteur spécifiée
-  },
-  sectionTitle: "Organisation de SGI Mali",
-  sectionDescription:
-    "SGI Mali est une organisation de premier plan dans le domaine des investissements et de la gestion de portefeuilles. Nous combinons expertise, réactivité, et savoir-faire pour offrir des solutions adaptées à nos clients.",
-};
+// Fonction pour récupérer les données de l'Organisation
+async function getOrganisation(): Promise<OrganisationData[]> {
+  
+  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
+  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
+  
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch Organisation data");
+  }
+
+  const pages = await res.json();
+  return pages.map((page: Page) => ({
+    title: page.title.rendered,
+    description: page.content.rendered, // Récupération du contenu HTML
+    image: page.featured_image_url || "", // Récupération de l'URL de l'image mise en avant
+    slug: page.slug,
+
+  }));
+}
 
 
-export default function Organisation() {
+export default async function Organisation() {
+
+    // Récupérer les données depuis l'API
+    const dataOrganisation = await getOrganisation();
+    //si le slug
+    if (!dataOrganisation || dataOrganisation.length === 0) {
+      return <SkeletonOrganisation />;
+    }
+  
+    // Si une des pages a un slug égal à "Organisation", cette page sera retournée par la méthode find() et assignée à la variable Organisation.
+    const organisation = dataOrganisation.find(page => page.slug === "organisation");
+  
+    if (!organisation) {
+      return (
+        <SkeletonHeaderPageSection/>
+      );
+    }
+
   return (
-    <div>
-      
-      <HeaderPageSection title={"Organisation"} />
-
+    <div>            
+      <HeaderPageSection title={organisation.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
-          <SectionTitle title={contentData.sectionTitle} />
-
           <div className="row align-items-center">
-            {/* Bloc gauche : Texte avec Image */}
-            <div className="col-md-6" style={{ marginBottom: 20 }}>
+            {/* Bloc gauche : Texte */}
+            <div className="col-md-6">
               <div className="main-page">
-              <Image
-                  src={contentData.leftImage.src}
-                  alt={contentData.leftImage.alt}
-                  width={contentData.leftImage.width}
-                  height={contentData.leftImage.height}
-                  className="img-responsive"  // Ajout de la classe img-fluid pour rendre l'image responsive
-                  style={{
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  }}
+                <SectionTitle title={organisation.title} />
+                <div
+                  className="organisation-description"
+                  style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
+                  dangerouslySetInnerHTML={{ __html: organisation.description }} // Affichage du contenu HTML
                 />
               </div>
             </div>
@@ -88,23 +101,21 @@ export default function Organisation() {
             {/* Bloc droit : Image */}
             <div className="col-md-6">
               <div className="main-page">
-              <Image
-                  src={contentData.rightImage.src}
-                  alt={contentData.rightImage.alt}
-                  width={contentData.rightImage.width}
-                  height={contentData.rightImage.height}
-                  className="img-responsive"  // Ajout de la classe img-fluid pour rendre l'image responsive
+                <Image
+                  src={organisation.image || "/images/default.webp"} // Source de l'image
+                  alt="Organisation SGI Mali" // Texte alternatif
+                  className="img-responsive"
                   style={{
                     borderRadius: "8px",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                   }}
+                  width={500}
+                  height={300}
+                  layout="intrinsic"
                 />
               </div>
             </div>
           </div>
-
-
-          
         </div>
       </section>
     </div>
