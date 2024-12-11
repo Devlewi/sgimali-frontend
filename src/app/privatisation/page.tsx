@@ -41,8 +41,8 @@ export const metadata: Metadata = {
 
 // Fonction pour récupérer les données de l'privatisation
 async function getHistorique(): Promise<PrivatisationData[]> {
-  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  // const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });

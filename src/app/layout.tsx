@@ -382,19 +382,19 @@ export default function RootLayout({
                           <a href="#">Réalisation</a>
                           <ul>
                             <li>
-                              <a href="#">
+                              <Link href="/emissions-demprunts-prives">
                                 <span>Emissions d’emprunts privés</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/emissions-demprunts-publics">
                                 <span>Emissions d’emprunts publics</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/capacite-de-placement-de-titre">
                                 <span>Capacité de placement de titre</span>
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>
@@ -494,20 +494,20 @@ export default function RootLayout({
                         <li>
                           <a href="#">Réalisation</a>
                           <ul className="navi-level-2">
-                            <li>
-                              <a href="#">
+                          <li>
+                              <Link href="/emissions-demprunts-prives">
                                 <span>Emissions d’emprunts privés</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/emissions-demprunts-publics">
                                 <span>Emissions d’emprunts publics</span>
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="#">
+                              <Link href="/capacite-de-placement-de-titre">
                                 <span>Capacité de placement de titre</span>
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>

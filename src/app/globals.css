@@ -12942,7 +12942,8 @@ padding: 15px;
 
 
 .mission-description p, .historique-description p, .formejuridique-description p, .actionnariat-description p, .historique-description p, .mission-description p, .organisation-description p
-,.Relation-clientele-description p, .privatisation-description p, .financement-description p, .gesportefeuille-description p, .gesregistre-description p {
+,.Relation-clientele-description p, .privatisation-description p, .financement-description p, .gesportefeuille-description p, .gesregistre-description p,
+.intermediation-description p, .capaciteplacementitre-description p, .emissionempruntpub-description p, .emissionemprive-description p {
   font-size: 14px !important;
   color: #555;
   line-height: 1.8;

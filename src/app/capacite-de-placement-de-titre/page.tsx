@@ -1,13 +1,13 @@
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
-import SkeletonActionnariat from "@/components/skeleton/SkeletonActionnariat";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
+import SkeletonHistorique from "@/components/skeleton/SkeletonHistorique";
 import { Metadata } from "next";
 import Image from "next/image";
 
 
 // Type de données
-type ActionnariatData = {
+type CapaciteplacementitreData = {
   title: string;
   description: string;
   image: string;
@@ -28,8 +28,8 @@ interface Page {
 
 
 export const metadata: Metadata = {
-  title: "ACTIONNARIAT | SGI Mali",
-  description: "Page actionnariat SGI Mali",
+  title: "CAPACITE DE PLACEMENT DE TITRE | SGI Mali",
+  description: "Page Capacité de placement de titre - SGI Mali",
   icons: {
     icon: "/favicon.ico", // Icône générale pour le site
     apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
@@ -38,16 +38,16 @@ export const metadata: Metadata = {
 }
 
 
-// Fonction pour récupérer les données de l'Actionnariat
-async function getActionnariat(): Promise<ActionnariatData[]> {
-  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
+// Fonction pour récupérer les données de l'capaciteplacementitre
+async function getCapaciteplacementitre(): Promise<CapaciteplacementitreData[]> {
   const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch Actionnariat data");
+    throw new Error("Failed to fetch capaciteplacementitre data");
   }
 
   const pages = await res.json();
@@ -60,47 +60,38 @@ async function getActionnariat(): Promise<ActionnariatData[]> {
   }));
 }
 
-// Données statiques simulant une réponse d'API
+export default async function Capaciteplacementitre() {
+  // Récupérer les données depuis l'API
+  const dataCapaciteplacementitre = await getCapaciteplacementitre();
+  //si le slug
+  if (!dataCapaciteplacementitre || dataCapaciteplacementitre.length === 0) {
+    return <SkeletonHistorique />;
+  }
 
+  // Si une des pages a un slug égal à "capaciteplacementitre", cette page sera retournée par la méthode find() et assignée à la variable capaciteplacementitre.
+  const capaciteplacementitre = dataCapaciteplacementitre.find(page => page.slug === "capacite-de-placement-de-titre");
 
-
-
-export default async function Actionnariat() {
-
-
-    // Récupérer les données depuis l'API
-    const dataActionnariat = await getActionnariat();
-    //si le slug
-    if (!dataActionnariat || dataActionnariat.length === 0) {
-      return <SkeletonActionnariat />;
-    }
+  if (!capaciteplacementitre) {
+    return (
+      <SkeletonHeaderPageSection/>
+    );
+  }
   
-    // Si une des pages a un slug égal à "Actionnariat", cette page sera retournée par la méthode find() et assignée à la variable Actionnariat.
-    const actionnariat = dataActionnariat.find(page => page.slug === "actionnariat");
-  
-    if (!actionnariat) {
-      return (
-        <SkeletonHeaderPageSection/>
-      );
-    }
-  
-
-  //const data = actionnariatData[0]; // On récupère la première entrée pour cet exemple
-
+    
   return (
     <div>            
-      <HeaderPageSection title={actionnariat.title} />      
+      <HeaderPageSection title={capaciteplacementitre.title} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
             <div className="col-md-8">
               <div className="main-page">
-                <SectionTitle title={actionnariat.title} />
+                <SectionTitle title={capaciteplacementitre.title} />
                 <div
-                  className="actionnariat-description"
+                  className="capaciteplacementitre-description"
                   style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
-                  dangerouslySetInnerHTML={{ __html: actionnariat.description }} // Affichage du contenu HTML
+                  dangerouslySetInnerHTML={{ __html: capaciteplacementitre.description }} // Affichage du contenu HTML
                 />
 
               </div>
@@ -110,8 +101,8 @@ export default async function Actionnariat() {
             <div className="col-md-4">
               <div className="main-page">
                 <Image
-                  src={actionnariat.image || "/images/default.webp"} // Source de l'image
-                  alt="Actionnariat SGI Mali" // Texte alternatif
+                  src={capaciteplacementitre.image || "/images/default.webp"} // Source de l'image
+                  alt="Capaciteplacementitre SGI Mali" // Texte alternatif
                   className="img-responsive"
                   style={{
                     borderRadius: "8px",

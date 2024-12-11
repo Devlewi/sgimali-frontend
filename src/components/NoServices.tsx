@@ -4,14 +4,52 @@ import Image from 'next/image'; // Importer Image de Next.js si vous l'utilisez
 const NoServices = () => {
   // Définir le contenu dynamique avec les couleurs de fond et autres détails
   const contentData = [
-    
     {
-      title: "INGENIERIE FINANCIERE",
+      title: "PRIVATISATIONS",
+      icon: null, // Pas d'icône mais une image
+      image: "/images/img4.png",
+      //image: "/images/money.png", // Image spécifique pour ce service
+      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
+      backgroundColor: "#021039",
+    },
+    {
+      title: "FINANCEMENT",
+      icon: null, // Pas d'icône mais une image
+      image: "/images/img4.png",
+      //image: "/images/money.png", // Image spécifique pour ce service
+      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
+      backgroundColor: "#00a0e2",
+    },    
+    {
+      title: "GESTION DE PORTEFEUILLE",
+      icon: "lnr-briefcase",
+      image: "/images/img4.png",
+      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
+      backgroundColor: "#021039",
+    },   
+    {
+      title: "GESTION REGISTRE ACTIONNAIRES",
       icon: "lnr-arrow-up",
       image: "/images/img22.png",
       description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
       backgroundColor: "#00a0e2",
     },
+    {
+      title: "INTERMEDIATION",
+      icon: null, // Pas d'icône mais une image
+      image: "/images/img4.png",
+      //image: "/images/money.png", // Image spécifique pour ce service
+      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
+      backgroundColor: "#021039",
+    },
+
+    {
+      title: "EMPRUNTS OBLIGATAIRES",
+      icon: "lnr-arrow-up",
+      image: "/images/img1.png",
+      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
+      backgroundColor: "#00a0e2",
+    }, 
     {
       title: "INTRODUCTION EN BOURSE",
       icon: "lnr-arrow-up",
@@ -26,51 +64,17 @@ const NoServices = () => {
       description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
       backgroundColor: "#00a0e2",
     },    
-    {
-      title: "EMPRUNTS OBLIGATAIRES",
-      icon: "lnr-arrow-up",
-      image: "/images/img1.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    }, 
+    
     {
       title: "BILLETS DE TRESORERIE",
       icon: "lnr-arrow-up",
       image: "/images/img5.png",
       description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
+      backgroundColor: "#021039",
     }, 
-    {
-      title: "PRIVATISATIONS",
-      icon: null, // Pas d'icône mais une image
-      image: "/images/img4.png",
-      //image: "/images/money.png", // Image spécifique pour ce service
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    },
-    {
-      title: "GESTION DE PORTEFEUILLE",
-      icon: "lnr-briefcase",
-      image: "/images/img4.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
-    },    
-    {
-      title: "INTERMEDIATION",
-      icon: null, // Pas d'icône mais une image
-      image: "/images/img4.png",
-      //image: "/images/money.png", // Image spécifique pour ce service
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    },
-    {
-      title: "FINANCEMENT",
-      icon: null, // Pas d'icône mais une image
-      image: "/images/img4.png",
-      //image: "/images/money.png", // Image spécifique pour ce service
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
-    },
+
+
+    
     
   ];
 
@@ -112,21 +116,7 @@ const NoServices = () => {
                       <p style={{ fontSize: 14, color: "white", marginTop:7 }}>
                         {service.description}
                       </p>
-                      <center>
-                <a
-                  href={''}
-                  className="btn btn-primary mt-3 mission-description"
-                  style={{
-                    padding: "10px 20px",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                    textTransform: "uppercase",
-                    backgroundColor: "#276f92",
-                  }}
-                >
-                  En savoir plus
-                </a>
-              </center>
+                     
                     </div>
                   </div>
                 </div>

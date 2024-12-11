@@ -40,7 +40,8 @@ export const metadata: Metadata = {
 
 // Fonction pour récupérer les données de l'Mission
 async function getMission(): Promise<MissionData[]> {
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });
@@ -92,7 +93,7 @@ export default async function Mission() {
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
-            <div className="col-md-6">
+            <div className="col-md-8">
               <div className="main-page">
                 <SectionTitle title={datamission.title} />
                 <div
@@ -104,7 +105,7 @@ export default async function Mission() {
             </div>
 
             {/* Bloc droit : Image */}
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="main-page">
                 <Image
                   src={datamission.image || "/images/default.webp"} // Source de l'image

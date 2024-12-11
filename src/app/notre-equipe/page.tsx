@@ -45,8 +45,8 @@ export const metadata: Metadata = {
     icon: "/favicon.ico", // Icône générale pour le site
     apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
     shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
-  }
-}
+  },
+};
 
 // Fonction pour récupérer l'URL de l'image par ID
 async function getImageUrlById(imageId: number): Promise<string> {
@@ -64,8 +64,8 @@ async function getImageUrlById(imageId: number): Promise<string> {
 
 // Fonction pour récupérer les données de l'historique
 async function getNotreEquipe(): Promise<NotreEquipeData[]> {
-  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });
@@ -76,14 +76,15 @@ async function getNotreEquipe(): Promise<NotreEquipeData[]> {
 
   const pages = await res.json();
   const equipePromises = pages.map(async (page: Page) => {
-    const equipe = page.acf?.equipe?.map(async (member) => {
-      const imageUrl = await getImageUrlById(member.image); // Récupérer l'URL de l'image
-      return {
-        image: imageUrl, // URL complète de l'image
-        titre: member.titre,
-        sous_titre: member.sous_titre
-      };
-    }) || [];
+    const equipe =
+      page.acf?.equipe?.map(async (member) => {
+        const imageUrl = await getImageUrlById(member.image); // Récupérer l'URL de l'image
+        return {
+          image: imageUrl, // URL complète de l'image
+          titre: member.titre,
+          sous_titre: member.sous_titre,
+        };
+      }) || [];
 
     // Résultats après résolution des promesses pour les membres de l'équipe
     const equipeResolved = await Promise.all(equipe);
@@ -93,17 +94,14 @@ async function getNotreEquipe(): Promise<NotreEquipeData[]> {
       description: page.content.rendered, // Récupération du contenu HTML
       image: page.featured_image_url || "", // Récupération de l'URL de l'image mise en avant
       slug: page.slug,
-      equipe: equipeResolved // Membres de l'équipe avec les images récupérées
+      equipe: equipeResolved, // Membres de l'équipe avec les images récupérées
     };
   });
 
   return await Promise.all(equipePromises); // Résoudre toutes les promesses
-
-
 }
 
 export default async function Equipe() {
-
   // Récupérer les données depuis l'API
   const dataNotreEquipe = await getNotreEquipe();
 
@@ -112,22 +110,22 @@ export default async function Equipe() {
   }
 
   // Si une des pages a un slug égal à "notre-equipe", cette page sera retournée par la méthode find() et assignée à la variable notrequipe.
-  const notrequipe = dataNotreEquipe.find(page => page.slug === "notre-equipe");
+  const notrequipe = dataNotreEquipe.find(
+    (page) => page.slug === "notre-equipe"
+  );
 
   if (!notrequipe) {
-    return (
-      <SkeletonHeaderPageSection/>
-    );
+    return <SkeletonHeaderPageSection />;
   }
 
   return (
-    <div>            
-      <HeaderPageSection title={notrequipe.title} />      
+    <div>
+      <HeaderPageSection title={notrequipe.title} />
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
-            <div className="col-md-6">
+            <div className="col-md-8">
               <div className="main-page">
                 <SectionTitle title={notrequipe.title} />
                 <div
@@ -139,10 +137,10 @@ export default async function Equipe() {
             </div>
 
             {/* Bloc droit : Image */}
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="main-page">
                 <Image
-                  src={notrequipe.image || "/images/default.webp"} 
+                  src={notrequipe.image || "/images/default.webp"}
                   alt="Historique SGI Mali" // Texte alternatif
                   className="img-responsive"
                   style={{
@@ -158,36 +156,46 @@ export default async function Equipe() {
           </div>
           <div className="row">
             {/* retourner les membres ici */}
-            <br/><br/><br/><br/>
+            <br />
+            <br />
+            <br />
+            <br />
             <div className="row">
-  {notrequipe.equipe && notrequipe.equipe.length > 0 ? (
-    notrequipe.equipe.map((member, index) => (
-      <div className="col-lg-3 col-md-4 col-6 mb-4" key={index} style={{marginBottom:20}}>
-        <div className="team-member text-center item-team">
-          <Image
-            src={member.image} // Remplacer par l'URL de l'image
-            alt={member.titre}
-            className="img-responsive img-thumbnail"
-            style={{
-              borderRadius: "50%",
-              width: "150px",
-              height: "150px",
-              objectFit: "cover",
-              marginBottom: "15px",
-            }}
-            width={150}
-            height={150}
-          />
-          <h5>{member.titre}</h5>
-          <p style={{ fontSize: "14px", color: "#777" }}>{member.sous_titre}</p>
-        </div>
-      </div>
-    ))
-  ) : (
-    <p style={{ textAlign: "center", color: "#777" }}>Aucun membre trouvé.</p>
-  )}
-</div>
-
+              {notrequipe.equipe && notrequipe.equipe.length > 0 ? (
+                notrequipe.equipe.map((member, index) => (
+                  <div
+                    className="col-lg-3 col-md-4 col-6 mb-4"
+                    key={index}
+                    style={{ marginBottom: 20 }}
+                  >
+                    <div className="team-member text-center item-team">
+                      <Image
+                        src={member.image} // Remplacer par l'URL de l'image
+                        alt={member.titre}
+                        className="img-responsive img-thumbnail"
+                        style={{
+                          borderRadius: "50%",
+                          width: "150px",
+                          height: "150px",
+                          objectFit: "cover",
+                          marginBottom: "15px",
+                        }}
+                        width={150}
+                        height={150}
+                      />
+                      <h5>{member.titre}</h5>
+                      <p style={{ fontSize: "14px", color: "#777" }}>
+                        {member.sous_titre}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p style={{ textAlign: "center", color: "#777" }}>
+                  Aucun membre trouvé.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </section>
