@@ -44,8 +44,8 @@ if (!formData.first_name || !formData.email || !formData.subject || !formData.co
 
     try {
       // Envoyer la requête POST à l'API REST de WordPress
-      //const apiUrl = "https://sgimali-frontend.vercel.app/api/send-email";
-      const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/custom/v1/send-email/"
+      const apiUrl = "https://sgimali-frontend.vercel.app/api/send-email";
+      // const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/custom/v1/send-email/"
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
