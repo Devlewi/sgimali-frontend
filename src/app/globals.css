@@ -12943,8 +12943,25 @@ padding: 15px;
 
 .mission-description p, .historique-description p, .formejuridique-description p, .actionnariat-description p, .historique-description p, .mission-description p, .organisation-description p
 ,.Relation-clientele-description p, .privatisation-description p, .financement-description p, .gesportefeuille-description p, .gesregistre-description p,
-.intermediation-description p, .capaciteplacementitre-description p, .emissionempruntpub-description p, .emissionemprive-description p {
+.intermediation-description p, .capaciteplacementitre-description p, .emissionempruntpub-description p, .emissionemprive-description p, .faq-description p {
   font-size: 14px !important;
   color: #555;
   line-height: 1.8;
+}
+
+
+/* Personnalisation du bouton et du texte dans l'alerte SweetAlert2 */
+.swal-confirm-button,.swal2-confirm, .swal2-styled {
+  background-color: #0a2c50 !important;
+  font-size: 16px !important;
+  padding: 5px 24px !important;
+  border-radius: 5px !important;
+}
+
+.swal-title {
+  font-size: 20px !important;
+}
+
+.swal-text,.swal2-html-container {
+  font-size: 15px !important;
 }

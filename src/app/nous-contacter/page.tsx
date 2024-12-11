@@ -1,132 +1,161 @@
+import ContactForm from "@/components/ContactForm";
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
+import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
+import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
+import { Metadata } from "next";
+import Image from "next/image";
 
-export const metadata = {
+// Type de données
+type NouscontacterData = {
+  title: string;
+  description: string;
+  image: string;
+  slug: string;
+  acf: {
+    informations_generales: {
+      localisation: string;
+      telephone: string;
+      adresse_email: string;
+    };
+    url_google_maps: string; // Ajoutez ici la propriété
+  };
+};
+
+
+
+interface Page {
+  title: {
+    rendered: string;
+  };
+  content: {
+    rendered: string;
+  };
+  featured_image_url?: string;
+  slug: string;
+  acf?: {
+    informations_generales: {
+      localisation: string;
+      telephone: string;
+      adresse_email: string;
+    };
+    url_google_maps: string;
+  };
+}
+
+export const metadata: Metadata = {
   title: "NOUS CONTACTER | SGI Mali",
-  description:
-    "Contactez-nous pour toute question ou assistance concernant les services de SGI Mali.",
+  description: "Page Nous Contacter SGI Mali",
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-    shortcut: "/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "NOUS CONTACTER | SGI Mali",
-    description:
-      "Découvrez comment nous joindre pour toute assistance ou demande d'information. Retrouvez nos coordonnées complètes.",
-    url: "https://sgimali-frontend.vercel.app/contact",
-    siteName: "SGI Mali",
-    images: [
-      {
-        url: "https://sgimali-frontend.vercel.app/images/logo-og.png",
-        width: 120,
-        height: 120,
-        alt: "Logo SGI Mali",
-      },
-    ],
-    locale: "fr_FR",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "NOUS CONTACTER | SGI Mali",
-    description:
-      "Besoin d'aide ou d'informations supplémentaires ? Retrouvez ici toutes nos coordonnées pour nous joindre.",
-    images: ["https://sgimali-frontend.vercel.app/images/logo-og.png"],
-  },
-  manifest: "/site.webmanifest",
-};
+    icon: "/favicon.ico", // Icône générale pour le site
+    apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
+    shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
+  }
+}
 
+// Fonction pour récupérer les données de l'nouscontacter
+async function getNouscontacter(): Promise<NouscontacterData[]> {
+  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
 
-// Simulated API Data
-const contactData = {
-  pageTitle: "Nous contacter",
-  contactInfo: [
-    {
-      id: 1,
-      title: "Localisation",
-      icon: "icon icon-location2",
-      background: "#00a0e2",
-      color: "white",
-      description:
-        "Immeuble du PATRONAT 3eme étage Hamdallaye ACI 2000",
-    },
-    {
-      id: 2,
-      title: "Téléphone",
-      icon: "icon icon-phone",
-      background: "#00a0e2",
-      color: "white",
-      description: `Tél : +223 20 29 29 72 
-                    Tél : +223 20 29 41 19 
-                    Fax : +223 20 29 29 75`,
-    },
-    {
-      id: 3,
-      title: "Adresse Email",
-      icon: "icon icon-envelop",
-      background: "#00a0e2",
-      color: "white",
-      description: "sgi@sgimali.com",
-    },
-  ],
-  mission: `La SGI-Mali a pour mission l’intermédiation entre les capacités de financement 
-            et les besoins en financement en vue du développement économique et l’accroissement 
-            de la richesse des actionnaires des entreprises, celle des investisseurs particuliers 
-            et institutionnels ainsi que toutes les autres parties prenantes.
+  if (!res.ok) {
+    throw new Error("Failed to fetch nous contacter data");
+  }
 
-            Elle se veut donc être l’intermédiaire de ses clients pour accéder au marché financier. 
-            Elle peut acheter et/ou vendre des titres (actions, obligations, billets, etc.) pour 
-            le compte de ses clients, personnes physiques ou morales, soit à la Bourse régionale 
-            des valeurs mobilières (BRVM), soit lors de nouvelles émissions de titres par appel 
-            public à l'épargne sur le marché dans la zone UEMOA.`,
-};
+  const pages = await res.json();
+  return pages.map((page: Page) => ({
+    title: page.title.rendered,
+    description: page.content.rendered, // Récupération du contenu HTML
+    image: page.featured_image_url || "", // Récupération de l'URL de l'image mise en avant
+    slug: page.slug,
+    acf: page.acf || { informations_generales: {}, url_google_maps: "" }, // Mapping des données ACF
+  }));
+}
 
+export default async function Nouscontacter() {
+  // Récupérer les données depuis l'API
+  const dataNouscontacter = await getNouscontacter();
 
-export default function Contact() {
-  const { pageTitle, contactInfo, mission } = contactData;
+  if (!dataNouscontacter || dataNouscontacter.length === 0) {
+    return <SkeletonTemplatePages />;
+  }
+
+  function formatTextWithLineBreaks(text: string) {
+    return text.split("\r\n").map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ));
+  }
+  
+  // Si une des pages a un slug égal à "nouscontacter", cette page sera retournée par la méthode find() et assignée à la variable nouscontacter.
+  const nouscontacter = dataNouscontacter.find(page => page.slug === "nous-contacter");
+
+  if (!nouscontacter || !nouscontacter.acf.informations_generales) {
+    return <SkeletonHeaderPageSection />;
+  }
+
+  const { localisation, telephone, adresse_email } = nouscontacter.acf.informations_generales;
+  const { url_google_maps } = nouscontacter.acf;
+
 
   return (
     <div>
-      
-      <HeaderPageSection title={"Nous contacter"} />
-
+      <HeaderPageSection title={nouscontacter.title} />
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row">
             <div className="col-md-12">
               <div className="title-block title-contac">
-                <SectionTitle title={pageTitle} />
+                <SectionTitle title={nouscontacter.title} />
               </div>
             </div>
 
-            {contactInfo.map((info) => (
-              <div className="col-md-4" key={info.id}>
-                <div className="iconbox-inline">
-                  <span
-                    className={info.icon}
-                    style={{ background: info.background, color: info.color }}
-                  />
-                  <h4>{info.title}</h4>
-                  <p style={{ fontSize: 14 }}>{info.description}</p>
-                </div>
+            {/* Affichage des informations directement depuis ACF */}
+            <div className="col-md-4">
+              <div className="iconbox-inline">
+                <span style={{ background: "#00a0e2", color: "white" }} className="fa fa-map-marker"/>
+                <h4>Localisation</h4>
+                <p style={{ fontSize: 14 }}>{formatTextWithLineBreaks(localisation)}</p>
               </div>
-            ))}
+            </div>
+
+            <div className="col-md-4">
+              <div className="iconbox-inline">
+              <span style={{ background: "#00a0e2", color: "white" }} className="fa fa-phone"/>
+                <h4>Téléphone</h4>
+                <p style={{ fontSize: 14 }}>{formatTextWithLineBreaks(telephone)}</p>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div className="iconbox-inline">
+              <span style={{ background: "#00a0e2", color: "white" }} className="fa fa-envelope" />
+                <h4>Email</h4>
+                <p style={{ fontSize: 14 }}>{formatTextWithLineBreaks(adresse_email)}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <div id="map-canvas" className="map-warp" style={{ height: 360 }}>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15602303.509661775!2d-14.654307987065353!3d17.308014445889167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe143e881b1073cf%3A0xbb3a5be2a0bdcf80!2sMali!5e0!3m2!1sfr!2sci!4v1731600833104!5m2!1sfr!2sci"
-          width="100%"
-          height={450}
-          style={{ border: 0 }}
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
-      </div>
+      {/* Carte Google Maps */}
+      {url_google_maps && (
+        <div id="map-canvas" className="map-warp" style={{ height: 360 }}>
+          <iframe
+            src={url_google_maps}
+            width="100%"
+            height={450}
+            style={{ border: 0 }}
+            allowFullScreen={false}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      )}
       {/* /Map */}
       <br />
       <br />
@@ -134,7 +163,6 @@ export default function Contact() {
       <br />
       <br />
       <br />
-
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -144,12 +172,29 @@ export default function Contact() {
           </div>
 
           <div className="col-md-6">
-          <p style={{ fontSize: "14px", lineHeight: "1.8", color: "#555" }}>
-          {mission}
-
-          </p>
+          <div
+                  className="faq-description"
+                  style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
+                  dangerouslySetInnerHTML={{ __html: nouscontacter.description }} // Affichage du contenu HTML
+                />          
+            <br/>
+            <Image
+                  src={nouscontacter.image || "/images/default.webp"} // Source de l'image
+                  alt="Faq SGI Mali" // Texte alternatif
+                  className="img img-responsive"
+                  style={{
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  }}
+                  width={500}
+                  height={300}
+                  layout="intrinsic"
+                />
+            <br/>
           </div>
-          <div className="col-md-6" style={{marginTop:-5}}>
+          
+          <ContactForm/>
+          {/* <div className="col-md-6" style={{marginTop:-5}}>
             <div className="main-page">
               <form name="contactform" method="post" action="">
                 <div className="form-group">
@@ -209,7 +254,7 @@ export default function Contact() {
               </div>
               </form>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

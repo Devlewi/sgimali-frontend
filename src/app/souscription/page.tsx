@@ -78,6 +78,8 @@ export default function Souscription() {
                     </span>
                   ))}
                 </p>
+                <br/>
+                <p>image ici</p>
         </div>
       </div>
       {/* Bloc droit : Image */}

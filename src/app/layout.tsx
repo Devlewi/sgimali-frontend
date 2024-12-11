@@ -408,7 +408,7 @@ export default function RootLayout({
                           <Link href="/nous-contacter">Nous contacter</Link>
                         </li>
                         <li>
-                          <Link href="/faq">FAQ</Link>
+                          <Link href="/foire-aux-questions">FAQ</Link>
                         </li>
                       </ul>
                     </nav>
@@ -521,7 +521,7 @@ export default function RootLayout({
                           <Link href="/nous-contacter">Nous contacter</Link>
                         </li>
                         <li>
-                          <Link href="/faq">FAQ</Link>
+                          <Link href="/foire-aux-questions">FAQ</Link>
                         </li>
                       </ul>
                     </nav>
