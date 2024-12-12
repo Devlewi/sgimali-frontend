@@ -512,7 +512,7 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <a href="#">Téléchargements</a>
+                          <Link href="/telechargement">Téléchargements</Link>
                         </li>
                         <li>
                           <Link href="/souscription">Souscription</Link>
@@ -760,7 +760,7 @@ export default function RootLayout({
                       <Link href="/offres-emploi">Opportunités d emploi</Link>
                     </li>
                     <li>
-                      <a href="telechargement.html">Téléchargements</a>
+                      <Link href="/telechargement">Téléchargements</Link>
                     </li>
                     <li>
                       <a href="emploi.html">Autre lien</a>
