@@ -399,7 +399,8 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <a href="#">Téléchargements</a>
+                        <Link href="/telechargement">Téléchargements</Link>
+
                         </li>
                         <li>
                           <Link href="/souscription">Souscription</Link>
