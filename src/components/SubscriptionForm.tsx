@@ -106,7 +106,8 @@ const SubscriptionForm = () => {
     try {
       // Enregistrement dans la base
       const apiUrl =
-        "https://sgi.cynomedia-africa.com/wp-json/subscription-api/v1/add-subscriber";
+        "https://sgimali-frontend.vercel.app/api/add-subscriber";
+        
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -121,7 +122,7 @@ const SubscriptionForm = () => {
 
       // Envoi de la notification par e-mail
       const emailApiUrl =
-        "https://sgi.cynomedia-africa.com/wp-json/custom/v1/send-subscription-notification/";
+        "https://sgimali-frontend.vercel.app/api/send-notif";
 
       const emailResponse = await fetch(emailApiUrl, {
         method: "POST",
