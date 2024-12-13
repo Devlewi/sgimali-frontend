@@ -71,21 +71,18 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
 */
 
 async function getMediaUrlById(mediaId: number): Promise<string> {
-   const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
-  // const apiUrl = `https://sgimali-frontend.vercel.app/api/media/${mediaId}`; // Appel à votre route API proxy frontend
-  //   const apiUrl = `http://localhost:3000/api/media/${mediaId}`; // Endpoint local original localhost OK
+  //const apiUrl = `https://sgimali-frontend.vercel.app/api/media/${mediaId}`; // Appel à votre route API proxy
+  const apiUrl = `http://localhost:3000/api/media/${mediaId}`; // Endpoint local
 
-  // Effectuer la requête API
   const res = await fetch(apiUrl);
 
   if (!res.ok) {
     const errorData = await res.text();
-    console.error(`API call failed for media ID ${mediaId}:`, errorData);
     throw new Error(`Failed to fetch media with ID ${mediaId}: ${errorData}`);
   }
 
   const mediaData = await res.json();
-  // console.log(`Media data for ID ${mediaId}:`, mediaData); // Vérification des données
+  console.log(`Media data for ID ${mediaId}:`, mediaData); // Vérification des données
 
   // Vérifier si fileUrl est valide
   if (!mediaData.fileUrl || typeof mediaData.fileUrl !== "string") {
@@ -109,13 +106,7 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
     
     return proxyUrl; // Retourner l'URL masquée via le proxy
   } catch (error) {
-    // Vérification du type de l'erreur et gestion appropriée
-    if (error instanceof Error) {
-      throw new Error(`Error parsing fileUrl for media ID ${mediaId}: ${error.message}`);
-    } else {
-      // Si ce n'est pas une instance de Error, gérer le cas générique
-      throw new Error(`Unknown error occurred while parsing fileUrl for media ID ${mediaId}`);
-    }
+    throw new Error(`Error parsing fileUrl for media ID ${mediaId}: ${error.message}`);
   }
 }
 
@@ -160,27 +151,13 @@ export default async function Telechargement() {
   }
 
   // Récupérer les liens PDF pour chaque élément
-{/*
-    const elementsWithPdfUrl = await Promise.all(
+  const elementsWithPdfUrl = await Promise.all(
     telechargement.acf.elements.map(async (element) => {
       const pdfUrl = await getMediaUrlById(element.pdf);
       return { ...element, pdfUrl };
     })
   );
-  */}
 
-  const elementsWithPdfUrl = await Promise.all(
-    telechargement.acf.elements.map(async (element) => {
-      try {
-        const pdfUrl = await getMediaUrlById(element.pdf);
-        return { ...element, pdfUrl };
-      } catch (error) {
-        console.error(`Failed to fetch PDF URL for element:`, element, error);
-        return { ...element, pdfUrl: null }; // Retourne un lien vide en cas d'échec
-      }
-    })
-  );
-  
   return (
     <div>
       <HeaderPageSection title={telechargement.title} />
@@ -212,35 +189,19 @@ export default async function Telechargement() {
                           <tbody>
                             {elementsWithPdfUrl.map((element, index) => (
                               <tr key={index}>
-                               <td>
-  <a href={element.pdfUrl ?? '#'} target="_blank" rel="noopener noreferrer">
-    {element.libelle}
-  </a>
-</td>
-
+                                <td>
+                                  
+                                  <a href={element.pdfUrl} target="_blank" rel="noopener noreferrer">
+                                  {element.libelle}
+                                  </a>
+                                  </td>
                                 <td>{element.description}</td>
                                 <td>{element.date_de_mise_a_jour}</td>
                                 <td>
                                   {/* Lien de téléchargement du fichier PDF */}
-
-
-{/*
-
                                   <a href={element.pdfUrl} target="_blank" rel="noopener noreferrer">
                                     Télécharger
                                   </a>
-
-
-*/}
-                                  <a
-  href={element.pdfUrl || "#"}
-  target={element.pdfUrl ? "_blank" : "_self"}
-  rel="noopener noreferrer"
-  style={{ pointerEvents: element.pdfUrl ? "auto" : "none", color: element.pdfUrl ? "inherit" : "gray" }}
->
-  Télécharger
-</a>
-
                                 </td>
                               </tr>
                             ))}
