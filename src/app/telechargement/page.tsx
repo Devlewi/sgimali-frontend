@@ -71,8 +71,8 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
 */
 
 async function getMediaUrlById(mediaId: number): Promise<string> {
-   const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
-  // const apiUrl = `https://sgimali-frontend.vercel.app/api/media/${mediaId}`; // Appel à votre route API proxy frontend
+   //const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
+   const apiUrl = `https://sgimali-frontend.vercel.app/api/media/${mediaId}`; // Appel à votre route API proxy frontend
   //   const apiUrl = `http://localhost:3000/api/media/${mediaId}`; // Endpoint local original localhost OK
 
   // Effectuer la requête API
@@ -105,7 +105,8 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
     const filename = pathParts[pathParts.length - 1]; // Nom du fichier (ex. SupportSBFr090103.pdf)
 
     // Construire le chemin complet à passer à l'API proxy
-    const proxyUrl = `http://localhost:3000/api/proxy/${year}/${month}/${filename}`;
+    const proxyUrl = `https://sgimali-frontend.vercel.app/api/proxy/${year}/${month}/${filename}`;
+    //const proxyUrl = `http://localhost:3000/api/proxy/${year}/${month}/${filename}`;
     
     return proxyUrl; // Retourner l'URL masquée via le proxy
   } catch (error) {
