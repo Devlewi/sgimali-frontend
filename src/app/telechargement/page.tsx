@@ -4,7 +4,6 @@ import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageS
 import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
 import { Metadata } from "next";
 
-
 // Type de données
 type TelechargementData = {
   title: string;
@@ -47,8 +46,8 @@ export const metadata: Metadata = {
     icon: "/favicon.ico", // Icône générale pour le site
     apple: "/apple-touch-icon.png", // Icône pour les appareils Apple
     shortcut: "/apple-touch-icon.png", // Icône pour raccourci de navigateur
-  }
-}
+  },
+};
 
 // Fonction pour récupérer l'URL du média (PDF) à partir de son ID
 
@@ -71,8 +70,8 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
 */
 
 async function getMediaUrlById(mediaId: number): Promise<string> {
-   //const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
-   const apiUrl = `https://sgimali-frontend.vercel.app/api/media/${mediaId}`; // Appel à votre route API proxy frontend
+  //const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
+  const apiUrl = `https://sgimali-frontend.vercel.app/api/media/${mediaId}`; // Appel à votre route API proxy frontend
   //   const apiUrl = `http://localhost:3000/api/media/${mediaId}`; // Endpoint local original localhost OK
 
   // Effectuer la requête API
@@ -97,32 +96,32 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
     const urlPath = new URL(mediaData.fileUrl).pathname;
 
     // Séparer le chemin en parties pour extraire les segments de date et de fichier
-    const pathParts = urlPath.split('/');
+    const pathParts = urlPath.split("/");
 
     // Extraire les informations pertinentes
-    const year = pathParts[pathParts.length - 3];  // Année (ex. 2024)
+    const year = pathParts[pathParts.length - 3]; // Année (ex. 2024)
     const month = pathParts[pathParts.length - 2]; // Mois (ex. 12)
     const filename = pathParts[pathParts.length - 1]; // Nom du fichier (ex. SupportSBFr090103.pdf)
 
     // Construire le chemin complet à passer à l'API proxy
     const proxyUrl = `https://sgimali-frontend.vercel.app/api/proxy/${year}/${month}/${filename}`;
     //const proxyUrl = `http://localhost:3000/api/proxy/${year}/${month}/${filename}`;
-    
+
     return proxyUrl; // Retourner l'URL masquée via le proxy
   } catch (error) {
     // Vérification du type de l'erreur et gestion appropriée
     if (error instanceof Error) {
-      throw new Error(`Error parsing fileUrl for media ID ${mediaId}: ${error.message}`);
+      throw new Error(
+        `Error parsing fileUrl for media ID ${mediaId}: ${error.message}`
+      );
     } else {
       // Si ce n'est pas une instance de Error, gérer le cas générique
-      throw new Error(`Unknown error occurred while parsing fileUrl for media ID ${mediaId}`);
+      throw new Error(
+        `Unknown error occurred while parsing fileUrl for media ID ${mediaId}`
+      );
     }
   }
 }
-
-
-
-
 
 // Fonction pour récupérer les données de l'telechargement
 async function getTelechargement(): Promise<TelechargementData[]> {
@@ -142,7 +141,7 @@ async function getTelechargement(): Promise<TelechargementData[]> {
     description: page.content.rendered,
     image: page.featured_image_url || "",
     slug: page.slug,
-    acf: page.acf,  // Inclure les éléments ACF dans les données
+    acf: page.acf, // Inclure les éléments ACF dans les données
   }));
 }
 
@@ -152,23 +151,25 @@ export default async function Telechargement() {
     return <SkeletonTemplatePages />;
   }
 
-  const telechargement = dataTelechargement.find(page => page.slug === "telechargement");
+  const telechargement = dataTelechargement.find(
+    (page) => page.slug === "telechargement"
+  );
 
   if (!telechargement) {
-    return (
-      <SkeletonHeaderPageSection />
-    );
+    return <SkeletonHeaderPageSection />;
   }
 
   // Récupérer les liens PDF pour chaque élément
-{/*
+  {
+    /*
     const elementsWithPdfUrl = await Promise.all(
     telechargement.acf.elements.map(async (element) => {
       const pdfUrl = await getMediaUrlById(element.pdf);
       return { ...element, pdfUrl };
     })
   );
-  */}
+  */
+  }
 
   const elementsWithPdfUrl = await Promise.all(
     telechargement.acf.elements.map(async (element) => {
@@ -181,7 +182,7 @@ export default async function Telechargement() {
       }
     })
   );
-  
+
   return (
     <div>
       <HeaderPageSection title={telechargement.title} />
@@ -194,63 +195,70 @@ export default async function Telechargement() {
                 <div
                   className="telechargement-description"
                   style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}
-                  dangerouslySetInnerHTML={{ __html: telechargement.description }} // Affichage du contenu HTML
-                />                
-              </div>              
+                  dangerouslySetInnerHTML={{
+                    __html: telechargement.description,
+                  }} // Affichage du contenu HTML
+                />
+              </div>
 
-          <div className="list-job-warp">
-                    <div className="table-warp">
-                      <div className="table-responsive">
-                        <table className="table table-hover table-reset">
-                          <thead>
-                            <tr>
-                              <th>Libellé</th>
-                              <th>Description</th>
-                              <th>Mise à jour le</th>
-                              <th>Télécharger</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {elementsWithPdfUrl.map((element, index) => (
-                              <tr key={index}>
-                               <td>
-  <a href={element.pdfUrl ?? '#'} target="_blank" rel="noopener noreferrer">
-    {element.libelle}
-  </a>
-</td>
+              <div className="list-job-warp">
+                <div className="table-warp">
+                  <div className="table-responsive">
+                    <table className="table table-hove table-reset">
+                      <thead>
+                        <tr>
+                          <th>Libellé</th>
+                          <th>Description</th>
+                          <th>Mise à jour le</th>
+                          <th>Télécharger</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {elementsWithPdfUrl.map((element, index) => (
+                          <tr key={index}>
+                            <td>
+                              <a
+                                href={element.pdfUrl ?? "#"}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{color:"#2da2dd", fontWeight:600}}
+                              >
+                                {element.libelle}
+                              </a>
+                            </td>
 
-                                <td>{element.description}</td>
-                                <td>{element.date_de_mise_a_jour}</td>
-                                <td>
-                                  {/* Lien de téléchargement du fichier PDF */}
+                            <td>{element.description}</td>
+                            <td>{element.date_de_mise_a_jour}</td>
+                            <td>
+                              {/* Lien de téléchargement du fichier PDF */}
 
-
-{/*
+                              {/*
 
                                   <a href={element.pdfUrl} target="_blank" rel="noopener noreferrer">
                                     Télécharger
                                   </a>
-
-
 */}
-                                  <a
-  href={element.pdfUrl || "#"}
-  target={element.pdfUrl ? "_blank" : "_self"}
-  rel="noopener noreferrer"
-  style={{ pointerEvents: element.pdfUrl ? "auto" : "none", color: element.pdfUrl ? "inherit" : "gray" }}
->
-  Télécharger
-</a>
-
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>  
-          
+                              <a
+                                href={element.pdfUrl || "#"}
+                                target={element.pdfUrl ? "_blank" : "_self"}
+                                rel="noopener noreferrer"
+                                style={{
+                                  pointerEvents: element.pdfUrl
+                                    ? "auto"
+                                    : "none",
+                                  color: element.pdfUrl ? "#2da2dd" : "#2da2dd",fontWeight:600
+                                }}
+                              >
+                                Télécharger
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
