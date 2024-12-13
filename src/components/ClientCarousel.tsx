@@ -26,7 +26,8 @@ const ClientCarousel = () => {
   // Fonction pour récupérer les données des clients depuis l'API
   const fetchClients = async () => {
     try {
-      const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/clients";
+      //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/clients";
+      const apiUrl = "https://sgimali-frontend.vercel.app/api/clients";
       const res = await fetch(apiUrl, {
         next: { revalidate: 60 },
       });
