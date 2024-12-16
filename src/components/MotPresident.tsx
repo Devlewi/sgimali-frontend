@@ -58,7 +58,7 @@ function transformImageUrl(imageUrl: string): string {
   const imageName = parts.pop(); // Le nom de l'image est le dernier élément
 
   // Construire l'URL locale pour l'image
-  return `http://localhost:3000/api/images/${year}/${month}/${imageName}`;
+  return `https://sgimali-frontend.vercel.app/api/images/${year}/${month}/${imageName}`;
 }
 
 export default async function MotPresident() {
