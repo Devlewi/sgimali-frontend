@@ -14,7 +14,7 @@ const nextConfig = {
         pathname: '/wp-content/uploads/**', // Autorise les images depuis ce chemin spécifique
       },
     ],
-    domains: ['sgi.cynomedia-africa.com', 'localhost'], // Ajoutez localhost ici
+    domains: ['sgi.cynomedia-africa.com', 'localhost','sgimali-frontend.vercel.app'], // Ajoutez localhost ici
   },
   // D'autres configurations possibles si nécessaire
   async rewrites() {
