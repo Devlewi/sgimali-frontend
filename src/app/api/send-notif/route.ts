@@ -1,8 +1,9 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/custom/v1/send-subscription-notification/"; // L'URL de l'API d'envoi d'email
-
+  
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/custom/v1/send-subscription-notification/`; // L'URL de l'API d'envoi d'email
+  
   try {
     // Récupérer les données envoyées dans la requête
     const data = await request.json();

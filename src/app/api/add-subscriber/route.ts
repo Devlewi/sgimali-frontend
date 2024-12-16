@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/subscription-api/v1/add-subscriber"; // L'URL de l'API d'envoi d'email
+
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/subscription-api/v1/add-subscriber`;
 
   try {
     // Vérification de la méthode POST

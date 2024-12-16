@@ -8,7 +8,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ path: st
     return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
   }
 
-  const targetUrl = `https://sgi.cynomedia-africa.com/wp-content/uploads/${path.join('/')}`;
+  //const targetUrl = `https://sgi.cynomedia-africa.com/wp-content/uploads/${path.join('/')}`;
+  const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-content/uploads/${path.join('/')}`;
+  
+
   console.log('Fetching URL:', targetUrl);
 
   try {

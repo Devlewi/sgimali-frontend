@@ -2,11 +2,8 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  //const apiUrl = 'https://sgi.cynomedia-africa.com/wp-json/wp/v2/slides'; // L'URL de l'API WordPress
-  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides`; // L'URL de l'API backend
-  const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30"; // L'URL de l'API backend
 
-//https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=20
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/pages?per_page=30`;
 
   try {
     // Faire une requête GET vers l'API WordPress

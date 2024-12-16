@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 // Fonction pour récupérer les données de l'financement
 async function getFinancement(): Promise<FinancementData[]> {
   //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
-  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });
