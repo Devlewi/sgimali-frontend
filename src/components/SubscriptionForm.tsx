@@ -105,8 +105,8 @@ const SubscriptionForm = () => {
 
     try {
       // Enregistrement dans la base
-      const apiUrl =
-        "https://sgimali-frontend.vercel.app/api/add-subscriber";
+      //const apiUrl = "https://sgimali-frontend.vercel.app/api/add-subscriber";
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/add-subscriber`;
         
       const response = await fetch(apiUrl, {
         method: "POST",
