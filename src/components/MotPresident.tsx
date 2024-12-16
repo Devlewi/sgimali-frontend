@@ -27,10 +27,11 @@ async function getMotPresident(): Promise<ContentData[]> {
   //await new Promise(resolve => setTimeout(resolve, 12000));
 
   //const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  const apiUrl = "https://sgimali-frontend.vercel.app/api/acf-options";
+  //const apiUrl = "https://sgimali-frontend.vercel.app/api/acf-options";
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+  
   // const apiUrl = "http://localhost:3000/api/acf-options";
   // const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
-  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
   //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
 
   const res = await fetch(apiUrl, {
@@ -65,7 +66,7 @@ export default async function MotPresident() {
 
   
   const dataMotPresident = await getMotPresident();
-  console.log(dataMotPresident);
+  //console.log(dataMotPresident);
 
 
   if (!dataMotPresident || dataMotPresident.length === 0) {
@@ -76,8 +77,8 @@ export default async function MotPresident() {
   const contentData = dataMotPresident[0].bloc_mot_du_president;
   // Transformer l'URL de l'image pour charger depuis votre API locale
   const imageUrl = transformImageUrl(contentData.image);
-  console.log("imageUrl");
-  console.log(imageUrl);
+  //console.log("imageUrl");
+  //console.log(imageUrl);
 
 
   return (
