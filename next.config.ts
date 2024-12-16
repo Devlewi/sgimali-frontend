@@ -14,8 +14,17 @@ const nextConfig = {
         pathname: '/wp-content/uploads/**', // Autorise les images depuis ce chemin spécifique
       },
     ],
+    domains: ['sgi.cynomedia-africa.com', 'localhost'], // Ajoutez localhost ici
   },
   // D'autres configurations possibles si nécessaire
+  async rewrites() {
+    return [
+      {
+        source: '/api/images/:path*', // Toutes les requêtes qui commencent par '/api/images/'
+        destination: 'https://sgi.cynomedia-africa.com/wp-content/uploads/:path*', // Destination vers le serveur WordPress
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

@@ -37,7 +37,6 @@ async function getMotPresident(): Promise<ContentData[]> {
     next: { revalidate: 60 },
   }); // Requête vers l'API distante
   //console.log(`${apiUrl}`);
-  //console.log(res);
   //const res = await fetch("http://localhost:3000/api/acf-options");
   //const res = await fetch("/api/slides"); // Requête vers l'API Next.js (qui est en fait un proxy)
 
@@ -49,11 +48,24 @@ async function getMotPresident(): Promise<ContentData[]> {
 }
 
 
+
+// Fonction pour transformer l'URL de l'image
+function transformImageUrl(imageUrl: string): string {
+  // Extraire les parties de l'URL : année, mois et nom de l'image
+  const parts = imageUrl.split('/');
+  const year = parts[parts.length - 3]; // L'année est l'avant-dernier élément
+  const month = parts[parts.length - 2]; // Le mois est l'avant-avant-dernier élément
+  const imageName = parts.pop(); // Le nom de l'image est le dernier élément
+
+  // Construire l'URL locale pour l'image
+  return `http://localhost:3000/api/images/${year}/${month}/${imageName}`;
+}
+
 export default async function MotPresident() {
 
   
   const dataMotPresident = await getMotPresident();
-  //console.log(dataMotPresident);
+  console.log(dataMotPresident);
 
 
   if (!dataMotPresident || dataMotPresident.length === 0) {
@@ -62,6 +74,10 @@ export default async function MotPresident() {
 
   // Accédez à la clé bloc_mot_du_president à l'intérieur des données récupérées
   const contentData = dataMotPresident[0].bloc_mot_du_president;
+  // Transformer l'URL de l'image pour charger depuis votre API locale
+  const imageUrl = transformImageUrl(contentData.image);
+  console.log("imageUrl");
+  console.log(imageUrl);
 
 
   return (
@@ -80,8 +96,9 @@ export default async function MotPresident() {
         <div className="row align-items-center">
           {/* Colonne gauche : image */}
           <div className="col-lg-6 col-md-12 mb-4 mb-lg-0">
+            {/* src={contentData.image} */}
             <Image
-              src={contentData.image}
+              src={imageUrl}              
               alt={contentData.texte_alternatif_de_limage}
               className="img-responsive img-thumbnail"
               style={{ marginBottom: 20, borderColor: "#f8f8f8 !important" }}

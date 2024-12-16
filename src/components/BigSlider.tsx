@@ -95,6 +95,8 @@ const BigSlider = () => {
     },
   };
 
+
+  
   return (
     <>
     {isBrowser && (
