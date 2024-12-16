@@ -22,17 +22,8 @@ type ContentData = {
 // Fonction pour récupérer les données à partir de l'API
 async function getMotPresident(): Promise<ContentData[]> {
   
-  
-  
-  //await new Promise(resolve => setTimeout(resolve, 12000));
 
-  //const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  //const apiUrl = "https://sgimali-frontend.vercel.app/api/acf-options";
   const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
-  
-  // const apiUrl = "http://localhost:3000/api/acf-options";
-  // const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
-  //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/acf/v2/options/";
 
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
@@ -57,10 +48,7 @@ function transformImageUrl(imageUrl: string): string {
   const year = parts[parts.length - 3]; // L'année est l'avant-dernier élément
   const month = parts[parts.length - 2]; // Le mois est l'avant-avant-dernier élément
   const imageName = parts.pop(); // Le nom de l'image est le dernier élément
-
   // Construire l'URL locale pour l'image
-  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
-  //return `https://sgimali-frontend.vercel.app/api/images/${year}/${month}/${imageName}`;
   return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
 }
 

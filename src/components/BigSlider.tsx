@@ -35,20 +35,24 @@ const BigSlider = () => {
     return text;
   };
 
+  // Fonction pour transformer l'URL de l'image
+function transformImageUrl(imageUrl: string): string {
+  // Extraire les parties de l'URL : année, mois et nom de l'image
+  const parts = imageUrl.split('/');
+  const year = parts[parts.length - 3]; // L'année est l'avant-dernier élément
+  const month = parts[parts.length - 2]; // Le mois est l'avant-avant-dernier élément
+  const imageName = parts.pop(); // Le nom de l'image est le dernier élément
+  // Construire l'URL locale pour l'image
+  return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
+}
+
+
   // Récupérer les données de l'API
   const fetchSlides = async () => {
     try {
-      // Lire l'URL de base à partir de la variable d'environnement
-      // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-      // const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
-      //const apiUrl = "/api/slides";
-      const apiUrl = "https://sgimali-frontend.vercel.app/api/slides";
-      console.log(apiUrl);
-      /*
-      if (!baseUrl) {
-        throw new Error("L'URL de base de l'API n'est pas définie");
-      }*/
-  
+      
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
+      
       // Construire l'URL complète pour les slides
       const res = await fetch(apiUrl, {
         next: { revalidate: 60 },
@@ -110,7 +114,7 @@ const BigSlider = () => {
               <div className="item" key={slide.id}>
                 <div className="carousel-image">
                   <Image
-                    src={slide.featured_image_url || "/placeholder.png"}
+                    src={ transformImageUrl(slide.featured_image_url) || "/placeholder.png"}
                     alt={slide.alt_text || "Slide Image"}
                     width={2560}
                     height={1280}
