@@ -67,8 +67,8 @@ export default async function MotPresident() {
   const contentData = dataMotPresident[0].bloc_mot_du_president;
   // Transformer l'URL de l'image pour charger depuis votre API locale
   const imageUrl = transformImageUrl(contentData.image);
-  //console.log("imageUrl");
-  //console.log(imageUrl);
+
+
 
 
   return (

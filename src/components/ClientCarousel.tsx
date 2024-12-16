@@ -22,12 +22,23 @@ const ClientCarousel = () => {
   const [isBrowser, setIsBrowser] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  
+  // Fonction pour transformer l'URL de l'image
+function transformImageUrl(imageUrl: string): string {
+  // Extraire les parties de l'URL : année, mois et nom de l'image
+  const parts = imageUrl.split('/');
+  const year = parts[parts.length - 3]; // L'année est l'avant-dernier élément
+  const month = parts[parts.length - 2]; // Le mois est l'avant-avant-dernier élément
+  const imageName = parts.pop(); // Le nom de l'image est le dernier élément
+  // Construire l'URL locale pour l'image
+  return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
+}
+
+
+
   // Fonction pour récupérer les données des clients depuis l'API
   const fetchClients = async () => {
     try {
-      //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/clients";
-      const apiUrl = "https://sgimali-frontend.vercel.app/api/clients";
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/clients`;
       const res = await fetch(apiUrl, {
         next: { revalidate: 60 },
       });
@@ -54,8 +65,8 @@ const ClientCarousel = () => {
   const options = {
     loop: true,
     margin: 10,
-    nav: true,
-    dots: true,
+    nav: false,
+    dots: false,
     autoplay: true,
     autoplayTimeout: 5000,
     autoplayHoverPause: true,
@@ -100,7 +111,7 @@ const ClientCarousel = () => {
                   <div className="item-partner" key={client.id}>
                       <a href={client.client_link} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
                       <Image
-                        src={client.featured_image_url || "/placeholder.png"}
+                        src={transformImageUrl(client.featured_image_url) || "/placeholder.png"}
                         alt={"Client Image"}
                         width={200}
                         height={200}
