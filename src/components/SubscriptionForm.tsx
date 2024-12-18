@@ -284,30 +284,31 @@ const SubscriptionForm = () => {
               ) 
               
               :(
-                <input
-                  type={
-                    field === "phone_number"
-                      ? "tel"
-                      : field.includes("date")
-                      ? "date"
-                      : "text"
-                  }
-                  className="form-control"
-                  id={field}
-                  name={field}
-                  value={formData[field as keyof FormData]}
-                  onChange={handleChange}
-                  onInput={(e) => {
-                    // Empêcher la saisie de lettres dans le champ du numéro de téléphone
-                    if (field === "phone_number") {
-                      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Remplacer tout ce qui n'est pas un chiffre
-                    }
-                  }}
-                  disabled={formDisabled}
-                  placeholder={field === "phone_number" ? "Ex: 0123456789" : ""}
-                  pattern={field === "phone_number" ? "[0-9]{8,14}" : undefined}
-                  inputMode={field === "phone_number" ? "numeric" : undefined}
-                />
+<input
+  type={
+    field === "phone_number"
+      ? "tel"
+      : field.includes("date")
+      ? "date"
+      : "text"
+  }
+  className="form-control"
+  id={field}
+  name={field}
+  value={formData[field as keyof FormData]}
+  onChange={handleChange}
+  onInput={(e) => {
+    const target = e.target as HTMLInputElement; // Assurez-vous que le type est correctement défini
+    if (field === "phone_number") {
+      target.value = target.value.replace(/[^0-9]/g, ""); // Remplacer tout ce qui n'est pas un chiffre
+    }
+  }}
+  disabled={formDisabled}
+  placeholder={field === "phone_number" ? "Ex: 0123456789" : ""}
+  pattern={field === "phone_number" ? "[0-9]{8,14}" : undefined}
+  inputMode={field === "phone_number" ? "numeric" : undefined}
+/>
+
               )}
             </div>
           ))}

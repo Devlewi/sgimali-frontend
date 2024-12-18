@@ -4,15 +4,9 @@ import Image from "next/image"; // Importer Image de Next.js si vous l'utilisez
 import Link from "next/link";
 
 // Définir les types pour les données de service
-type ServiceImage = {
-  url: string;
-  alt: string;
-  description: string;
-};
-
 type Service = {
   titre: string;
-  image: ServiceImage;
+  image: string;  // L'image est maintenant une chaîne de caractères (URL)
   description: string;
   lien: string;
   backgroundcolor: string;
@@ -25,6 +19,7 @@ type BlocServices = {
     services: Service[];
   };
 };
+
 
 const NoServices = () => {
   // Définir le contenu dynamique avec les couleurs de fond et autres détails
@@ -59,8 +54,10 @@ const NoServices = () => {
       const data = await res.json();
       setBlocserviceData(data); // Mettre à jour l'état avec les données récupérées
       setLoading(false); // Fin du chargement
-      console.log(blocserviceData);
+      //console.log(blocserviceData);
       //console.log(serviceData[0].bloc_services);
+      console.log("serviceData[0].bloc_services.image");
+      //console.log(data[0].bloc_services.services);
       //console.log("serviceData[0].bloc_services.services");
       //console.log(serviceData[0].bloc_services.services);
       //
@@ -100,6 +97,7 @@ const NoServices = () => {
 
                 <div className="warp-full-width services-h1-warp offer-h10-warp">
                   {/* Itérer sur contentData pour afficher chaque service */}
+                  {/* data[0].bloc_services.services */}
                   {blocserviceData[0]?.bloc_services?.services.map(
                     (service, index) => (
                       <Link key={index} href={service.lien}>
