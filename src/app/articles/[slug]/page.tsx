@@ -59,8 +59,9 @@ async function getPostBySlug(slug: string): Promise<Post | null> {
 
 // Fonction pour générer des métadonnées dynamiques
 // Fonction pour générer des métadonnées dynamiques
+// Fonction pour générer des métadonnées dynamiques
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;  // Attendre la résolution de `params`
+  const { slug } = await params; // Attendre la résolution de `params`
   const post = await getPostBySlug(slug);
 
   // Si l'article n'est pas trouvé, retourner une page 404
@@ -68,12 +69,37 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: "Article non trouvé" };
   }
 
-  // Retourner les métadonnées de l'article
+  // Vérifier si l'image de l'article est disponible, sinon utiliser une image par défaut
+  const imageUrl = post.featured_image_url
+    ? `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${post.featured_image_url}` // Utiliser l'URL dynamique de l'image
+    : "URL_DE_DEFAULT_IMAGE"; // Utiliser une image par défaut si nécessaire
+
+  // Retourner les métadonnées de l'article avec les balises Open Graph et Twitter
   return {
     title: post.title.rendered,
     description: `Découvrez notre article : ${post.title.rendered}`,
+    openGraph: {
+      title: post.title.rendered,
+      description: `Découvrez notre article : ${post.title.rendered}`,
+      url: `https://votre-site.com/articles/${slug}`, // Assurez-vous de mettre le bon URL de l'article
+      images: [
+        {
+          url: imageUrl, // URL de l'image de l'article
+          width: 1200, // Largeur de l'image
+          height: 630, // Hauteur de l'image
+          alt: post.title.rendered, // Texte alternatif
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image", // Utiliser un résumé avec une image
+      title: post.title.rendered,
+      description: `Découvrez notre article : ${post.title.rendered}`,
+      image: imageUrl, // URL de l'image
+    },
   };
 }
+
 
 
 function transformImageUrl(imageUrl: string): string {
