@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import Image from "next/image";
-import SkeletonSliderLoading from "./skeleton/Skeleton";
+import SkeletonCircleLoad2 from "./skeleton/SkeletonCircleLoad2";
 
 // Charger OwlCarousel uniquement côté client
 const OwlCarousel = dynamic(() => import("react-owl-carousel"), { ssr: false });
@@ -104,7 +104,7 @@ function transformImageUrl(imageUrl: string): string {
             </div>
 
             {loading ? (
-              <SkeletonSliderLoading />
+              <SkeletonCircleLoad2/>
             ) : (
               <OwlCarousel className="owl-carousel" {...options}>
                 {clients.map((client) => (
@@ -121,6 +121,7 @@ function transformImageUrl(imageUrl: string): string {
                   </div>
                 ))}
               </OwlCarousel>
+              
             )}
           </div>
         </section>

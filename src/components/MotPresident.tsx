@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import SkeletonMotPresident from './skeleton/SkeletonMotPresident';
+import Link from 'next/link';
 
 // Définir les types pour les données récupérées
 type MissionVision = {
@@ -28,9 +29,6 @@ async function getMotPresident(): Promise<ContentData[]> {
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   }); // Requête vers l'API distante
-  //console.log(`${apiUrl}`);
-  //const res = await fetch("http://localhost:3000/api/acf-options");
-  //const res = await fetch("/api/slides"); // Requête vers l'API Next.js (qui est en fait un proxy)
 
   if (!res.ok) {
     throw new Error("Failed to fetch mot du pr");
@@ -121,7 +119,7 @@ export default async function MotPresident() {
 
           
               <center>
-                <a
+                <Link
                   href={contentData.lien_du_bouton}
                   className="btn btn-primary mt-3 mission-description"
                   style={{
@@ -133,7 +131,7 @@ export default async function MotPresident() {
                   }}
                 >
                   En savoir plus
-                </a>
+                </Link>
               </center>
             </div>
           </div>

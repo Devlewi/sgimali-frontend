@@ -1,6 +1,5 @@
 "use client";
 import { useEffect } from "react";
-import Link from "next/link";
 import "./globals.css";
 import "./styles/styles.css"; // Importation du fichier CSS
 import Image from "next/image";
@@ -9,6 +8,10 @@ import { useState } from "react";
 import $ from "jquery"; // Importer jQuery directement
 import Script from "next/script";
 import { usePathname } from "next/navigation";
+import Topbar from "@/components/Topbar";
+import Copyright from "@/components/Copyright";
+import SkeletonCircleLoad3 from "@/components/skeleton/SkeletonCircleLoad3";
+import Link from "next/link";
 
 export default function RootLayout({
   children,
@@ -17,6 +20,80 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname(); // Récupère la route active
   const [isHomePage, setIsHomePage] = useState(false);
+
+  // Déclarez les états
+  const [blocfooterData, setBlocfooterData] = useState<BlocFooter[]>([]); // Stocke les items
+  const [loading, setLoading] = useState<boolean>(true); // Indique si les données sont en cours de chargement
+
+ 
+  
+  interface BlocFooter {
+    bloc_header?: {
+      contacts_et_localisation?: {
+        localisation?: string;
+        adresse_mail?: string;
+        telephone?: string;
+      };
+      reseaux_sociaux?: {
+        facebook?: string;
+        twitter?: string;
+        whatsapp?: string;
+        linkedin?: string;
+      };
+    };
+    bloc_footer?: {
+      liens_utiles?: {
+        elements?: Array<{
+          titre: string;
+          lien: string;
+        }>;
+      };
+      contacts?: {
+        groupe?: {
+          contact_infos?: string;
+          heure_douverture?: Array<{
+            jours: string;
+            heure: string;
+          }>;
+        };
+      };
+    };
+  }
+  
+  
+  
+  const fetchBlocFooterData = async () => {
+    try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+
+      // Construire l'URL complète pour les slides
+      const res = await fetch(apiUrl, {
+        next: { revalidate: 60 },
+      }); // Requête vers l'API distante
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch service, status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setBlocfooterData(data); // Mettre à jour l'état avec les données récupérées
+      setLoading(false); // Fin du chargement
+      console.log("blocfooterData[0].bloc_footer");
+      console.log(blocfooterData);
+      //console.log(blocfooterData[0].bloc_footer.liens_utiles.elements);
+      //console.log(serviceData[0].bloc_services);
+      //console.log("serviceData[0].bloc_services.services");
+      //console.log(serviceData[0].bloc_services.services);
+      //console.log(blocfooterData[0].bloc_header.reseaux_sociaux);
+      //
+    } catch (error) {
+      console.error(error); // Ou un log utile
+    }
+  };
+
+  useEffect(() => {
+    fetchBlocFooterData();
+  }, []);
 
   useEffect(() => {
     // Vérifie si la route actuelle est la page d'accueil
@@ -45,7 +122,6 @@ export default function RootLayout({
       window.$ = window.jQuery = $; // Assigner jQuery à window
     }
   }, []);
-
 
   return (
     <html lang="fr">
@@ -122,14 +198,10 @@ export default function RootLayout({
         />
         {/* REVOLUTION NAVIGATION STYLES */}
 
-       
-
         {/* Main Style */}
-        
+
         {/* color scheme */}
         <link rel="stylesheet" href="/switcher/demo.css" type="text/css" />
-
-       
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -180,98 +252,8 @@ export default function RootLayout({
         {/* Menu global */}
 
         <header className="header-h2">
-          <div
-            className="topbar tb-dark tb-md"
-            style={{ background: "#0a2c4f !important" }}
-          >
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="topbar-home2">
-                    <div className="tb-contact tb-iconbox">
-                      <ul>
-                        <li>
-                          <a href="contact.html">
-                            <i
-                              className="fa fa-map-marker"
-                              aria-hidden="true"
-                            />
-                            <span>
-                              <i>Immeuble du PATRONAT</i>3ème étage, Hamdallaye
-                              ACI2000 Mali
-                            </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="mailto:admin@amwal.com">
-                            <i className="fa fa-envelope" aria-hidden="true" />
-                            <span>
-                              <i>contactez-nous à</i>sgi@sgimali.com
-                            </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="tel:0100123456789">
-                            <i className="fa fa-phone" aria-hidden="true" />
-                            <span>
-                              <i>Téléphone</i> +223 20 29 29 72
-                            </span>
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="tb-social-lan language">
-                      <ul>
-                        <li>
-                          <a
-                            href="#"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="facebook"
-                          >
-                            <i className="fab fa-facebook" aria-hidden="true" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="twitter"
-                          >
-                            <i
-                              className="fa-brands fa-x-twitter"
-                              aria-hidden="true"
-                            />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="twitter"
-                          >
-                            <i className="fab fa-whatsapp" aria-hidden="true" />
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="twitter"
-                          >
-                            <i className="fab fa-linkedin" aria-hidden="true" />
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* /topbar */}
+          <Topbar />
           {/* /topbar */}
           <div
             className="nav-warp nav-warp-h2"
@@ -399,8 +381,7 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                        <Link href="/telechargement">Téléchargements</Link>
-
+                          <Link href="/telechargement">Téléchargements</Link>
                         </li>
                         <li>
                           <Link href="/souscription">Souscription</Link>
@@ -463,7 +444,7 @@ export default function RootLayout({
                         <li>
                           <a href="#">Activités</a>
                           <ul className="navi-level-2">
-                          <li>
+                            <li>
                               <Link href="/privatisation">
                                 <span>Privatisation</span>
                               </Link>
@@ -495,7 +476,7 @@ export default function RootLayout({
                         <li>
                           <a href="#">Réalisation</a>
                           <ul className="navi-level-2">
-                          <li>
+                            <li>
                               <Link href="/emissions-demprunts-prives">
                                 <span>Emissions d’emprunts privés</span>
                               </Link>
@@ -732,48 +713,24 @@ export default function RootLayout({
                     <span className="bottom-title" />
                   </div>
                   <ul style={{ marginLeft: 20 }}>
-                    <li>
-                      <a href="">CEDEAO</a>
-                    </li>
-                    <li>
-                      <a href="">UEMOA</a>
-                    </li>
-                    <li>
-                      <a href="">CREPMF</a>
-                    </li>
-                    <li>
-                      <a href="">BRVM</a>
-                    </li>
-                    <li>
-                      <a href="">DNTCP</a>
-                    </li>
-                  </ul>
-                  <p />
-                  <p style={{ fontSize: 14 }}></p>
-                  <div
-                    className="title-block title-on-dark title-xs"
-                    style={{ marginBottom: 10 }}
-                  >
-                    <span className="bottom-title" />
-                  </div>
-                  <ul style={{ marginLeft: 20 }}>
-                    <li>
-                      <Link href="/offres-emploi">Opportunités d emploi</Link>
-                    </li>
-                    <li>
-                      <Link href="/telechargement">Téléchargements</Link>
-                    </li>
-                    <li>
-                      <a href="emploi.html">Autre lien</a>
-                    </li>
-                    <li>
-                      <a href="emploi.html">Autre lien</a>
-                    </li>
-                    <li>
-                      <a href="emploi.html">Autre lien</a>
-                    </li>
-                  </ul>
-                  <p />
+  {loading ? (
+    <SkeletonCircleLoad3 />
+  ) : (
+    // Vérification de blocfooterData et de sa structure
+    Array.isArray(blocfooterData) && blocfooterData.length > 0 &&
+    blocfooterData[0]?.bloc_footer?.liens_utiles?.elements?.length ? (
+      blocfooterData[0].bloc_footer.liens_utiles.elements.map((lien, index) => (
+        <li key={index}>
+          <Link href={lien.lien || "#"}>{lien.titre || "Lien sans titre"}</Link>
+        </li>
+      ))
+    ) : (
+      <p>No links available</p> // Affichage si aucun lien n'est disponible
+    )
+  )}
+</ul>
+
+
                 </div>
               </div>
               <div className="col-md-4 bg-lighten-theme">
@@ -788,60 +745,60 @@ export default function RootLayout({
                     <h4>Contacts</h4>
                     <span className="bottom-title" />
                   </div>
-                  <ul style={{ marginLeft: 20 }}>
-                    <li>
-                      <a href="">Immeuble du PATRONAT 3eme étage</a>
-                    </li>
-                    <li>
-                      <a href="">Hamdallaye ACI 2000</a>
-                    </li>
-                    <li>
-                      <a href="">Tél : +223 20 29 29 72 </a>
-                    </li>
-                    <li>
-                      <a href="">Tél : +223 20 29 41 19</a>
-                    </li>
-                    <li>
-                      <a href="">Fax : +223 20 29 29 75</a>
-                    </li>
-                    <li>
-                      <a href="">BPE : E2477</a>
-                    </li>
-                    <li>
-                      <a href="">sgi@sgimali.com</a>
-                    </li>
+                  <ul style={{ marginLeft: 20, fontWeight: "bolder" }}>
+                    {loading ? (
+                      <SkeletonCircleLoad3 />
+                    ) : blocfooterData &&
+                      blocfooterData[0]?.bloc_footer?.contacts?.groupe
+                        ?.contact_infos ? (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            blocfooterData[0].bloc_footer.contacts.groupe
+                              .contact_infos,
+                        }}
+                      />
+                    ) : (
+                      <p>Aucun contact enregistré</p> // Message si aucune info de contact
+                    )}
                   </ul>
+
                   <div
                     className="title-block title-on-dark title-xs"
                     style={{ marginBottom: 10 }}
                   >
-                    <h4>Heure douverture</h4>
+                    <h4>Heure d&rsquo;ouverture</h4>
                     <span className="bottom-title" />
                   </div>
                   <ul style={{ marginLeft: 0, listStyle: "none", padding: 0 }}>
-                    <li
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <span style={{ fontWeight: "bold" }}>
-                        Lundi - Vendredi
-                      </span>
-                      <span>7H30 - 17H30</span>
-                    </li>
-                    <li
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <span style={{ fontWeight: "bold" }}>Samedi</span>
-                      <span>9H30 - 12H00</span>
-                    </li>
-                  </ul>
+  {loading ? (
+    <SkeletonCircleLoad3 />
+  ) : blocfooterData &&
+    blocfooterData[0]?.bloc_footer?.contacts?.groupe?.heure_douverture && 
+    blocfooterData[0].bloc_footer.contacts.groupe.heure_douverture.length > 0 ? (
+    blocfooterData[0].bloc_footer.contacts.groupe.heure_douverture.map(
+      (horaire, index) => (
+        <li
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <span style={{ fontWeight: "bold" }}>
+            {horaire.jours}
+          </span>
+          <span>{horaire.heure}</span>
+        </li>
+      )
+    )
+  ) : (
+    <p>Aucune heure enregistrée.</p> // Affichage si aucune heure n'est disponible
+  )}
+</ul>
+
+
                 </div>
               </div>
               <div className="col-md-4 ">
@@ -869,10 +826,7 @@ export default function RootLayout({
                         placeholder="Votre Email"
                       />
                     </div>
-                    <button
-                      type="submit"
-                      className="btn_valider_newsletter"                      
-                    >
+                    <button type="submit" className="btn_valider_newsletter">
                       s inscrire
                     </button>
                   </form>
@@ -885,27 +839,61 @@ export default function RootLayout({
                     <span className="bottom-title" />
                   </div>
                   <ul className="widget widget-footer widget-footer-social-1">
-                    <li>
-                      <a href="#">
-                        <i className="fab fa-facebook" aria-hidden="true" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fab fa-whatsapp" aria-hidden="true" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa-brands fa-x-twitter" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fab fa-linkedin" aria-hidden="true" />
-                      </a>
-                    </li>
-                  </ul>
+  {loading ? (
+    <SkeletonCircleLoad3 /> // Loader pendant le chargement des données
+  ) : blocfooterData &&
+    blocfooterData[0]?.bloc_header?.reseaux_sociaux ? (
+    <>
+      {blocfooterData[0].bloc_header.reseaux_sociaux.facebook && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-facebook" aria-hidden="true" />
+          </a>
+        </li>
+      )}
+      {blocfooterData[0].bloc_header.reseaux_sociaux.whatsapp && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-whatsapp" aria-hidden="true" />
+          </a>
+        </li>
+      )}
+      {blocfooterData[0].bloc_header.reseaux_sociaux.twitter && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fa-brands fa-x-twitter" />
+          </a>
+        </li>
+      )}
+      {blocfooterData[0].bloc_header.reseaux_sociaux.linkedin && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-linkedin" aria-hidden="true" />
+          </a>
+        </li>
+      )}
+    </>
+  ) : (
+    <p>Aucun lien disponible pour le moment.</p> // Message par défaut si aucune donnée n'est disponible
+  )}
+</ul>
+
                 </div>
               </div>
             </div>
@@ -919,85 +907,7 @@ export default function RootLayout({
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <div className="copyright-warp cr-1">
-                  <div className="copyright-list-link">
-                    <ul style={{ marginBottom: -20 }}>
-                      <li>
-                        <a
-                          style={{
-                            color: "white",
-                            fontWeight: 600,
-                            fontSize: 14,
-                          }}
-                          href="#"
-                        >
-                          Accueil{" "}
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          style={{
-                            color: "white",
-                            fontWeight: 600,
-                            fontSize: 14,
-                          }}
-                          href="#"
-                        >
-                          SGI Mali{" "}
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          style={{
-                            color: "white",
-                            fontWeight: 600,
-                            fontSize: 14,
-                          }}
-                          href="#"
-                        >
-                          Nos Services
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          style={{
-                            color: "white",
-                            fontWeight: 600,
-                            fontSize: 14,
-                          }}
-                          href="#"
-                        >
-                          Notre Actualité{" "}
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          style={{
-                            color: "white",
-                            fontWeight: 600,
-                            fontSize: 14,
-                          }}
-                          href="#"
-                        >
-                          Nos Publications
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div
-                    className="copyright-text"
-                    style={{ color: "white", fontWeight: 600 }}
-                  >
-                    <p
-                      style={{ color: "white", fontSize: 13, fontWeight: 600 }}
-                    >
-                      © 2023 -{" "}
-                      <span style={{ color: "white", fontWeight: 600 }}>
-                        Developpé par CYNOMEDIA
-                      </span>
-                    </p>
-                  </div>
-                </div>
+                <Copyright />
               </div>
             </div>
           </div>

@@ -1,134 +1,163 @@
-import React from 'react';
-import Image from 'next/image'; // Importer Image de Next.js si vous l'utilisez
+"use client";
+import React, { useEffect, useState } from "react";
+import Image from "next/image"; // Importer Image de Next.js si vous l'utilisez
+import Link from "next/link";
+
+// Définir les types pour les données de service
+type ServiceImage = {
+  url: string;
+  alt: string;
+  description: string;
+};
+
+type Service = {
+  titre: string;
+  image: ServiceImage;
+  description: string;
+  lien: string;
+  backgroundcolor: string;
+};
+
+type BlocServices = {
+  bloc_services: {
+    titre: string;
+    description: string;
+    services: Service[];
+  };
+};
 
 const NoServices = () => {
   // Définir le contenu dynamique avec les couleurs de fond et autres détails
-  const contentData = [
-    {
-      title: "PRIVATISATIONS",
-      icon: null, // Pas d'icône mais une image
-      image: "/images/img4.png",
-      //image: "/images/money.png", // Image spécifique pour ce service
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    },
-    {
-      title: "FINANCEMENT",
-      icon: null, // Pas d'icône mais une image
-      image: "/images/img4.png",
-      //image: "/images/money.png", // Image spécifique pour ce service
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
-    },    
-    {
-      title: "GESTION DE PORTEFEUILLE",
-      icon: "lnr-briefcase",
-      image: "/images/img4.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    },   
-    {
-      title: "GESTION REGISTRE ACTIONNAIRES",
-      icon: "lnr-arrow-up",
-      image: "/images/img22.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
-    },
-    {
-      title: "INTERMEDIATION",
-      icon: null, // Pas d'icône mais une image
-      image: "/images/img4.png",
-      //image: "/images/money.png", // Image spécifique pour ce service
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    },
 
-    {
-      title: "EMPRUNTS OBLIGATAIRES",
-      icon: "lnr-arrow-up",
-      image: "/images/img1.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
-    }, 
-    {
-      title: "INTRODUCTION EN BOURSE",
-      icon: "lnr-arrow-up",
-      image: "/images/img22.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    },    
-    {
-      title: "AUGMENTATION DE CAPITAL",
-      icon: "lnr-arrow-up",
-      image: "/images/img22.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#00a0e2",
-    },    
-    
-    {
-      title: "BILLETS DE TRESORERIE",
-      icon: "lnr-arrow-up",
-      image: "/images/img5.png",
-      description: "L'ingénierie financière consiste à appliquer des techniques mathématiques, statistiques et informatiques pour ... ",
-      backgroundColor: "#021039",
-    }, 
+  // Déclarez les états
+  const [blocserviceData, setBlocserviceData] = useState<BlocServices[]>([]); // Stocke les services
+  const [loading, setLoading] = useState<boolean>(true); // Indique si les données sont en cours de chargement
 
+  function transformImageUrl(imageUrl: string): string {
+    // Extraire les parties de l'URL : année, mois et nom de l'image
+    const parts = imageUrl.split("/");
+    const year = parts[parts.length - 3]; // L'année est l'avant-dernier élément
+    const month = parts[parts.length - 2]; // Le mois est l'avant-avant-dernier élément
+    const imageName = parts.pop(); // Le nom de l'image est le dernier élément
+    // Construire l'URL locale pour l'image
+    return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
+  }
 
-    
-    
-  ];
+  const fetchBlocServicesData = async () => {
+    try {
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+
+      // Construire l'URL complète pour les slides
+      const res = await fetch(apiUrl, {
+        next: { revalidate: 60 },
+      }); // Requête vers l'API distante
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch service, status: ${res.status}`);
+      }
+
+      const data = await res.json();
+      setBlocserviceData(data); // Mettre à jour l'état avec les données récupérées
+      setLoading(false); // Fin du chargement
+      console.log(blocserviceData);
+      //console.log(serviceData[0].bloc_services);
+      //console.log("serviceData[0].bloc_services.services");
+      //console.log(serviceData[0].bloc_services.services);
+      //
+    } catch (error) {
+      console.error(error); // Ou un log utile
+    }
+  };
+
+  useEffect(() => {
+    fetchBlocServicesData();
+  }, []);
 
   return (
-    <section className="no-padding" style={{ backgroundColor: "#f8f8f8" }}>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <div className="title-block text-center" style={{ marginTop: 0, marginBottom: 20 }}>
-              <h3 style={{ fontSize: 28, color: "#021039" }}>Nos services</h3>
-              <p className="sub-title" style={{ fontSize: 15, lineHeight: 2 }}>
-                Lorem Ipsum is simply dummy text Lorem Ipsum is simply dummy text
-              </p>
-              <span className="bottom-title" />
-            </div>
-            <div className="warp-full-width services-h1-warp offer-h10-warp">
-              {/* Itérer sur contentData pour afficher chaque service */}
-              {contentData.map((service, index) => (
-                <div key={index} className="col-md-4 col-sm-6" style={{ backgroundColor: service.backgroundColor }}>
-                  <div className="item-offer-h10">
-                    <div className="iconbox-type-xs text-center">
-                      {/* Vérifier s'il y a une image ou une icône */}
-                      {service.image ? (
-                        <center>
-                          <Image
-                            src={service.image}
-                            className="img img-responsive img-circle"
-                            width={105}
-                            height={20}
-                            alt={service.title}
-                          />
-                        </center>
-                      ) : (
-                        <span className={`lnr ${service.icon}`} style={{ fontSize: 60, color: "white" }} />
-                      )}
-                      <h4 style={{ fontSize: 21, marginBottom: "-1px", color: "white" }}>
-                        {service.title}
-                      </h4>
-                      <p style={{ fontSize: 14, color: "white", marginTop:7 }}>
-                        {service.description}
-                      </p>
-                     
-                    </div>
-                  </div>
+    <>
+      {loading ? (
+        <p></p>
+      ) : (
+        <section className="no-padding" style={{ backgroundColor: "#f8f8f8" }}>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12">
+                <div
+                  className="title-block text-center"
+                  style={{ marginTop: 0, marginBottom: 20 }}
+                >
+                  <h3 style={{ fontSize: 28, color: "#021039" }}>
+                    {blocserviceData[0]?.bloc_services?.titre}
+                  </h3>
+                  <p
+                    className="sub-title"
+                    style={{ fontSize: 15, lineHeight: 2 }}
+                  >
+                    {blocserviceData[0]?.bloc_services?.description}
+                  </p>
+                  <span className="bottom-title" />
                 </div>
-              ))}
 
-                
+                <div className="warp-full-width services-h1-warp offer-h10-warp">
+                  {/* Itérer sur contentData pour afficher chaque service */}
+                  {blocserviceData[0]?.bloc_services?.services.map(
+                    (service, index) => (
+                      <Link key={index} href={service.lien}>
+                        <div
+                          className="col-md-4 col-sm-6"
+                          style={{ backgroundColor: service.backgroundcolor }}
+                        >
+                          <div className="item-offer-h10">
+                            <div className="iconbox-type-xs text-center">
+                              {/* Vérifier s'il y a une image ou une icône */}
+                              {service.image ? (
+                                <center>
+                                  <Image
+                                    src={transformImageUrl(service.image)} // Utilisez une image par défaut si service.image est vide
+                                    className="img img-responsive img-circle"
+                                    width={105}
+                                    height={20}
+                                    alt={service.titre || "Service image"}
+                                  />
+                                </center>
+                              ) : (
+                                <i
+                                  className="fas fa-camera" // Utilisation d'une icône fixe Font Awesome
+                                  style={{ fontSize: 60, color: "white" }}
+                                />
+                              )}
+
+                              <h4
+                                style={{
+                                  fontSize: 21,
+                                  marginBottom: "-1px",
+                                  color: "white",
+                                }}
+                              >
+                                {service.titre}
+                              </h4>
+                              <p
+                                style={{
+                                  fontSize: 14,
+                                  color: "white",
+                                  marginTop: 7,
+                                }}
+                              >
+                                {service.description}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    )
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      )}
+    </>
   );
 };
-
 export default NoServices;

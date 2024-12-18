@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { Bars } from "react-loader-spinner";
 
 const SubscriptionForm = () => {
-
   interface FormData {
     offer: string;
     person: string;
@@ -67,7 +66,6 @@ const SubscriptionForm = () => {
     email: "E-mail",
   };
 
-  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -100,6 +98,8 @@ const SubscriptionForm = () => {
       return;
     }
 
+    if (!validateFields()) return;
+
     setLoading(true);
     setFormDisabled(true);
 
@@ -107,7 +107,7 @@ const SubscriptionForm = () => {
       // Enregistrement dans la base
       //const apiUrl = "https://sgimali-frontend.vercel.app/api/add-subscriber";
       const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/add-subscriber`;
-        
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -121,8 +121,7 @@ const SubscriptionForm = () => {
       }
 
       // Envoi de la notification par e-mail
-      const emailApiUrl =
-        "https://sgimali-frontend.vercel.app/api/send-notif";
+      const emailApiUrl = "https://sgimali-frontend.vercel.app/api/send-notif";
 
       const emailResponse = await fetch(emailApiUrl, {
         method: "POST",
@@ -133,7 +132,7 @@ const SubscriptionForm = () => {
           first_name: formData.first_name,
           email: formData.email,
           subject: "Nouveau Souscripteur",
-          message: "Nouveau Souscripteur",//Bonjour ${formData.first_name},\n\nVotre inscription a été enregistrée avec succès.\n\nCordialement.
+          message: "Nouveau Souscripteur", //Bonjour ${formData.first_name},\n\nVotre inscription a été enregistrée avec succès.\n\nCordialement.
         }),
       });
 
@@ -172,7 +171,7 @@ const SubscriptionForm = () => {
           title: "Erreur",
           text: error.message,
         });
-      }else {
+      } else {
         Swal.fire({
           icon: "error",
           title: "Erreur",
@@ -185,23 +184,42 @@ const SubscriptionForm = () => {
     }
   };
 
+  const validateFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{8,15}$/;
 
-  
+    if (!emailRegex.test(formData.email)) {
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "Veuillez entrer une adresse e-mail valide.",
+      });
+      return false;
+    }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!phoneRegex.test(formData.phone_number)) {
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "Veuillez entrer un numéro de téléphone valide (8 à 15 chiffres).",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+  
 
-// Fonction pour capitaliser la première lettre en minuscule sauf pour la première
-function capitalizeFirstLetter(string: string): string {
-  if (!string) return ""; // Gestion des chaînes vides ou nulles
-  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-
+  // Fonction pour capitaliser la première lettre en minuscule sauf pour la première
+  
   return (
     <div className="col-md-6" style={{ marginTop: -5 }}>
       <div className="main-page">
@@ -218,37 +236,92 @@ function capitalizeFirstLetter(string: string): string {
             </div>
           )}
 
-          {/* Champs de formulaire avec labels en français et première lettre en majuscule */}
           {Object.keys(formData).map((field) => (
             <div className="form-group" key={field}>
               <label htmlFor={field}>
-                      {fieldLabels[field] || capitalizeFirstLetter(field.replace(/_/g, " "))} <span className="text-danger">*</span>
+                {fieldLabels[field]} <span className="text-danger">*</span>
               </label>
-              <input
-                type={field.includes("date") ? "date" : "text"}
-                className="form-control"
-                id={field}
-                name={field}                
-                value={formData[field as keyof FormData]} // Utilisation de l'indexation sécurisée
-                onChange={handleChange}
-                disabled={formDisabled}
-              />
+              {field === "gender" ? (
+                <select
+                  className="form-control"
+                  id={field}
+                  name={field}
+                  value={formData[field as keyof FormData]}
+                  onChange={handleChange}
+                  disabled={formDisabled}
+                >
+                  <option value="">Sélectionnez...</option>
+                  <option value="Masculin">Masculin</option>
+                  <option value="Féminin">Féminin</option>
+                </select>
+              ) : field === "offer" ? (
+                <select
+                  className="form-control"
+                  id={field}
+                  name={field}
+                  value={formData[field as keyof FormData]}
+                  onChange={handleChange}
+                  disabled={formDisabled}
+                >
+                  <option value="">Sélectionnez...</option>
+                  <option value="OR">OR</option>
+                  <option value="DIAMENT">DIAMENT</option>
+                </select>
+              ) :
+                field === "person" ? (
+                  <select
+                    className="form-control"
+                    id={field}
+                    name={field}
+                    value={formData[field as keyof FormData]}
+                    onChange={handleChange}
+                    disabled={formDisabled}
+                  >
+                    <option value="">Sélectionnez...</option>
+                    <option value="Morale">Morale</option>
+                    <option value="Physique">Physique</option>
+                  </select>
+              ) 
+              
+              :(
+                <input
+                  type={
+                    field === "phone_number"
+                      ? "tel"
+                      : field.includes("date")
+                      ? "date"
+                      : "text"
+                  }
+                  className="form-control"
+                  id={field}
+                  name={field}
+                  value={formData[field as keyof FormData]}
+                  onChange={handleChange}
+                  onInput={(e) => {
+                    // Empêcher la saisie de lettres dans le champ du numéro de téléphone
+                    if (field === "phone_number") {
+                      e.target.value = e.target.value.replace(/[^0-9]/g, ""); // Remplacer tout ce qui n'est pas un chiffre
+                    }
+                  }}
+                  disabled={formDisabled}
+                  placeholder={field === "phone_number" ? "Ex: 0123456789" : ""}
+                  pattern={field === "phone_number" ? "[0-9]{8,14}" : undefined}
+                  inputMode={field === "phone_number" ? "numeric" : undefined}
+                />
+              )}
             </div>
           ))}
 
           <button
             type="submit"
             className="btn-main-color"
-              style={{
-                borderRadius: 4,
-                fontWeight: 400,
-                fontSize: 15,
-                paddingLeft: 25,
-                paddingRight: 25,
-                paddingTop: 7,
-                paddingBottom: 7,
-                float:"right"
-              }}
+            style={{
+              borderRadius: 4,
+              fontWeight: 400,
+              fontSize: 15,
+              padding: "7px 25px",
+              float: "right",
+            }}
             disabled={formDisabled}
           >
             Envoyer
