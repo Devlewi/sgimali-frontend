@@ -30,9 +30,10 @@ export default function Articles() {
 
   // Fonction pour récupérer les catégories
 // Fonction pour récupérer les catégories
+// `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/categories`
 const fetchCategories = async () => {
     const res = await fetch(
-      "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories"
+      "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories"            
     );
     const data: { id: number; name: string }[] = await res.json(); // Typage explicite de la réponse
     const categoryMap = new Map<number, string>( // Assurez-vous que Map utilise le bon type
@@ -40,7 +41,7 @@ const fetchCategories = async () => {
     );
     setCategories(categoryMap);
   };
-  
+  //return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
 
   // Fonction pour récupérer les articles
   const fetchArticles = async () => {
