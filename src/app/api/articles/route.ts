@@ -1,9 +1,9 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // L'URL de l'API WordPress
 const POSTS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts";
 
-export async function GET(request) {
+export async function GET(request: NextRequest) {
   try {
     // Récupérer les paramètres de la requête
     const url = new URL(request.url);
