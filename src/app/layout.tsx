@@ -507,6 +507,7 @@ export default function RootLayout({
                         </li>
                       </ul>
                     </nav>
+                    {/*
                     <ul className="subnavi">
                       <li>
                         <a className="btn-search-navi" href="#/">
@@ -521,11 +522,11 @@ export default function RootLayout({
                                 type="text"
                               />
                             </div>
-                            {/* /input-group */}
                           </form>
                         </div>
                       </li>
                     </ul>
+                    */}
                     <a href="#menu" className="btn-menu-mobile">
                       <i className="fa fa-bars" aria-hidden="true" />
                     </a>
