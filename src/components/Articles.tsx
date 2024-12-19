@@ -48,41 +48,52 @@ const fetchCategories = async () => {
   // Fonction pour récupérer les articles
   const fetchArticles = async () => {
     setLoading(true);
-    // Utiliser l'ID de la catégorie (selectedCategory) au lieu du nom
-
-    /*
-        const categoryParam =
-      selectedCategory && selectedCategory !== ""
-        ? `&categories=${selectedCategory}`
+    try {
+      // Paramètre de catégorie si sélectionné
+      const categoryParam = selectedCategory && selectedCategory !== "" 
+        ? `&categories=${selectedCategory}` 
         : "";
-    const res = await fetch(
-      `https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?orderby=date&per_page=6&page=${currentPage}${categoryParam}&_embed`
-    );
-
-    */
-
-    // Utiliser l'ID de la catégorie (selectedCategory) au lieu du nom
-  const categoryParam =
-  selectedCategory && selectedCategory !== ""
-    ? `&categories=${selectedCategory}`
-    : "";
-
-// Utilisation de NEXT_PUBLIC_API_BASE_URL pour construire l'URL du proxy
-const res = await fetch(
-  `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/articles?page=${currentPage}${categoryParam}`
-);
-
-
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      setArticles(data);
-    } else {
-      setArticles([]); // Si la réponse n'est pas un tableau, on vide les articles
+  
+      // Requête à l'API de Next.js via le proxy
+      const res = await fetch(
+        `http://localhost:3000/api/articles?orderby=date&per_page=6&page=${currentPage}${categoryParam}&_embed`
+      );
+      
+      // Vérifier si la réponse est correcte
+      if (!res.ok) {
+        throw new Error("Erreur lors de la récupération des articles");
+      }
+  
+      // Récupérer les données au format JSON
+      const data = await res.json();
+  
+      // Vérifier si la réponse contient un tableau d'articles
+      if (Array.isArray(data.posts)) {
+        setArticles(data.posts);
+      } else {
+        setArticles([]); // Si la réponse n'est pas un tableau, on vide les articles
+      }
+  
+      // Récupérer le nombre total d'articles depuis le corps de la réponse
+      const total = data.totalPosts; // Récupérer directement depuis le corps de la réponse
+      console.warn(total);  // Affichage du total pour vérifier dans la console
+      
+      // Vérifier si le total est bien défini et calculer les pages
+      if (total) {
+        const totalPagesCalculated = Math.ceil(Number(total) / 6);  // Calcul du nombre de pages
+        setTotalPages(totalPagesCalculated);
+        console.log('Total Pages:', totalPagesCalculated); // Affichage du total de pages calculé
+      } else {
+        setTotalPages(1); // Par défaut, si le total n'est pas retourné
+      }
+    } catch (error) {
+      console.error("Erreur:", error);
+      setArticles([]); // Vider les articles en cas d'erreur
+      setTotalPages(1); // Par défaut, une seule page en cas d'erreur
     }
-    const total = res.headers.get("X-WP-Total");
-    setTotalPages(Math.ceil(Number(total) / 6));
-    setLoading(false);
+    setLoading(false); // Désactiver le loader après la récupération des données
   };
+  
 
   // Gérer le changement de page
   const handlePageChange = (page: number) => {

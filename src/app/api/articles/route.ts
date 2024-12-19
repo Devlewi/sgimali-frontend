@@ -1,30 +1,55 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
+// L'URL de l'API WordPress
 const POSTS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts";
 
-// Fonction pour récupérer les articles avec des paramètres de catégorie et de pagination
-export async function GET(request: NextRequest) { // Spécifiez le type NextRequest ici
+export async function GET(request) {
   try {
+    // Récupérer les paramètres de la requête
     const url = new URL(request.url);
-    const page = url.searchParams.get('page') || '1'; // Par défaut, page = 1
-    const categoryParam = url.searchParams.get('categories') || ''; // Paramètre de catégorie
-    const perPage = 6; // Nombre d'articles par page
 
-    // Construction de l'URL de l'API externe
-    const apiUrl = `${POSTS_API_URL}?orderby=date&per_page=${perPage}&page=${page}${categoryParam ? `&categories=${categoryParam}` : ''}&_embed`;
+    const page = url.searchParams.get('page') || '1'; // Par défaut page = 1
+    const categoryParam = url.searchParams.get('categories') || ''; // Paramètre de catégorie (facultatif)
+    const perPage = url.searchParams.get('per_page') || '6'; // Par défaut 6 articles par page
+    const orderBy = url.searchParams.get('orderby') || 'date'; // Par défaut trié par date
+    const embed = url.searchParams.get('_embed') || 'true'; // Assurez-vous que _embed est défini, ou laissez le par défaut 'true'
 
-    const postsRes = await fetch(apiUrl);
-    if (!postsRes.ok) {
-      throw new Error("Failed to fetch posts");
+    // Construire l'URL de l'API WordPress avec les paramètres nécessaires
+    let apiUrl = `${POSTS_API_URL}?orderby=${orderBy}&per_page=${perPage}&page=${page}&_embed=${embed}`;
+    
+    if (categoryParam) {
+      apiUrl += `&categories=${categoryParam}`;
     }
-    const posts = await postsRes.json();
 
-    // Retourner les articles sous forme de JSON
-    return NextResponse.json(posts);
+    // Faire la requête vers l'API WordPress
+    const response = await fetch(apiUrl);
+
+    // Vérifier si la réponse est OK
+    if (!response.ok) {
+      throw new Error("Failed to fetch posts from API");
+    }
+
+    // Récupérer les articles au format JSON
+    const posts = await response.json();
+
+    // Récupérer les en-têtes `X-WP-Total` et `X-WP-TotalPages` de la réponse de l'API
+    const totalPosts = response.headers.get('X-WP-Total');
+    const totalPages = response.headers.get('X-WP-TotalPages');
+
+    // Créer un objet de réponse incluant les données des posts et les en-têtes
+    const responseData = {
+      posts,
+      totalPosts,
+      totalPages,
+    };
+
+    // Retourner les données sous forme de réponse JSON à l'utilisateur
+    return NextResponse.json(responseData);
+
   } catch (error) {
     console.error("Error fetching posts:", error);
     return NextResponse.json(
-      { message: "Failed to fetch posts" },
+      { message: "Failed to fetch posts", error: error.message },
       { status: 500 }
     );
   }
