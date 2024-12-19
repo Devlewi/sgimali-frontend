@@ -1,39 +1,30 @@
 // app/src/api/categories/route.js
-export async function GET(req) {
-    const targetUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories";
-    
-    try {
-      // Effectuer la requête vers l'API externe
-      const response = await fetch(targetUrl, {
-        method: 'GET', // Méthode GET ou POST selon votre cas
-        headers: {
-          'Authorization': 'Bearer YOUR_TOKEN', // Si vous avez besoin d'un token
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      // Vérifier si la réponse est valide
-      if (!response.ok) {
-        return new Response(
-          JSON.stringify({ error: 'Failed to fetch data from external API' }),
-          { status: response.status }
-        );
-      }
-  
-      // Extraire les données au format JSON
-      const data = await response.json();
-  
-      // Retourner les données au client
-      return new Response(JSON.stringify(data), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    } catch (error) {
-      console.error(error);
-      return new Response(
-        JSON.stringify({ error: 'Something went wrong while fetching the data' }),
-        { status: 500, headers: { 'Content-Type': 'application/json' } }
-      );
+import { NextResponse } from 'next/server';
+
+const CATEGORIES_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories";
+
+// Types pour les données des catégories
+type Category = {
+  id: number;
+  name: string;
+};
+
+export async function GET() {
+  try {
+    // Récupérer les catégories depuis l'API externe
+    const categoriesRes = await fetch(CATEGORIES_API_URL);
+    if (!categoriesRes.ok) {
+      throw new Error("Failed to fetch categories");
     }
+    const categories: Category[] = await categoriesRes.json();
+
+    // Retourner les données au format JSON
+    return NextResponse.json(categories);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return NextResponse.json(
+      { message: "Failed to fetch categories" },
+      { status: 500 }
+    );
   }
-  
+}
