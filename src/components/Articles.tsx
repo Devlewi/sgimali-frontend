@@ -49,13 +49,30 @@ const fetchCategories = async () => {
   const fetchArticles = async () => {
     setLoading(true);
     // Utiliser l'ID de la catégorie (selectedCategory) au lieu du nom
-    const categoryParam =
+
+    /*
+        const categoryParam =
       selectedCategory && selectedCategory !== ""
         ? `&categories=${selectedCategory}`
         : "";
     const res = await fetch(
       `https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?orderby=date&per_page=6&page=${currentPage}${categoryParam}&_embed`
     );
+
+    */
+
+    // Utiliser l'ID de la catégorie (selectedCategory) au lieu du nom
+  const categoryParam =
+  selectedCategory && selectedCategory !== ""
+    ? `&categories=${selectedCategory}`
+    : "";
+
+// Utilisation de NEXT_PUBLIC_API_BASE_URL pour construire l'URL du proxy
+const res = await fetch(
+  `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/articles?page=${currentPage}${categoryParam}`
+);
+
+
     const data = await res.json();
     if (Array.isArray(data)) {
       setArticles(data);
