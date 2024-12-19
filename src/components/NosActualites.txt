@@ -26,6 +26,69 @@ type Post = {
   };
 };
 
+// Fonction pour récupérer les derniers articles
+/*async function getLastPosts(): Promise<Post[]> {
+  const apiUrl =
+    "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?orderby=date&per_page=3&_embed"; // Ajout du paramètre "_embed" pour récupérer les données liées
+
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+
+  const posts = await res.json();
+
+  // Récupérer les catégories
+  const categoryRes = await fetch(
+    "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories"
+  );
+  if (!categoryRes.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  type Category = {
+    id: number;
+    name: string;
+  };
+  
+  const categories = await categoryRes.json();
+
+  // Créer un dictionnaire des catégories avec ID comme clé et nom comme valeur
+  const categoryDictionary = categories.reduce(
+    (acc: { [key: number]: string }, category: Category) => {
+      acc[category.id] = category.name;
+      return acc;
+    },
+    {}
+  );
+
+  // Extraire les catégories et l'image vedette pour chaque article
+  const postsWithCategoriesAndImages = posts.map((post: Post) => {
+    const categoryNames = post.categories.map(
+      (categoryId: number) => categoryDictionary[categoryId]
+    );
+    const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || null;
+  
+    return {
+      id: post.id,
+      date: post.date,
+      title: { rendered: post.title.rendered },
+      categories: categoryNames,
+      excerpt: { rendered: post.excerpt.rendered },
+      content: { rendered: post.content.rendered },
+      slug: post.slug,
+      link: post.link,
+      featured_media: post.featured_media,
+      featured_image_url: featuredImage,
+    };
+  });
+  
+
+  return postsWithCategoriesAndImages;
+}*/
 
 
 // Fonction pour récupérer les derniers articles
@@ -121,14 +184,12 @@ export default async function NosActualites() {
                           style={{ color: "#021039", fontWeight: 600 }}
                         >
                       <div className="news-tag">
-  {post.categories.map((category, index) => (
-    <span key={index} className="category-tag" style={{ fontWeight: 700 }}>
-      {category}
-      {index < post.categories.length - 1 && " - "}
-    </span>
-  ))}
-</div>
-
+                        {post.categories.map((category, index) => (
+                          <span key={index} className="category-tag" style={{fontWeight:700}}>
+                            {category}
+                          </span>
+                        ))}
+                      </div>
 
                       {/* Vérification de l'image */}
                       {post.featured_image_url ? (
@@ -159,18 +220,9 @@ export default async function NosActualites() {
     className="text-decoration-none"
     style={{ color: "#021039", fontWeight: 600 }}
   >
-
-{post.title.rendered.length > 65
-  ? `${post.title.rendered.substring(0, 65)}...`
-  : (
-      <>
-        {post.title.rendered}
-        {Array.from({ length: Math.ceil((65 - post.title.rendered.length) / 30) }).map((_, index) => (
-          <br key={index} />
-        ))}
-      </>
-    )}
-
+    {post.title.rendered.length > 65 
+      ? `${post.title.rendered.substring(0, 65)}...` 
+      : post.title.rendered}
   </Link>
 </h4>
 
