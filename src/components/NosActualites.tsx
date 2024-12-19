@@ -27,7 +27,7 @@ type Post = {
 };
 
 // Fonction pour récupérer les derniers articles
-async function getLastPosts(): Promise<Post[]> {
+/*async function getLastPosts(): Promise<Post[]> {
   const apiUrl =
     "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?orderby=date&per_page=3&_embed"; // Ajout du paramètre "_embed" pour récupérer les données liées
 
@@ -86,6 +86,46 @@ async function getLastPosts(): Promise<Post[]> {
     };
   });
   
+
+  return postsWithCategoriesAndImages;
+}*/
+
+
+// Fonction pour récupérer les derniers articles
+async function getLastPosts(): Promise<Post[]> {
+  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/latest-posts`;
+
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+
+  const posts = await res.json();
+
+  // Créer un dictionnaire des catégories si nécessaire
+  // Ici, les catégories sont déjà incluses dans la réponse, donc ce traitement est facultatif
+
+  // Extraire les catégories et l'image vedette pour chaque article
+  const postsWithCategoriesAndImages = posts.map((post: Post) => {
+    const featuredImage = post.featured_image_url || null;
+
+    return {
+      id: post.id,
+      date: post.date,
+      title: { rendered: post.title },
+      categories: post.categories, // Les catégories sont directement incluses dans l'API
+      excerpt: { rendered: post.excerpt },
+      content: { rendered: post.content },
+      slug: post.slug,
+      link: post.link,
+      featured_media: post.featured_media,
+      featured_image_url: featuredImage,
+    };
+  });
 
   return postsWithCategoriesAndImages;
 }
