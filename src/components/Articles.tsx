@@ -57,10 +57,10 @@ const fetchCategories = async () => {
       // Requête à l'API de Next.js via le proxy
       //`http://localhost:3000/api/articles?orderby=date&per_page=6&page=${currentPage}${categoryParam}&_embed`
       const res = await fetch(
-        `http://localhost:3000/api/articles?orderby=date&per_page=6&page=${currentPage}${categoryParam}&_embed`
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/articles?orderby=date&per_page=6&page=${currentPage}${categoryParam}&_embed`
       );
       //`${process.env.NEXT_PUBLIC_API_BASE_URL}
-      
+
       // Vérifier si la réponse est correcte
       if (!res.ok) {
         throw new Error("Erreur lors de la récupération des articles");
