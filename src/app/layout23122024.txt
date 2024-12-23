@@ -12,7 +12,6 @@ import Topbar from "@/components/Topbar";
 import Copyright from "@/components/Copyright";
 import SkeletonCircleLoad3 from "@/components/skeleton/SkeletonCircleLoad3";
 import Link from "next/link";
-import AnimationPage from "@/components/AnimationPage";
 
 export default function RootLayout({
   children,
@@ -28,39 +27,42 @@ export default function RootLayout({
 
   const [marginTop, setMarginTop] = useState(80);
 
-  type ScrollData = {
-    zone_de_defilement: string;
-  };
 
+  type ScrollData = {
+    zone_de_defilement: string 
+  };
+  
   const [scrolldata, setScrollData] = useState<ScrollData[]>([]);
 
-  // Récupérer les données de l'API
-  const fetchSTData = async () => {
-    try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
-
-      // Construire l'URL complète pour les slides
-      const res = await fetch(apiUrl, {
-        next: { revalidate: 60 },
-      }); // Requête vers l'API distante
-
-      if (!res.ok) {
-        throw new Error(`Failed to fetch Topbar, status: ${res.status}`);
+    // Récupérer les données de l'API
+    const fetchSTData = async () => {
+      try {
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+  
+        // Construire l'URL complète pour les slides
+        const res = await fetch(apiUrl, {
+          next: { revalidate: 60 },
+        }); // Requête vers l'API distante
+  
+        if (!res.ok) {
+          throw new Error(`Failed to fetch Topbar, status: ${res.status}`);
+        }
+  
+        const data = await res.json();
+        setScrollData(data); // Mettre à jour l'état avec les données récupérées
+        setLoading(false); // Fin du chargement
+        console.log("scrolldata");
+        console.log(scrolldata);
+      } catch (error) {
+        console.error("Error fetching top bar:", error); // Gérer les erreurs de requête
       }
+    };
+  
 
-      const data = await res.json();
-      setScrollData(data); // Mettre à jour l'état avec les données récupérées
-      setLoading(false); // Fin du chargement
-      console.log("scrolldata");
-      console.log(scrolldata);
-    } catch (error) {
-      console.error("Error fetching top bar:", error); // Gérer les erreurs de requête
-    }
-  };
 
-  // Récupérer le texte de la première zone_de_defilement si disponible
-  const scrollingText =
-    scrolldata.length > 0 ? scrolldata[0].zone_de_defilement : "";
+      // Récupérer le texte de la première zone_de_defilement si disponible
+  const scrollingText = scrolldata.length > 0 ? scrolldata[0].zone_de_defilement : '';
+
 
   useEffect(() => {
     fetchSTData();
@@ -74,15 +76,17 @@ export default function RootLayout({
     };
 
     // Attach the resize listener
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     // Trigger resize event on mount
     handleResize();
 
     // Cleanup listener on unmount
-    return () => window.removeEventListener("resize", handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+ 
+  
   interface BlocFooter {
     bloc_header?: {
       contacts_et_localisation?: {
@@ -115,7 +119,9 @@ export default function RootLayout({
       };
     };
   }
-
+  
+  
+  
   const fetchBlocFooterData = async () => {
     try {
       const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
@@ -181,7 +187,6 @@ export default function RootLayout({
     <html lang="fr">
       <head>
         <link rel="stylesheet" href="/css/bootstrap.css" />
-
         {/* Fonts */}
         <link
           href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&subset=devanagari,latin-ext"
@@ -279,14 +284,8 @@ export default function RootLayout({
         {/*<link rel="shortcut icon" href="/images/favicon.png" /> */}
       </head>
       <body>
-      {loading ? (
-    <AnimationPage onComplete={function (): void {
-      throw new Error("Function not implemented.");
-    } }/>
-  ) : (
-<>
- {/* Insertion du script */}
- <Script id="scroll-script" strategy="afterInteractive">
+        {/* Insertion du script */}
+        <Script id="scroll-script" strategy="afterInteractive">
           {`
           // Écouteur d'événement pour le défilement
           window.onscroll = function () {
@@ -339,13 +338,16 @@ export default function RootLayout({
                       />
                     </Link>
 
-                    {/**debut nav mobile hidden hidden-sm hidden-md hidden-lg**/}
-                    {/* visible-sm hidden-md */}
 
-                    <nav id="menu" className="" style={{ zIndex: 10 }}>
+{/**debut nav mobile **/}
+                    <nav
+                      id="menu"
+                      className="hidden hidden-sm hidden-md hidden-lg"
+                      style={{ zIndex: 10 }}
+                    >
                       <ul>
                         <li className="">
-                          <Link href="/">mob Accueil</Link>
+                          <Link href="/">Accueil</Link>
                         </li>
                         <li>
                           <a href="#">Présentation</a>
@@ -454,7 +456,8 @@ export default function RootLayout({
                         </li>
                       </ul>
                     </nav>
-                    {/**fin nav mobile **/}
+{/**fin nav mobile **/}
+
 
                     <nav>
                       <ul className="navi-level-1 active-subcolor">
@@ -624,28 +627,33 @@ export default function RootLayout({
             }}
           />
 
+          
+
           {isHomePage && (
             <>
+              
               <div className="" style={{ marginTop }}>
-                <div
-                  className="scrollingText"
-                  style={{
-                    paddingTop: 13,
-                    backgroundColor: "blue",
-                    color: "white",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  <span
-                    style={{
-                      display: "inline-block",
-                      animation: "scroll-text 30s linear infinite",
-                    }}
-                    dangerouslySetInnerHTML={{ __html: scrollingText }} // Utilisation de dangerouslySetInnerHTML pour afficher le HTML brut
-                  />
-                </div>
-              </div>
+       <div
+        className="scrollingText"
+        style={{
+          paddingTop: 13,
+          backgroundColor: 'blue',
+          color: 'white',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-block',
+            animation: 'scroll-text 30s linear infinite',
+          }}
+          dangerouslySetInnerHTML={{ __html: scrollingText }} // Utilisation de dangerouslySetInnerHTML pour afficher le HTML brut
+        />
+      </div>
+      </div>
+
+
             </>
           )}
         </header>
@@ -672,26 +680,24 @@ export default function RootLayout({
                     <span className="bottom-title" />
                   </div>
                   <ul style={{ marginLeft: 20 }}>
-                    {loading ? (
-                      <SkeletonCircleLoad3 />
-                    ) : // Vérification de blocfooterData et de sa structure
-                    Array.isArray(blocfooterData) &&
-                      blocfooterData.length > 0 &&
-                      blocfooterData[0]?.bloc_footer?.liens_utiles?.elements
-                        ?.length ? (
-                      blocfooterData[0].bloc_footer.liens_utiles.elements.map(
-                        (lien, index) => (
-                          <li key={index}>
-                            <Link href={lien.lien || "#"}>
-                              {lien.titre || "Lien sans titre"}
-                            </Link>
-                          </li>
-                        )
-                      )
-                    ) : (
-                      <p>No links available</p> // Affichage si aucun lien n'est disponible
-                    )}
-                  </ul>
+  {loading ? (
+    <SkeletonCircleLoad3 />
+  ) : (
+    // Vérification de blocfooterData et de sa structure
+    Array.isArray(blocfooterData) && blocfooterData.length > 0 &&
+    blocfooterData[0]?.bloc_footer?.liens_utiles?.elements?.length ? (
+      blocfooterData[0].bloc_footer.liens_utiles.elements.map((lien, index) => (
+        <li key={index}>
+          <Link href={lien.lien || "#"}>{lien.titre || "Lien sans titre"}</Link>
+        </li>
+      ))
+    ) : (
+      <p>No links available</p> // Affichage si aucun lien n'est disponible
+    )
+  )}
+</ul>
+
+
                 </div>
               </div>
               <div className="col-md-4 bg-lighten-theme">
@@ -732,34 +738,34 @@ export default function RootLayout({
                     <span className="bottom-title" />
                   </div>
                   <ul style={{ marginLeft: 0, listStyle: "none", padding: 0 }}>
-                    {loading ? (
-                      <SkeletonCircleLoad3 />
-                    ) : blocfooterData &&
-                      blocfooterData[0]?.bloc_footer?.contacts?.groupe
-                        ?.heure_douverture &&
-                      blocfooterData[0].bloc_footer.contacts.groupe
-                        .heure_douverture.length > 0 ? (
-                      blocfooterData[0].bloc_footer.contacts.groupe.heure_douverture.map(
-                        (horaire, index) => (
-                          <li
-                            key={index}
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "10px",
-                            }}
-                          >
-                            <span style={{ fontWeight: "bold" }}>
-                              {horaire.jours}
-                            </span>
-                            <span>{horaire.heure}</span>
-                          </li>
-                        )
-                      )
-                    ) : (
-                      <p>Aucune heure enregistrée.</p> // Affichage si aucune heure n'est disponible
-                    )}
-                  </ul>
+  {loading ? (
+    <SkeletonCircleLoad3 />
+  ) : blocfooterData &&
+    blocfooterData[0]?.bloc_footer?.contacts?.groupe?.heure_douverture && 
+    blocfooterData[0].bloc_footer.contacts.groupe.heure_douverture.length > 0 ? (
+    blocfooterData[0].bloc_footer.contacts.groupe.heure_douverture.map(
+      (horaire, index) => (
+        <li
+          key={index}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <span style={{ fontWeight: "bold" }}>
+            {horaire.jours}
+          </span>
+          <span>{horaire.heure}</span>
+        </li>
+      )
+    )
+  ) : (
+    <p>Aucune heure enregistrée.</p> // Affichage si aucune heure n'est disponible
+  )}
+</ul>
+
+
                 </div>
               </div>
               <div className="col-md-4 ">
@@ -800,85 +806,61 @@ export default function RootLayout({
                     <span className="bottom-title" />
                   </div>
                   <ul className="widget widget-footer widget-footer-social-1">
-                    {loading ? (
-                      <SkeletonCircleLoad3 /> // Loader pendant le chargement des données
-                    ) : blocfooterData &&
-                      blocfooterData[0]?.bloc_header?.reseaux_sociaux ? (
-                      <>
-                        {blocfooterData[0].bloc_header.reseaux_sociaux
-                          .facebook && (
-                          <li>
-                            <a
-                              href={
-                                blocfooterData[0].bloc_header.reseaux_sociaux
-                                  .facebook
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <i
-                                className="fab fa-facebook"
-                                aria-hidden="true"
-                              />
-                            </a>
-                          </li>
-                        )}
-                        {blocfooterData[0].bloc_header.reseaux_sociaux
-                          .whatsapp && (
-                          <li>
-                            <a
-                              href={
-                                blocfooterData[0].bloc_header.reseaux_sociaux
-                                  .whatsapp
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <i
-                                className="fab fa-whatsapp"
-                                aria-hidden="true"
-                              />
-                            </a>
-                          </li>
-                        )}
-                        {blocfooterData[0].bloc_header.reseaux_sociaux
-                          .twitter && (
-                          <li>
-                            <a
-                              href={
-                                blocfooterData[0].bloc_header.reseaux_sociaux
-                                  .twitter
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <i className="fa-brands fa-x-twitter" />
-                            </a>
-                          </li>
-                        )}
-                        {blocfooterData[0].bloc_header.reseaux_sociaux
-                          .linkedin && (
-                          <li>
-                            <a
-                              href={
-                                blocfooterData[0].bloc_header.reseaux_sociaux
-                                  .linkedin
-                              }
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <i
-                                className="fab fa-linkedin"
-                                aria-hidden="true"
-                              />
-                            </a>
-                          </li>
-                        )}
-                      </>
-                    ) : (
-                      <p>Aucun lien disponible pour le moment.</p> // Message par défaut si aucune donnée n'est disponible
-                    )}
-                  </ul>
+  {loading ? (
+    <SkeletonCircleLoad3 /> // Loader pendant le chargement des données
+  ) : blocfooterData &&
+    blocfooterData[0]?.bloc_header?.reseaux_sociaux ? (
+    <>
+      {blocfooterData[0].bloc_header.reseaux_sociaux.facebook && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-facebook" aria-hidden="true" />
+          </a>
+        </li>
+      )}
+      {blocfooterData[0].bloc_header.reseaux_sociaux.whatsapp && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.whatsapp}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-whatsapp" aria-hidden="true" />
+          </a>
+        </li>
+      )}
+      {blocfooterData[0].bloc_header.reseaux_sociaux.twitter && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.twitter}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fa-brands fa-x-twitter" />
+          </a>
+        </li>
+      )}
+      {blocfooterData[0].bloc_header.reseaux_sociaux.linkedin && (
+        <li>
+          <a
+            href={blocfooterData[0].bloc_header.reseaux_sociaux.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-linkedin" aria-hidden="true" />
+          </a>
+        </li>
+      )}
+    </>
+  ) : (
+    <p>Aucun lien disponible pour le moment.</p> // Message par défaut si aucune donnée n'est disponible
+  )}
+</ul>
+
                 </div>
               </div>
             </div>
@@ -964,11 +946,6 @@ export default function RootLayout({
 
         {/* Demo Switcher */}
         <Script src="/switcher/demo.js" strategy="afterInteractive" />
-     
-</>
-
-  )}
-
       </body>
     </html>
   );
