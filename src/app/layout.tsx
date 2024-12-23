@@ -12,7 +12,6 @@ import Topbar from "@/components/Topbar";
 import Copyright from "@/components/Copyright";
 import SkeletonCircleLoad3 from "@/components/skeleton/SkeletonCircleLoad3";
 import Link from "next/link";
-import AnimationPage from "@/components/AnimationPage";
 
 export default function RootLayout({
   children,
