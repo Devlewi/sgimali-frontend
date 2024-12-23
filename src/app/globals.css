@@ -1975,7 +1975,7 @@ body.royal_loader {
 .bg-counter-h1 {
   width: 100%;
   height: 267px;
-  background: url(/images/bg-content/ct-h1.jpg) no-repeat;
+  background: url(/images/cb-h5.webp) no-repeat;
   -webkit-background-size: cover;
           background-size: cover;
   background-attachment: fixed;
@@ -3154,7 +3154,7 @@ body.royal_loader {
 }
 /* Call Back Home 5 */
 .cb-h5 {
-  background: url(/images/bg-content/cb-h5.jpg) no-repeat;
+  background: url(/images/cb-h5.webp) no-repeat;
   -webkit-background-size: cover;
           background-size: cover;
 }
@@ -4912,7 +4912,7 @@ ul.wd-list-link li.active a {
 }
 /* History Page */
 .sh-company-history {
-  background: url(/images/bg-content/cb-h5.jpg) no-repeat;
+  background: url(/images/cb-h5.webp) no-repeat;
   -webkit-background-size: cover;
           background-size: cover;
   background-attachment: fixed;
