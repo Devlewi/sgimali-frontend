@@ -37,7 +37,6 @@ const Copyright = () => {
             fontSize: 13,
             fontWeight: 600,
             margin: 0,
-            marginTop:-30
           }}
         >
           <span style={{color:"white"}}>
