@@ -628,7 +628,7 @@ export default function RootLayout({
           {isHomePage && (
             <>
               
-              <div className="row" style={{ marginTop }}>
+              <div className="" style={{ marginTop }}>
        <div
         className="scrollingText"
         style={{
