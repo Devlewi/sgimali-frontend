@@ -342,7 +342,7 @@ export default function RootLayout({
                     {/**debut nav mobile hidden hidden-sm hidden-md hidden-lg**/}
                     {/* visible-sm hidden-md */}
 
-                    <nav id="menu" className="" style={{ zIndex: 10 }}>
+                    <nav id="menu" className="hidden-lg" style={{ zIndex: 10 }}>
                       <ul>
                         <li className="">
                           <Link href="/">mob Accueil</Link>
