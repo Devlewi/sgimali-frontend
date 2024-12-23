@@ -1,5 +1,8 @@
-"use client"
+"use client";
+
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import { Bars } from "react-loader-spinner"; // Import du composant Spinner
 
 type JobOffer = {
   id: number;
@@ -8,20 +11,19 @@ type JobOffer = {
 
 const JobApplicationForm: React.FC<{ jobOffers: JobOffer[] }> = ({ jobOffers }) => {
   const [formData, setFormData] = useState({
-    jobCode: jobOffers.length > 0 ? jobOffers[0].id : "",  // Sélectionner automatiquement la première offre
+    jobCode: jobOffers.length > 0 ? jobOffers[0].id : "",
     firstName: "",
     phone: "",
     email: "",
     cv: null as File | null,
-    message: "",  // Ajouter la propriété message
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Lorsque jobOffers change, mettre à jour jobCode par défaut
   useEffect(() => {
     if (jobOffers.length > 0 && !formData.jobCode) {
       setFormData((prevData) => ({
         ...prevData,
-        jobCode: jobOffers[0].id,  // Sélectionner la première offre si jobCode est vide
+        jobCode: jobOffers[0].id,
       }));
     }
   }, [jobOffers]);
@@ -37,27 +39,40 @@ const JobApplicationForm: React.FC<{ jobOffers: JobOffer[] }> = ({ jobOffers }) 
     }
   };
 
+  const validateForm = () => {
+    if (!formData.firstName || !formData.email || !formData.phone || !formData.jobCode || !formData.cv) {
+      Swal.fire({
+        icon: "error",
+        title: "Validation échouée",
+        text: "Tous les champs sont obligatoires.",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation des champs
-    if (!formData.firstName || !formData.email || !formData.jobCode || !formData.cv) {
-      alert("Tous les champs doivent être remplis.");
-      return;
-    }
+    if (!validateForm()) return;
 
-    // Créer un FormData pour inclure à la fois des champs de texte et des fichiers
+    setIsSubmitting(true);
+
     const formDataToSend = new FormData();
+    const selectedJobOffer = jobOffers.find((offer) => offer.id === Number(formData.jobCode));
+    const jobTitle = selectedJobOffer ? selectedJobOffer.title.rendered : "Offre inconnue";
+
     formDataToSend.append("first_name", formData.firstName);
     formDataToSend.append("email", formData.email);
-    formDataToSend.append("subject", formData.jobCode.toString());  // Convertir jobCode en string
-    formDataToSend.append("message", formData.message || "");  // Message facultatif
-    formDataToSend.append("cv", formData.cv);  // Ajouter le fichier CV
+    formDataToSend.append("subject", `ID Offre: ${formData.jobCode} - ${jobTitle}`);
+    formDataToSend.append("telephone", formData.phone);
+    formDataToSend.append("cv", formData.cv as Blob);
 
     try {
-      const response = await fetch("https://sgi.cynomedia-africa.com/wp-json/custom/v1/apply-job/", {
+      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/custom/v1/apply-job/`;
+      const response = await fetch(apiUrl, {
         method: "POST",
-        body: formDataToSend, // Envoyer FormData directement
+        body: formDataToSend,
       });
 
       if (!response.ok) {
@@ -66,10 +81,28 @@ const JobApplicationForm: React.FC<{ jobOffers: JobOffer[] }> = ({ jobOffers }) 
         throw new Error("Erreur lors de l'envoi de la candidature");
       }
 
-      alert("Candidature envoyée avec succès !");
+      Swal.fire({
+        icon: "success",
+        title: "Félicitation",
+        text: "Votre candidature a été envoyée avec succès !",
+      });
+
+      setFormData({
+        jobCode: jobOffers.length > 0 ? jobOffers[0].id : "",
+        firstName: "",
+        phone: "",
+        email: "",
+        cv: null,
+      });
     } catch (error) {
       console.error(error);
-      alert("Erreur lors de l'envoi de la candidature");
+      Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "Une erreur est survenue lors de l'envoi de votre candidature.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -78,83 +111,89 @@ const JobApplicationForm: React.FC<{ jobOffers: JobOffer[] }> = ({ jobOffers }) 
       <div className="apply-form">
         <h5>Formulaire de candidature</h5>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="jobCode">Code de l&apos;offre</label>
-            <select
-              className="form-control"
-              id="jobCode"
-              name="jobCode"
-              value={formData.jobCode}
-              onChange={handleInputChange}
-              required
-            >
-              {jobOffers.map((offer) => (
-                <option key={offer.id} value={offer.id}>
-                  {offer.id} - {offer.title.rendered}
-                </option>
-              ))}
-            </select>
-          </div>
+          <fieldset disabled={isSubmitting}>
+            <div className="form-group">
+              <label htmlFor="jobCode">Code de l&apos;offre</label>
+              <select
+                className="form-control"
+                id="jobCode"
+                name="jobCode"
+                value={formData.jobCode}
+                onChange={handleInputChange}
+                required
+              >
+                {jobOffers.map((offer) => (
+                  <option key={offer.id} value={offer.id}>
+                    {offer.id} - {offer.title.rendered}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="firstName">Nom et prénoms</label>
-            <input
-              type="text"
-              className="form-control"
-              id="firstName"
-              name="firstName"
-              placeholder="Votre nom"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="firstName">Nom et prénoms</label>
+              <input
+                type="text"
+                className="form-control"
+                id="firstName"
+                name="firstName"
+                placeholder="Votre nom"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="phone">Votre téléphone</label>
-            <input
-              type="number"
-              className="form-control"
-              id="phone"
-              name="phone"
-              placeholder="Votre téléphone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="phone">Votre téléphone</label>
+              <input
+                type="tel"
+                className="form-control"
+                id="phone"
+                name="phone"
+                placeholder="Votre téléphone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              placeholder="Votre email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                placeholder="Votre email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label htmlFor="cv">Votre CV</label>
-            <input
-              type="file"
-              className="form-control-file"
-              id="cv"
-              name="cv"
-              onChange={handleFileChange}
-              required
-            />
-          </div>
+            <div className="form-group">
+              <label htmlFor="cv">Votre CV</label>
+              <input
+                type="file"
+                className="form-control-file"
+                id="cv"
+                name="cv"
+                onChange={handleFileChange}
+                required
+              />
+            </div>
 
-          <div className="form-submit col-md-3">
-            <button type="submit" className="btn_valider">
-              Postuler
-            </button>
-          </div>
+            <div className="form-submit col-md-3">
+              <button type="submit" className="btn_valider" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <Bars height="30" width="30" color="#fff" ariaLabel="loading" />
+                ) : (
+                  "Postuler"
+                )}
+              </button>
+            </div>
+          </fieldset>
         </form>
       </div>
     </div>

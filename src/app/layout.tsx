@@ -25,6 +25,66 @@ export default function RootLayout({
   const [blocfooterData, setBlocfooterData] = useState<BlocFooter[]>([]); // Stocke les items
   const [loading, setLoading] = useState<boolean>(true); // Indique si les données sont en cours de chargement
 
+  const [marginTop, setMarginTop] = useState(80);
+
+
+  type ScrollData = {
+    zone_de_defilement: string 
+  };
+  
+  const [scrolldata, setScrollData] = useState<ScrollData[]>([]);
+
+    // Récupérer les données de l'API
+    const fetchSTData = async () => {
+      try {
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+  
+        // Construire l'URL complète pour les slides
+        const res = await fetch(apiUrl, {
+          next: { revalidate: 60 },
+        }); // Requête vers l'API distante
+  
+        if (!res.ok) {
+          throw new Error(`Failed to fetch Topbar, status: ${res.status}`);
+        }
+  
+        const data = await res.json();
+        setScrollData(data); // Mettre à jour l'état avec les données récupérées
+        setLoading(false); // Fin du chargement
+        console.log("scrolldata");
+        console.log(scrolldata);
+      } catch (error) {
+        console.error("Error fetching top bar:", error); // Gérer les erreurs de requête
+      }
+    };
+  
+
+
+      // Récupérer le texte de la première zone_de_defilement si disponible
+  const scrollingText = scrolldata.length > 0 ? scrolldata[0].zone_de_defilement : '';
+
+
+  useEffect(() => {
+    fetchSTData();
+    const handleResize = () => {
+      // Change the marginTop based on screen width
+      if (window.innerWidth <= 991) {
+        setMarginTop(60);
+      } else {
+        setMarginTop(80);
+      }
+    };
+
+    // Attach the resize listener
+    window.addEventListener('resize', handleResize);
+
+    // Trigger resize event on mount
+    handleResize();
+
+    // Cleanup listener on unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
  
   
   interface BlocFooter {
@@ -329,7 +389,7 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <a href="#">Activités </a>
+                          <a href="#">Métiers </a>
                           <ul>
                             <li>
                               <Link href="/privatisation">
@@ -361,7 +421,7 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <a href="#">Réalisation</a>
+                          <a href="#">Actualités</a>
                           <ul>
                             <li>
                               <Link href="/emissions-demprunts-prives">
@@ -381,13 +441,13 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <Link href="/telechargement">Téléchargements</Link>
+                          <Link href="/publications">Publications</Link>
                         </li>
                         <li>
                           <Link href="/souscription">Souscription</Link>
                         </li>
                         <li>
-                          <Link href="/nous-contacter">Nous contacter</Link>
+                          <Link href="/nous-contacter">Contact</Link>
                         </li>
                         <li>
                           <Link href="/foire-aux-questions">FAQ</Link>
@@ -442,7 +502,7 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <a href="#">Activités</a>
+                          <a href="#">Métiers</a>
                           <ul className="navi-level-2">
                             <li>
                               <Link href="/privatisation">
@@ -474,7 +534,7 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <a href="#">Réalisation</a>
+                          <a href="#">Actualités</a>
                           <ul className="navi-level-2">
                             <li>
                               <Link href="/emissions-demprunts-prives">
@@ -494,13 +554,13 @@ export default function RootLayout({
                           </ul>
                         </li>
                         <li>
-                          <Link href="/telechargement">Téléchargements</Link>
+                          <Link href="/publications">Publications</Link>
                         </li>
                         <li>
                           <Link href="/souscription">Souscription</Link>
                         </li>
                         <li>
-                          <Link href="/nous-contacter">Nous contacter</Link>
+                          <Link href="/nous-contacter">Contact</Link>
                         </li>
                         <li>
                           <Link href="/foire-aux-questions">FAQ</Link>
@@ -563,131 +623,33 @@ export default function RootLayout({
             }}
           />
 
+          
+
           {isHomePage && (
             <>
-              <br />
-              <br />
-              <br />
+              
+              <div className="row" style={{ marginTop }}>
+       <div
+        className="scrollingText"
+        style={{
+          paddingTop: 13,
+          backgroundColor: 'blue',
+          color: 'white',
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-block',
+            animation: 'scroll-text 30s linear infinite',
+          }}
+          dangerouslySetInnerHTML={{ __html: scrollingText }} // Utilisation de dangerouslySetInnerHTML pour afficher le HTML brut
+        />
+      </div>
+      </div>
 
-              <div
-                className="topbar tb-transparent tb-gradient tb-sm-50 tb-h9 hidden-xs hidden-sm"
-                style={{ marginTop: 10 }}
-              >
-                <div className="container">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="topbar-home1 topbar-home10">
-                        <div className="tb-contact tb-oneline">
-                          <div className="scroll-up-container">
-                            <ul className="scroll-up">
-                              <li>
-                                <a href="#" style={{ fontSize: 16 }}>
-                                  SVOC 2 395{" "}
-                                  <span
-                                    style={{
-                                      color: "#38ab60",
-                                      fontWeight: "bolder",
-                                    }}
-                                  >
-                                    0.00%
-                                  </span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" style={{ fontSize: 16 }}>
-                                  UNLC 7 030{" "}
-                                  <span
-                                    style={{
-                                      color: "#38ab60",
-                                      fontWeight: "bolder",
-                                    }}
-                                  >
-                                    0.00%
-                                  </span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" style={{ fontSize: 16 }}>
-                                  SIVC 800{" "}
-                                  <span style={{ fontWeight: "bolder" }}>
-                                    0.00%
-                                  </span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" style={{ fontSize: 16 }}>
-                                  CABC 1 155{" "}
-                                  <span style={{ fontWeight: "bolder" }}>
-                                    0.00%
-                                  </span>
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" style={{ fontSize: 16 }}>
-                                  ABJC{" "}
-                                  <span style={{ fontWeight: "bolder" }}>
-                                    1 575
-                                  </span>
-                                  &nbsp;&nbsp;
-                                  <span
-                                    style={{
-                                      color: "red",
-                                      fontWeight: "bolder",
-                                    }}
-                                  >
-                                    -1.25%
-                                  </span>
-                                </a>
-                                &nbsp;&nbsp;
-                                <span
-                                  style={{
-                                    fontWeight: "bolder",
-                                    fontSize: 16,
-                                    color: "white",
-                                  }}
-                                >
-                                  CB
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div className="tb-social-lan language">
-                          <div className="warp-lang">
-                            <span
-                              style={{
-                                color: "white",
-                                fontSize: 16,
-                                fontWeight: "bolder",
-                              }}
-                            >
-                              COTATION DU JOUR
-                            </span>
-                            <div className="fancy-select">
-                              <select
-                                className="lang fancified"
-                                style={{
-                                  display: "block",
-                                  width: 1,
-                                  height: 1,
-                                  position: "absolute",
-                                  top: 0,
-                                  left: 0,
-                                  opacity: 0,
-                                }}
-                              ></select>
-                              <div className="trigger">
-                                <div className="flags undefined" />
-                              </div>
-                              <ul className="options" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
             </>
           )}
         </header>

@@ -1,7 +1,9 @@
 // app/src/api/job_offers/route.js
 import { NextResponse } from 'next/server';
 
-const JOB_OFFERS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/job_offers";
+// const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+const JOB_OFFERS_API_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/job-offers`;
+//const JOB_OFFERS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/job_offers";
 
 // Types pour les données des offres d'emploi
 type JobOffer = {

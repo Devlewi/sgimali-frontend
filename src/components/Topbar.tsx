@@ -184,6 +184,18 @@ const Topbar = () => {
                             <i className="fab fa-linkedin" aria-hidden="true" />
                           </a>
                         </li>
+                        <li>
+                        
+                        &nbsp;&nbsp;
+                        
+                        </li>
+                        <li>
+                          <a style={{color:"white"}} target="_blank" href="https://www.sgimali.net/">
+                          <i className="fa fa-user"></i>
+                          &nbsp;
+                            espace client
+                          </a>
+                        </li>
                       </ul>
                     </div>
                   </div>
