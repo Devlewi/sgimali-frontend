@@ -279,7 +279,12 @@ export default function RootLayout({
         {/*<link rel="shortcut icon" href="/images/favicon.png" /> */}
       </head>
       <body>
-
+      {loading ? (
+    <AnimationPage onComplete={function (): void {
+      throw new Error("Function not implemented.");
+    } }/>
+  ) : (
+<>
  {/* Insertion du script */}
  <Script id="scroll-script" strategy="afterInteractive">
           {`
@@ -960,6 +965,9 @@ export default function RootLayout({
         {/* Demo Switcher */}
         <Script src="/switcher/demo.js" strategy="afterInteractive" />
      
+</>
+
+  )}
 
       </body>
     </html>
