@@ -12999,3 +12999,8 @@ padding: 15px;
   }
 }
 
+
+.copyright-warp .copyright-text-left {
+  display: inline-block;
+ /** float: left;**/
+}

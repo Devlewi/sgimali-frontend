@@ -129,6 +129,19 @@ const Topbar = () => {
                     </div>
                     <div className="tb-social-lan language">
                       <ul>
+                        
+                      <li>
+                        
+                        &nbsp;&nbsp;
+                        
+                        </li>
+                        <li>
+                          <a style={{color:"white", backgroundColor:"#019ee2", padding:10, borderRadius:3, opacity:1, fontWeight:700}} target="_blank" href="https://www.sgimali.net/">
+                          <i className="fa fa-user"></i>
+                          &nbsp;
+                            Espace Client
+                          </a>
+                        </li>
                         <li>
                           <a
                             href={
@@ -171,6 +184,7 @@ const Topbar = () => {
                             <i className="fab fa-whatsapp" aria-hidden="true" />
                           </a>
                         </li>
+                        
                         <li>
                           <a
                             href={
@@ -184,18 +198,7 @@ const Topbar = () => {
                             <i className="fab fa-linkedin" aria-hidden="true" />
                           </a>
                         </li>
-                        <li>
                         
-                        &nbsp;&nbsp;
-                        
-                        </li>
-                        <li>
-                          <a style={{color:"white"}} target="_blank" href="https://www.sgimali.net/">
-                          <i className="fa fa-user"></i>
-                          &nbsp;
-                            espace client
-                          </a>
-                        </li>
                       </ul>
                     </div>
                   </div>
