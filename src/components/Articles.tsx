@@ -177,8 +177,8 @@ const fetchCategories = async () => {
                 </Link>
                 <div className="news-content p-3" style={{ padding: 20 }}>
                   <h4 className="news-title">
-                    <a
-                      href={item.link}
+                    <Link
+                      href={`/articles/${item.slug}`} // Utilisez le slug de l'article pour générer le lien dynamique
                       className="text-decoration-none"
                       style={{ color: "#021039", fontWeight: 600 }}
                     >
@@ -196,7 +196,7 @@ const fetchCategories = async () => {
                           ))}
                         </>
                       )}
-                    </a>
+                    </Link>
                   </h4>
                   <p className="news-date text-muted mt-2">
                     {new Date(item.date).toLocaleDateString("fr-FR")}

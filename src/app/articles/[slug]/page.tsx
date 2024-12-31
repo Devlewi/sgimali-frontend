@@ -172,7 +172,7 @@ export default async function ArticleDetailPage({
                       </Link>
                       <span>/</span>
                       <Link
-                        href="/articles"
+                        href="/notre-actualite"
                         className="hover:underline text-gray-600"
                         style={{ color: "#019ee2", fontWeight: 700 }}
                       >

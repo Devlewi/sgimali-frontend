@@ -4,7 +4,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
-  const apiUrl = 'https://sgi.cynomedia-africa.com/wp-json/custom/v1/apply-job/'; // L'URL de votre API WordPress
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/custom/v1/apply-job/`; // L'URL de votre API WordPress
+  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/custom/v1/send-subscription-notification/`; // L'URL de l'API d'envoi d'email
 
   // Récupérer les données envoyées dans le corps de la requête (formulaire)
   const formData = await req.json(); // Récupérer les données du formulaire envoyé par le frontend

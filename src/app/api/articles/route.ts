@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // L'URL de l'API WordPress
-const POSTS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts";
+const POSTS_API_URL = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/posts`;
 
 export async function GET(request: NextRequest) {
   try {

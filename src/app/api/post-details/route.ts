@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
   try {
     // Faire une requête vers l'API externe pour récupérer l'article par son slug
-    const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?slug=${slug}&_embed`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/posts?slug=${slug}&_embed`;
     const response = await fetch(apiUrl);
 
     // Vérifier si la réponse de l'API externe est valide

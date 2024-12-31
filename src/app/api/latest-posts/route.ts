@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
 
-const POSTS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?orderby=date&per_page=3&_embed";
-const CATEGORIES_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories";
+//const POSTS_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/posts?orderby=date&per_page=3&_embed";
+const POSTS_API_URL = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/posts?orderby=date&per_page=3&_embed`;
+
+//const CATEGORIES_API_URL = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/categories";
+const CATEGORIES_API_URL = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/categories`;
 
 // Types pour les données
 type Post = {

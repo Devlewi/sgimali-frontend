@@ -12,6 +12,7 @@ import Topbar from "@/components/Topbar";
 import Copyright from "@/components/Copyright";
 import SkeletonCircleLoad3 from "@/components/skeleton/SkeletonCircleLoad3";
 import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function RootLayout({
   children,
@@ -772,19 +773,7 @@ export default function RootLayout({
                     Abonnez-vous à notre newsletter pour les dernières mises à
                     jours sur notre entreprise
                   </p>
-                  <form className="form-subcri-footer">
-                    <div className="form-group">
-                      <input
-                        type="email"
-                        className="form-control"
-                        style={{ fontSize: 14 }}
-                        placeholder="Votre Email"
-                      />
-                    </div>
-                    <button type="submit" className="btn_valider_newsletter">
-                      s inscrire
-                    </button>
-                  </form>
+                  <NewsletterForm/>
                   <br />
                   <div
                     className="title-block title-on-dark title-xs"

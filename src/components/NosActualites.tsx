@@ -159,7 +159,6 @@ export default async function NosActualites() {
     className="text-decoration-none"
     style={{ color: "#021039", fontWeight: 600 }}
   >
-
 {post.title.rendered.length > 65
   ? `${post.title.rendered.substring(0, 65)}...`
   : (
