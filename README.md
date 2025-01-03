@@ -1,2 +1,2 @@
 # sgimali-frontend
-Test Deploiement CI/CD
+site sgi mali
