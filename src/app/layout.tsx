@@ -14,6 +14,7 @@ import SkeletonCircleLoad3 from "@/components/skeleton/SkeletonCircleLoad3";
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,9 +23,11 @@ export default function RootLayout({
   const pathname = usePathname(); // Récupère la route active
   const [isHomePage, setIsHomePage] = useState(false);
 
+
   // Déclarez les états
   const [blocfooterData, setBlocfooterData] = useState<BlocFooter[]>([]); // Stocke les items
   const [loading, setLoading] = useState<boolean>(true); // Indique si les données sont en cours de chargement
+
 
   const [marginTop, setMarginTop] = useState(80);
 
@@ -177,7 +180,163 @@ export default function RootLayout({
     }
   }, []);
 
-  return (
+
+  // Vérifiez si la route active est `/maintenance`
+  if (pathname === "/maintenance") {
+    return (
+      <html lang="fr">
+        <head>
+          {/* Inclure Bootstrap et Font Awesome */}
+          <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          />
+          <style>
+            {`
+              /* Animation du brouillard */
+              @keyframes fog {
+                0% {
+                  transform: translateX(-100%) scale(1);
+                }
+                50% {
+                  transform: translateX(0%) scale(1.1);
+                }
+                100% {
+                  transform: translateX(100%) scale(1);
+                }
+              }
+    
+              .fog-layer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 200%;
+                height: 100%;
+                background: url('/fog.png') repeat-x;
+                opacity: 0.6;
+                animation: fog 20s linear infinite;
+              }
+    
+              .fog-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                z-index: -1; /* Derrière le contenu */
+                background: linear-gradient(180deg, #1b2735 0%, #090a0f 100%);
+              }
+    
+              .maintenance-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                padding: 20px;
+                color: #ffffff;
+                text-align: center;
+              }
+    
+              .maintenance-wrapper h1 {
+                font-size: 3rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+              }
+    
+              .maintenance-wrapper p {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+              }
+    
+              /* Animation de l'icône de rouage (cog) */
+              @keyframes rotate {
+                0% {
+                  transform: rotate(0deg);
+                }
+                100% {
+                  transform: rotate(360deg);
+                }
+              }
+    
+              .rotate-icon {
+                font-size: 4rem;
+                animation: rotate 2s linear infinite;
+                margin-bottom: 20px;
+                color: #ffffff;
+              }
+  
+              /* Animation de la date */
+              @keyframes blinkZoom {
+                0% {
+                  opacity: 1;
+                  transform: scale(1);
+                  color: #00a0e2; /* Rouge #ff0000*/
+                }
+                50% {
+                  opacity: 0.5;
+                  transform: scale(1.2);
+                  color: #ff0000; /* Rouge */
+                }
+                100% {
+                  opacity: 1;
+                  transform: scale(1);
+                  color: #00a0e2; /* Rouge */
+                }
+              }
+  
+              .date {
+                font-size: 2rem;
+                font-weight: bold;
+                animation: blinkZoom 1.5s ease-in-out infinite;                
+              }
+            `}
+          </style>
+        </head>
+        <body>
+          <div className="fog-container">
+            {/* Fond animé avec plusieurs couches */}
+            <div className="fog-layer"></div>
+            <div className="fog-layer" style={{ animationDelay: "5s" }}></div>
+          </div>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-xs-12">
+                <div className="maintenance-wrapper">
+                  {/* Icône de rouage animée */}
+                  <Image
+                        src="/images/new-logo.png"
+                        className="img-responsive"
+                        alt="Image"
+                        width={151} // Largeur de l'image
+                        height={38} // Hauteur de l'image
+                      />
+                      <br/>
+                  <i className="fas fa-cog rotate-icon"></i>
+                  <h1 style={{ marginTop: -10 }}>Site en Maintenance</h1>
+                  <p>Notre site est actuellement en maintenance.</p>
+                  <p>
+                    Il sera à nouveau disponible à partir du{" "}<br/><br/>
+                    <span className="date">5 janvier 2025</span>
+                  </p>
+                  <p>Merci de votre compréhension !</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    );
+  }
+
+
+
+  return (    
     <html lang="fr">
       <head>
         <link rel="stylesheet" href="/css/bootstrap.css" />
@@ -950,6 +1109,9 @@ export default function RootLayout({
      
 
       </body>
-    </html>
+    </html>    
   );
+
+    
+    
 }
