@@ -12,6 +12,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   // Logique pour appeler l'API WordPress et récupérer les informations du média
 
   const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/media/${id}`;
+  //console.log(apiUrl);
 
   try {
     const response = await fetch(apiUrl);

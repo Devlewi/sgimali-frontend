@@ -36,10 +36,11 @@ type JobOffer = {
   };
 };
 
+//const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
 // Fonction pour récupérer les données via fetch
 async function getJobOffers(): Promise<JobOffer[]> {
   const res = await fetch(
-    "https://sgi.cynomedia-africa.com/wp-json/wp/v2/job_offers",
+    `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/job_offers`,
     {
       next: { revalidate: 60 },
     }

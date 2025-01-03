@@ -15,6 +15,7 @@ import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
 
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,6 +37,8 @@ export default function RootLayout({
   };
 
   const [scrolldata, setScrollData] = useState<ScrollData[]>([]);
+
+
 
   // Récupérer les données de l'API
   const fetchSTData = async () => {
@@ -180,6 +183,30 @@ export default function RootLayout({
     }
   }, []);
 
+
+  
+  // Vérifier si le cookie X-Authorized est défini et égal à 'true'
+
+
+/*
+
+  // Utilisation de useEffect pour s'assurer que le code s'exécute côté client
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Accès à localStorage uniquement côté client
+      const value = localStorage.getItem('authenticated'); // Remplace 'nom_de_variable' par la clé que tu veux lire
+      console.log('authenticated ',value); // Affiche la valeur dans la console
+
+    }
+  }, []); // Le tableau vide garantit que l'effet s'exécute uniquement une fois après le premier rendu
+ 
+  const value = localStorage.getItem('authenticated'); // Remplace 'nom_de_variable' par la clé que tu veux lire
+  console.log('authenticated ',value); // Affiche la valeur dans la console
+
+
+*/
+  
+  //{console.log('js');}
 
   // Vérifiez si la route active est `/maintenance`
   if (pathname === "/maintenance") {
@@ -335,9 +362,10 @@ export default function RootLayout({
   }
 
 
+  
 
   return (    
-    <html lang="fr">
+<html lang="fr">
       <head>
         <link rel="stylesheet" href="/css/bootstrap.css" />
 
@@ -440,7 +468,7 @@ export default function RootLayout({
       <body>
 
  {/* Insertion du script */}
- <Script id="scroll-script" strategy="afterInteractive">
+     <Script id="scroll-script" strategy="afterInteractive">
           {`
           // Écouteur d'événement pour le défilement
           window.onscroll = function () {

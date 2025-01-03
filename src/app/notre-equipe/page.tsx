@@ -50,7 +50,10 @@ export const metadata: Metadata = {
 
 // Fonction pour récupérer l'URL de l'image par ID
 async function getImageUrlById(imageId: number): Promise<string> {
-  const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${imageId}`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/media/${imageId}`;
+  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+  // NEXT_PUBLIC_BACKEND_API_URL
   const res = await fetch(apiUrl);
 
   if (!res.ok) {
@@ -64,7 +67,8 @@ async function getImageUrlById(imageId: number): Promise<string> {
 
 // Fonction pour récupérer les données de l'historique
 async function getNotreEquipe(): Promise<NotreEquipeData[]> {
-  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
   //const apiUrl = "https://sgi.cynomedia-africa.com/wp-json/wp/v2/pages?per_page=30";
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
