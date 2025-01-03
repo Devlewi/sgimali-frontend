@@ -199,7 +199,7 @@ const fetchCategories = async () => {
                     </Link>
                   </h4>
                   <p className="news-date text-muted mt-2">
-                    {new Date(item.date).toLocaleDateString("fr-FR")}
+                  {new Date(item.date).toLocaleDateString()}
                   </p>
 
                   <div className="news-categories"></div>
