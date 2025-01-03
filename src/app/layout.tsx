@@ -349,7 +349,7 @@ export default function RootLayout({
                   <p>Notre site est actuellement en maintenance.</p>
                   <p>
                     Il sera à nouveau disponible à partir du{" "}<br/><br/>
-                    <span className="date">5 janvier 2025</span>
+                    <span className="date">20 janvier 2025</span>
                   </p>
                   <p>Merci de votre compréhension !</p>
                 </div>
