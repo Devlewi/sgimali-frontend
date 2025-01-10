@@ -121,8 +121,8 @@ const SubscriptionForm = () => {
       }
 
       // Envoi de la notification par e-mail
-      const emailApiUrl = "https://sgimali-frontend.vercel.app/api/send-notif";
-
+      const emailApiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/send-notif`;
+    //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
       const emailResponse = await fetch(emailApiUrl, {
         method: "POST",
         headers: {

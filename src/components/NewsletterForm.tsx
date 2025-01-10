@@ -25,7 +25,8 @@ const NewsletterForm: React.FC = () => {
 
         // Envoi de la requête API pour traiter l'abonnement
         try {
-            const response = await fetch("https://sgi.cynomedia-africa.com/wp-json/newsletter/v1/subscribe", {
+            //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/newsletter/v1/subscribe`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
