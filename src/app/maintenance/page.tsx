@@ -8,7 +8,7 @@ export default function MaintenancePage() {
         Notre site est actuellement en maintenance pour des mises à jour importantes. 
       </p>
       <p className={styles.message}>
-        Il sera à nouveau disponible à partir du <strong>5 janvier 2024</strong>.
+        Il sera à nouveau disponible dans peu de temps.
       </p>
       <p className={styles.message}>Merci de votre compréhension !</p>
     </div>
