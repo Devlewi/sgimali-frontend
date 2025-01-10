@@ -10,18 +10,18 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'sgi.cynomedia-africa.com', // Ajoute ce domaine
+        hostname: 'cpanel.sgi-mali.comm', // Ajoute ce domaine
         pathname: '/wp-content/uploads/**', // Autorise les images depuis ce chemin spécifique
       },
     ],
-    domains: ['sgi.cynomedia-africa.com', 'localhost','sgimali-frontend.vercel.app'], // Ajoutez localhost ici
+    domains: ['cpanel.sgi-mali.comm', 'localhost','sgimali-frontend.vercel.app'], // Ajoutez localhost ici
   },
   // D'autres configurations possibles si nécessaire
   async rewrites() {
     return [
       {
         source: '/api/images/:path*', // Toutes les requêtes qui commencent par '/api/images/'
-        destination: 'https://sgi.cynomedia-africa.com/wp-content/uploads/:path*', // Destination vers le serveur WordPress
+        destination: 'https://cpanel.sgi-mali.comm/wp-content/uploads/:path*', // Destination vers le serveur WordPress
       },
     ];
   },
