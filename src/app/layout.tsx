@@ -348,8 +348,7 @@ export default function RootLayout({
                   <h1 style={{ marginTop: -10 }}>Site en Maintenance</h1>
                   <p>Notre site est actuellement en maintenance.</p>
                   <p>
-                    Il sera à nouveau disponible à partir du{" "}<br/><br/>
-                    <span className="date">20 janvier 2025</span>
+                    Il sera à nouveau disponible dans peu de temps.<br/>
                   </p>
                   <p>Merci de votre compréhension !</p>
                 </div>
