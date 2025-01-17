@@ -599,6 +599,11 @@ export default function RootLayout({
                                 <span>Intermediation</span>
                               </Link>
                             </li>
+                            <li>
+                              <Link href="/nos-engagements">
+                                <span>Nos engagements</span>
+                              </Link>
+                            </li>                            
                           </ul>
                         </li>
                         <li>
@@ -711,6 +716,11 @@ export default function RootLayout({
                             <li>
                               <Link href="/intermediation">
                                 <span>Intermediation</span>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link href="/nos-engagements">
+                                <span>Nos engagements</span>
                               </Link>
                             </li>
                           </ul>

@@ -127,11 +127,20 @@ function transformImageUrl(imageUrl: string): string {
 
                   <p
                     className="sl-s3"
+                    style={{ fontFamily: '"Roboto Slab", serif',width:'50%' }}
+                    dangerouslySetInnerHTML={{
+                      __html: slide.description,
+                    }}
+                  />
+                  {/*
+                   <p
+                    className="sl-s3"
                     style={{ fontFamily: '"Roboto Slab", serif' }}
                     dangerouslySetInnerHTML={{
                       __html: truncateText(slide.description, 55),
                     }}
                   />
+                  */}
                   {slide.button_text && (
                     <a
                       target="_blank"

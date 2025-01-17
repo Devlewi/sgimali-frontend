@@ -170,17 +170,20 @@ export default async function Publication() {
   */
   }
 
-  const elementsWithPdfUrl = await Promise.all(
-    publications.acf.elements.map(async (element) => {
-      try {
-        const pdfUrl = await getMediaUrlById(element.pdf);
-        return { ...element, pdfUrl };
-      } catch (error) {
-        console.error(`Failed to fetch PDF URL for element:`, element, error);
-        return { ...element, pdfUrl: null }; // Retourne un lien vide en cas d'échec
-      }
-    })
-  );
+  const elementsWithPdfUrl = publications?.acf?.elements
+  ? await Promise.all(
+      publications.acf.elements.map(async (element) => {
+        try {
+          const pdfUrl = await getMediaUrlById(element.pdf);
+          return { ...element, pdfUrl };
+        } catch (error) {
+          console.error(`Failed to fetch PDF URL for element:`, element, error);
+          return { ...element, pdfUrl: null }; // Retourne un lien vide en cas d'échec
+        }
+      })
+    )
+  : []; // Si publications.acf.elements est null ou undefined, on retourne un tableau vide
+
 
   return (
     <div>
@@ -213,47 +216,46 @@ export default async function Publication() {
                         </tr>
                       </thead>
                       <tbody>
-                        {elementsWithPdfUrl.map((element, index) => (
-                          <tr key={index}>
-                            <td>
-                              <a
-                                href={element.pdfUrl ?? "#"}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{color:"#2da2dd", fontWeight:600}}
-                              >
-                                {element.libelle}
-                              </a>
-                            </td>
+  {elementsWithPdfUrl.length > 0 ? (
+    elementsWithPdfUrl.map((element, index) => (
+      <tr key={index}>
+        <td>
+          <a
+            href={element.pdfUrl ?? "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#2da2dd", fontWeight: 600 }}
+          >
+            {element.libelle}
+          </a>
+        </td>
+        <td>{element.description}</td>
+        <td>{element.date_de_mise_a_jour}</td>
+        <td>
+          <a
+            href={element.pdfUrl || "#"}
+            target={element.pdfUrl ? "_blank" : "_self"}
+            rel="noopener noreferrer"
+            style={{
+              pointerEvents: element.pdfUrl ? "auto" : "none",
+              color: element.pdfUrl ? "#2da2dd" : "#2da2dd",
+              fontWeight: 600,
+            }}
+          >
+            Télécharger
+          </a>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan={4} style={{ textAlign: "center", fontStyle: "italic", color: "#999" }}>
+        Aucun contenu pour le moment.
+      </td>
+    </tr>
+  )}
+</tbody>
 
-                            <td>{element.description}</td>
-                            <td>{element.date_de_mise_a_jour}</td>
-                            <td>
-                              {/* Lien de téléchargement du fichier PDF */}
-
-                              {/*
-
-                                  <a href={element.pdfUrl} target="_blank" rel="noopener noreferrer">
-                                    Télécharger
-                                  </a>
-*/}
-                              <a
-                                href={element.pdfUrl || "#"}
-                                target={element.pdfUrl ? "_blank" : "_self"}
-                                rel="noopener noreferrer"
-                                style={{
-                                  pointerEvents: element.pdfUrl
-                                    ? "auto"
-                                    : "none",
-                                  color: element.pdfUrl ? "#2da2dd" : "#2da2dd",fontWeight:600
-                                }}
-                              >
-                                Télécharger
-                              </a>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
                     </table>
                   </div>
                 </div>
