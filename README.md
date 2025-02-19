@@ -1,2 +1,2 @@
 # sgimali-frontend
-site sgi mali
+site sgi mali new
