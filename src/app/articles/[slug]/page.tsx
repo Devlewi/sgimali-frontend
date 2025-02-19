@@ -59,6 +59,7 @@ async function getPostBySlug(slug: string): Promise<Post | null> {
   };
 }
 
+/*
 function transformImageUrl(imageUrl: string): string {
   // Extraire les parties de l'URL : année, mois et nom de l'image
   const parts = imageUrl.split("/");
@@ -68,6 +69,7 @@ function transformImageUrl(imageUrl: string): string {
   // Construire l'URL locale pour l'image
   return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
 }
+  */
 
 // Fonction pour générer des métadonnées dynamiques
 // Fonction pour générer des métadonnées dynamiques
@@ -89,8 +91,9 @@ export async function generateMetadata({
   // Si l'URL complète est présente, extraire le chemin relatif de l'URL
   const imageUrl = post.featured_image_url;
 
+  //? transformImageUrl(imageUrl)
   const transformedImageUrl = imageUrl
-    ? transformImageUrl(imageUrl)
+    ? (imageUrl)
     : "URL_DE_DEFAULT_IMAGE"; // Remplacez par l'URL d'une image par défaut si nécessaire
 
   console.log("post.featured_image_url");
@@ -188,9 +191,10 @@ export default async function ArticleDetailPage({
                     </nav>
                     <br />
                     <Image
+                    //? transformImageUrl(post.featured_image_url)
                       src={
                         post.featured_image_url
-                          ? transformImageUrl(post.featured_image_url)
+                          ? (post.featured_image_url)
                           : "/images/default-image.webp"
                       }
                       alt={post.title.rendered}

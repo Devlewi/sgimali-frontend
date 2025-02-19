@@ -13,8 +13,10 @@ const nextConfig = {
         hostname: 'cpanel.sgi-mali.comm', // Ajoute ce domaine
         pathname: '/wp-content/uploads/**', // Autorise les images depuis ce chemin spécifique
       },
+      
     ],
-    domains: ['cpanel.sgi-mali.comm', 'localhost','sgi-mali.com','sgimali-frontend.vercel.app','www.sgi-mali.com'], // Ajoutez localhost ici
+    //domains: ['cpanel.sgi-mali.comm', 'localhost','sgi-mali.com','sgimali-frontend.vercel.app','www.sgi-mali.com'], // Ajoutez localhost ici
+    domains: ['cpanel.sgi-mali.com', 'localhost','www.sgi-mali.com','sgi-mali.com','sgimali-frontend.vercel.app'], // Ajoutez localhost ici
   },
   // D'autres configurations possibles si nécessaire
   async rewrites() {
@@ -26,5 +28,5 @@ const nextConfig = {
     ];
   },
 };
-
+//
 module.exports = nextConfig;

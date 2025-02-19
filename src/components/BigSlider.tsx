@@ -35,6 +35,7 @@ const BigSlider = () => {
     return text;
   };
 
+  /*
   // Fonction pour transformer l'URL de l'image
 function transformImageUrl(imageUrl: string): string {
   // Extraire les parties de l'URL : année, mois et nom de l'image
@@ -45,6 +46,7 @@ function transformImageUrl(imageUrl: string): string {
   // Construire l'URL locale pour l'image
   return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
 }
+  */
 
 
   // Récupérer les données de l'API
@@ -114,7 +116,8 @@ function transformImageUrl(imageUrl: string): string {
               <div className="item" key={slide.id}>
                 <div className="carousel-image">
                   <Image
-                    src={ transformImageUrl(slide.featured_image_url) || "/placeholder.png"}
+                    //src={ transformImageUrl(slide.featured_image_url) || "/placeholder.png"}
+                    src={ slide.featured_image_url || "/placeholder.png"}
                     alt={slide.alt_text || "Slide Image"}
                     width={2560}
                     height={1280}

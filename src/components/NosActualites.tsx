@@ -67,6 +67,7 @@ async function getLastPosts(): Promise<Post[]> {
   return postsWithCategoriesAndImages;
 }
 
+/*
 function transformImageUrl(imageUrl: string): string {
   // Extraire les parties de l'URL : année, mois et nom de l'image
   const parts = imageUrl.split('/');
@@ -75,7 +76,7 @@ function transformImageUrl(imageUrl: string): string {
   const imageName = parts.pop(); // Le nom de l'image est le dernier élément
   // Construire l'URL locale pour l'image
   return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
-}
+}*/
 
 
 export default async function NosActualites() {
@@ -133,7 +134,8 @@ export default async function NosActualites() {
                       {/* Vérification de l'image */}
                       {post.featured_image_url ? (
                         <Image
-                          src={transformImageUrl(post.featured_image_url)}
+                          src={post.featured_image_url}
+                          //src={transformImageUrl(post.featured_image_url)}
                           className="img-fluid news-image"
                           alt={post.title.rendered}
                           width={570}

@@ -37,7 +37,7 @@ async function getMotPresident(): Promise<ContentData[]> {
   return res.json();
 }
 
-
+/*
 
 // Fonction pour transformer l'URL de l'image
 function transformImageUrl(imageUrl: string): string {
@@ -49,6 +49,7 @@ function transformImageUrl(imageUrl: string): string {
   // Construire l'URL locale pour l'image
   return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
 }
+  */
 
 export default async function MotPresident() {
 
@@ -64,7 +65,7 @@ export default async function MotPresident() {
   // Accédez à la clé bloc_mot_du_president à l'intérieur des données récupérées
   const contentData = dataMotPresident[0].bloc_mot_du_president;
   // Transformer l'URL de l'image pour charger depuis votre API locale
-  const imageUrl = transformImageUrl(contentData.image);
+  //const imageUrl = transformImageUrl(contentData.image);
 
 
 
@@ -87,7 +88,8 @@ export default async function MotPresident() {
           <div className="col-lg-6 col-md-12 mb-4 mb-lg-0">
             {/* src={contentData.image} */}
             <Image
-              src={imageUrl}              
+              src={contentData.image}              
+              //src={imageUrl}              
               alt={contentData.texte_alternatif_de_limage}
               className="img-responsive img-thumbnail"
               style={{ marginBottom: 20, borderColor: "#f8f8f8 !important" }}

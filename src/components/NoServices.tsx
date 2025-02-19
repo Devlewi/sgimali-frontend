@@ -28,6 +28,7 @@ const NoServices = () => {
   const [blocserviceData, setBlocserviceData] = useState<BlocServices[]>([]); // Stocke les services
   const [loading, setLoading] = useState<boolean>(true); // Indique si les données sont en cours de chargement
 
+  /*
   function transformImageUrl(imageUrl: string): string {
     // Extraire les parties de l'URL : année, mois et nom de l'image
     const parts = imageUrl.split("/");
@@ -36,7 +37,7 @@ const NoServices = () => {
     const imageName = parts.pop(); // Le nom de l'image est le dernier élément
     // Construire l'URL locale pour l'image
     return `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/images/${year}/${month}/${imageName}`;
-  }
+  }*/
 
   const fetchBlocServicesData = async () => {
     try {
@@ -111,7 +112,8 @@ const NoServices = () => {
                               {service.image ? (
                                 <center>
                                   <Image
-                                    src={transformImageUrl(service.image)} // Utilisez une image par défaut si service.image est vide
+                                    src={service.image} // Utilisez une image par défaut si service.image est vide
+                                    //src={transformImageUrl(service.image)} // Utilisez une image par défaut si service.image est vide
                                     className="img img-responsive img-circle"
                                     width={105}
                                     height={20}
