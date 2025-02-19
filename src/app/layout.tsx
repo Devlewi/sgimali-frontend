@@ -337,7 +337,7 @@ export default function RootLayout({
                 <div className="maintenance-wrapper">
                   {/* Icône de rouage animée */}
                   <Image
-                        src="/images/new-logo.png"
+                        src="/images/old-logo.png"
                         className="img-responsive"
                         alt="Image"
                         width={151} // Largeur de l'image
@@ -512,7 +512,7 @@ export default function RootLayout({
                   <div className="navi-warp-home-2">
                     <Link href="/" className="logo">
                       <Image
-                        src="/images/Logo-on-light.png"
+                        src="/images/old-logo.png"
                         className="img-responsive"
                         alt="Image"
                         width={151} // Largeur de l'image
