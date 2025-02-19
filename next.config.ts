@@ -14,7 +14,7 @@ const nextConfig = {
         pathname: '/wp-content/uploads/**', // Autorise les images depuis ce chemin spécifique
       },
     ],
-    domains: ['cpanel.sgi-mali.comm', 'localhost','sgi-mali.com'], // Ajoutez localhost ici
+    domains: ['cpanel.sgi-mali.comm', 'localhost','sgimali-frontend.vercel.app','sgi-mali.com'], // Ajoutez localhost ici
   },
   // D'autres configurations possibles si nécessaire
   async rewrites() {
