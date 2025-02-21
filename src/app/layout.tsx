@@ -337,7 +337,7 @@ export default function RootLayout({
                 <div className="maintenance-wrapper">
                   {/* Icône de rouage animée */}
                   <Image
-                        src="/images/old-logo.png"
+                        src="/images/logo_SGIMALI.jpeg"
                         className="img-responsive"
                         alt="Image"
                         width={151} // Largeur de l'image
@@ -512,7 +512,7 @@ export default function RootLayout({
                   <div className="navi-warp-home-2">
                     <Link href="/" className="logo">
                       <Image
-                        src="/images/old-logo.png"
+                        src="/images/logo_SGIMALI.jpeg"
                         className="img-responsive"
                         alt="Image"
                         width={151} // Largeur de l'image
