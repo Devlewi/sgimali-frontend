@@ -588,9 +588,9 @@ export default function RootLayout({
                               </Link>
                             </li>
                             <li>
-                              <Link href="/gestion-du-registre-des-actionnaires">
+                              <Link href="/gestion-des-registres-dactionnaires">
                                 <span>
-                                  Gestion du registre des actionnaires
+                                  Gestion des registres d&apos;actionnaires
                                 </span>
                               </Link>
                             </li>
@@ -707,9 +707,9 @@ export default function RootLayout({
                               </Link>
                             </li>
                             <li>
-                              <Link href="/gestion-du-registre-des-actionnaires">
+                              <Link href="/gestion-des-registres-dactionnaires">
                                 <span>
-                                  Gestion du registre des actionnaires
+                                  Gestion des registres d&apos;actionnaires
                                 </span>
                               </Link>
                             </li>

@@ -4,6 +4,7 @@ import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageS
 import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
 import { Metadata } from "next";
 import Image from "next/image";
+import he from 'he';
 
 
 // Type de données
@@ -26,9 +27,9 @@ interface Page {
 }
 
 
-
+//Gestion des registres d’actionnaires
 export const metadata: Metadata = {
-  title: "GESTION DU REGISTRE DES ACTIONNAIRES | SGI Mali",
+  title: "GESTION DES REGISTRES D'ACTIONNAIRES | SGI Mali",
   description: "Page Gestion du régistre des actionnaires SGI Mali",
   icons: {
     icon: "/favicon.ico", // Icône générale pour le site
@@ -68,7 +69,7 @@ export default async function Gesregistre() {
   }
 
   // Si une des pages a un slug égal à "gesregistre", cette page sera retournée par la méthode find() et assignée à la variable gesregistre.
-  const gesregistre = dataHistorique.find(page => page.slug === "gestion-du-registre-des-actionnaires");
+  const gesregistre = dataHistorique.find(page => page.slug === "gestion-des-registres-dactionnaires");
 
   if (!gesregistre) {
     return (
@@ -79,14 +80,15 @@ export default async function Gesregistre() {
     
   return (
     <div>            
-      <HeaderPageSection title={gesregistre.title} />      
+      <HeaderPageSection title={he.decode(gesregistre.title)} />      
       <section style={{ padding: "39px 0" }}>
         <div className="container">
           <div className="row align-items-center">
             {/* Bloc gauche : Texte */}
             <div className="col-md-8">
               <div className="main-page">
-                <SectionTitle title={gesregistre.title} />
+              <SectionTitle title={he.decode(gesregistre.title)} />
+       
                 <div
                   className="gesregistre-description"
                   style={{ fontSize: 14, lineHeight: 1.8, color: "#555" }}

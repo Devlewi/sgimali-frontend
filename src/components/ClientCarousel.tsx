@@ -98,9 +98,9 @@ const ClientCarousel = () => {
         <section className="bg-light-grey" style={{ backgroundColor: "#f8f8f8" }}>
           <div className="container">
             <div className="title-block text-center title-pd">
-              <h3>Nos clients</h3>
+              <h3>Nos partenaires</h3>
               <p className="sub-title-client" style={{fontSize:15, lineHeight:2}}>
-                Découvrez les clients avec lesquels nous avons travaillé.
+                Découvrez nos partenaires.
               </p>
             </div>
 

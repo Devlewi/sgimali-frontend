@@ -167,7 +167,7 @@ export default async function Nouscontacter() {
         <div className="row">
           <div className="col-md-12">
             <div className="title-block title-contac">
-              <SectionTitle title="Envoyer un message" />              
+              <SectionTitle title="Laissez-nous un message" />              
             </div>
           </div>
 
