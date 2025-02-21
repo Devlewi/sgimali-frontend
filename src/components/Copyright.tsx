@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const Copyright = () => {
-  const currentYear = new Date().getFullYear(); // Récupère l'année actuelle
+  //const currentYear = new Date().getFullYear(); // Récupère l'année actuelle
 
   return (
     <>
