@@ -13006,3 +13006,8 @@ padding: 15px;
   display: inline-block;
  /** float: left;**/
 }
+
+
+.news-image{
+  height: 240px !important;
+}
