@@ -82,6 +82,7 @@ function transformImageUrl(imageUrl: string): string {
 export default async function NosActualites() {
   const posts = await getLastPosts();
 
+
   console.log("posts");
   console.log(posts);
 
@@ -175,8 +176,9 @@ export default async function NosActualites() {
   </Link>
 </h4>
 
-                      <p className="news-date text-muted mt-2">
-                        {new Date(post.date).toLocaleDateString()}
+                      <p className="news-date text-muted mt-2">                        
+                        {/*new Date(post.date).toLocaleDateString()*/}
+                        {new Date(post.date).toLocaleDateString("fr-FR")}
                       </p>
                     </div>
                   </div>
