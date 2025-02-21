@@ -27,7 +27,8 @@ const Copyright = () => {
           }}
           href="/"
         >
-          Copyright © {currentYear}
+          {/*currentYear*/}
+          Copyright © 2024
           {new Date().getFullYear() !== 2024 && ` - ${new Date().getFullYear()}`}{" "}
           SGI-MALI tous droits réservés
         </Link>
