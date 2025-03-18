@@ -52,8 +52,9 @@ function transformImageUrl(imageUrl: string): string {
   // Récupérer les données de l'API
   const fetchSlides = async () => {
     try {
-      
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
+      //${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides
+      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides`;
+      //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
       
       // Construire l'URL complète pour les slides
       const res = await fetch(apiUrl, {
@@ -126,8 +127,11 @@ function transformImageUrl(imageUrl: string): string {
                   <div className="overlay"></div>
                 </div>
                 <div className="carousel-caption">
+                  {/*
                   <h3>{truncateText(slide.title.rendered, 25)}</h3>
+                  */}
 
+                  {/*
                   <p
                     className="sl-s3"
                     style={{ fontFamily: '"Roboto Slab", serif',width:'50%' }}
@@ -135,6 +139,7 @@ function transformImageUrl(imageUrl: string): string {
                       __html: slide.description,
                     }}
                   />
+                  */}
                   {/*
                    <p
                     className="sl-s3"
