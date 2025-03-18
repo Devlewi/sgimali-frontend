@@ -120,7 +120,7 @@ function transformImageUrl(imageUrl: string): string {
                 <div className="carousel-image">
                   <Image
                     //src={ transformImageUrl(slide.featured_image_url) || "/placeholder.png"}
-                    src={ slide.featured_image_url || "/placeholder.png"}
+                    src={'https://cpanel.sgi-mali.com/wp-content/uploads/2025/03/slide-sgi-mali.webp'}
                     alt={slide.alt_text || "Slide Image"}
                     width={2560}
                     height={1280}
