@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-//import Image from "next/image";
+import Image from "next/image";
 import "animate.css";
 import SkeletonSliderLoading from "./skeleton/Skeleton";
 
@@ -120,7 +120,7 @@ function transformImageUrl(imageUrl: string): string {
                 <div className="carousel-image">
                   <img
                     //src={ transformImageUrl(slide.featured_image_url) || "/placeholder.png"}
-                    src={'https://cpanel.sgi-mali.com/wp-content/uploads/2025/03/slide-sgi-mali.webp'}
+                    src={ slide.featured_image_url || "/placeholder.png"}
                     alt={slide.alt_text || "Slide Image"}
                     width={2560}
                     height={1280}
