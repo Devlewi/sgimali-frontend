@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonHistorique from "@/components/skeleton/SkeletonHistorique";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 
 // Type de données
@@ -99,7 +99,7 @@ export default async function Historique() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={historique.image || "/images/default.webp"} // Source de l'image
                   alt="Historique SGI Mali" // Texte alternatif
                   className="img-responsive"

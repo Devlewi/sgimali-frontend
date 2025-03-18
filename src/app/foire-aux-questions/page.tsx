@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 
 // Type de données
@@ -112,7 +112,7 @@ export default async function Faq() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={faq.image || "/images/default.webp"} // Source de l'image
                   alt="Faq SGI Mali" // Texte alternatif
                   className="img img-responsive"

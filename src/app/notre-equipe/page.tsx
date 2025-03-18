@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonNotreEquipe from "@/components/skeleton/SkeletonNotreEquipe";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 // Type de données
 type TeamMember = {
@@ -143,7 +143,7 @@ export default async function Equipe() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={notrequipe.image || "/images/default.webp"}
                   alt="Historique SGI Mali" // Texte alternatif
                   className="img-responsive"

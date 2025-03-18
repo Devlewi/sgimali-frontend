@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image"; // Importation de Image si vous utilisez Next.js
+//import Image from "next/image"; // Importation de Image si vous utilisez Next.js
 import Link from "next/link";
 import SkeletonLastestArticles from "./skeleton/SkeletonLastestArticles";
 
@@ -134,7 +134,7 @@ export default async function NosActualites() {
 
                       {/* Vérification de l'image */}
                       {post.featured_image_url ? (
-                        <Image
+                        <img
                           src={post.featured_image_url}
                           //src={transformImageUrl(post.featured_image_url)}
                           className="img-fluid news-image"
@@ -144,7 +144,7 @@ export default async function NosActualites() {
                         />
                       ) : (
 
-                        <Image
+                        <img
                         src={'/images/default-image.webp'}
                         className="img-fluid news-image"
                         alt={post.title.rendered}

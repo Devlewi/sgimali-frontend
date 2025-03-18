@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
+//import Image from "next/image";
 import Link from "next/link";
 import { SkeletonLoader } from "./skeleton/SkeletonLoader";
 
@@ -163,7 +163,7 @@ const fetchCategories = async () => {
                   </div>
 
                   {/* Vérification de la présence de l'image */}
-                  <Image
+                  <img
                     src={
                       item.featured_image_url
                         ? item.featured_image_url

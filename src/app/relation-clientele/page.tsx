@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonRelationClientele from "@/components/skeleton/SkeletonRelationClientele";
 import { Metadata } from "next";
-import Image from "next/image"; // Importer le composant Image de Next.js
+//import Image from "next/image"; // Importer le composant Image de Next.js
 
 // Type de données
 type RelationClienteleData = {
@@ -102,7 +102,7 @@ export default async function RelationClientele() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={datarelationclientele.image || "/images/default.webp"} // Source de l'image
                   alt="Relation clientèle SGI Mali" // Texte alternatif
                   className="img-responsive"

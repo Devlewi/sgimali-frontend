@@ -1,4 +1,4 @@
-import Image from 'next/image';
+//import Image from 'next/image';
 import Link from 'next/link';
 
 const Copyright = () => {
@@ -61,7 +61,7 @@ const Copyright = () => {
           href="https://cynomedia.com/"
           style={{ textDecoration: "none" }}
         >
-          <Image
+          <img
             src={"/images/logo-cynomedia.webp"}
             width={90}
             height={31}

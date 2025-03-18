@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image"; // Importer Image de Next.js si vous l'utilisez
+//import Image from "next/image"; // Importer Image de Next.js si vous l'utilisez
 import Link from "next/link";
 
 // Définir les types pour les données de service
@@ -111,7 +111,7 @@ const NoServices = () => {
                               {/* Vérifier s'il y a une image ou une icône */}
                               {service.image ? (
                                 <center>
-                                  <Image
+                                  <img
                                     src={service.image} // Utilisez une image par défaut si service.image est vide
                                     //src={transformImageUrl(service.image)} // Utilisez une image par défaut si service.image est vide
                                     className="img img-responsive img-circle"

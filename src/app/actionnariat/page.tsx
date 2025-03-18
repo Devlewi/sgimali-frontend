@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonActionnariat from "@/components/skeleton/SkeletonActionnariat";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 
 // Type de données
@@ -109,7 +109,7 @@ export default async function Actionnariat() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={actionnariat.image || "/images/default.webp"} // Source de l'image
                   alt="Actionnariat SGI Mali" // Texte alternatif
                   className="img-responsive"

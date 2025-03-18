@@ -4,7 +4,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 // Type de données
 type NouscontacterData = {
@@ -178,7 +178,7 @@ export default async function Nouscontacter() {
                   dangerouslySetInnerHTML={{ __html: nouscontacter.description }} // Affichage du contenu HTML
                 />          
             <br/>
-            <Image
+            <img
                   src={nouscontacter.image || "/images/default.webp"} // Source de l'image
                   alt="Faq SGI Mali" // Texte alternatif
                   className="img img-responsive"

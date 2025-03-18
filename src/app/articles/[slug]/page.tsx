@@ -1,5 +1,5 @@
 import SkeletonDetailsArticles from "@/components/skeleton/SkeletonDetailsArticle";
-import Image from "next/image";
+//import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -190,7 +190,7 @@ export default async function ArticleDetailPage({
                       </span>
                     </nav>
                     <br />
-                    <Image
+                    <img
                     //? transformImageUrl(post.featured_image_url)
                       src={
                         post.featured_image_url

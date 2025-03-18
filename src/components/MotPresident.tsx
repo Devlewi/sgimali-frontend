@@ -1,5 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
+//import Image from 'next/image';
 import SkeletonMotPresident from './skeleton/SkeletonMotPresident';
 import Link from 'next/link';
 
@@ -87,7 +87,7 @@ export default async function MotPresident() {
           {/* Colonne gauche : image */}
           <div className="col-lg-6 col-md-12 mb-4 mb-lg-0">
             {/* src={contentData.image} */}
-            <Image
+            <img
               src={contentData.image}              
               //src={imageUrl}              
               alt={contentData.texte_alternatif_de_limage}

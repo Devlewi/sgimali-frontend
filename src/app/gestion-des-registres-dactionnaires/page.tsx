@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 import he from 'he';
 
 
@@ -101,7 +101,7 @@ export default async function Gesregistre() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={gesregistre.image || "/images/default.webp"} // Source de l'image
                   alt="Gesregistre SGI Mali" // Texte alternatif
                   className="img-responsive"

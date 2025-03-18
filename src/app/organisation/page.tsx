@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import SkeletonOrganisation from "@/components/skeleton/SkeletonOrganisation";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 
 // Type de données
@@ -101,7 +101,7 @@ export default async function Organisation() {
             {/* Bloc droit : Image */}
             <div className="col-md-4">
               <div className="main-page">
-                <Image
+                <img
                   src={organisation.image || "/images/default.webp"} // Source de l'image
                   alt="Organisation SGI Mali" // Texte alternatif
                   className="img-responsive"

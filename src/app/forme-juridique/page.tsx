@@ -3,7 +3,7 @@ import SectionTitle from "@/components/SectionTitle";
 import SkeletonFormeJuridique from "@/components/skeleton/SkeletonFormeJuridique";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 
 
@@ -104,7 +104,7 @@ export default async function FormeJuridique() {
               {/* Bloc droit : Image */}
               <div className="col-md-4">
                 <div className="main-page">
-                  <Image
+                  <img
                     src={formejuridique.image || "/images/default.webp"} // Source de l'image
                     alt="Forme Juridique SGI Mali" // Texte alternatif
                     className="img-responsive"

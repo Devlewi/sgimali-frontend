@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import Image from "next/image";
+//import Image from "next/image";
 import SkeletonCircleLoad2 from "./skeleton/SkeletonCircleLoad2";
 
 // Charger OwlCarousel uniquement côté client
@@ -111,7 +111,7 @@ const ClientCarousel = () => {
                 {clients.map((client) => (
                   <div className="item-partner" key={client.id}>
                       <a href={client.client_link} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
-                      <Image
+                      <img
                         src={(client.featured_image_url) || "/placeholder.png"}
                         //src={transformImageUrl(client.featured_image_url) || "/placeholder.png"}
                         alt={"Client Image"}

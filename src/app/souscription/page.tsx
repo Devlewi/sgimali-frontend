@@ -4,7 +4,7 @@ import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageS
 import SkeletonTemplatePages from "@/components/skeleton/SkeletonTemplatePages";
 import SubscriptionForm from "@/components/SubscriptionForm";
 import { Metadata } from "next";
-import Image from "next/image";
+//import Image from "next/image";
 
 // Type de données
 type SouscriptionData = {
@@ -94,7 +94,7 @@ export default async function Souscription() {
                 dangerouslySetInnerHTML={{ __html: souscription.description }} // Affichage du contenu HTML
               />
               <br />
-              <Image
+              <img
                 src={souscription.image || "/images/default.webp"} // Source de l'image
                 alt="Faq SGI Mali" // Texte alternatif
                 className="img img-responsive"
