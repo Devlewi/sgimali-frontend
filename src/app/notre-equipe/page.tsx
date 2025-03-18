@@ -173,7 +173,7 @@ export default async function Equipe() {
                     style={{ marginBottom: 20 }}
                   >
                     <div className="team-member text-center item-team">
-                      <Image
+                      <img
                         src={member.image} // Remplacer par l'URL de l'image
                         alt={member.titre}
                         className="img-responsive img-thumbnail"
