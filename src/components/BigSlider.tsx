@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import Image from "next/image";
+//import Image from "next/image";
 import "animate.css";
 import SkeletonSliderLoading from "./skeleton/Skeleton";
 
