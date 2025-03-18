@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import ContactForm from "@/components/ContactForm";
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
@@ -188,7 +189,7 @@ export default async function Nouscontacter() {
                   }}
                   width={500}
                   height={300}
-                  layout="intrinsic"
+                  //layout="intrinsic"
                 />
             <br/>
           </div>

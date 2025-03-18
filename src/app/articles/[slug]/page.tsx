@@ -1,5 +1,6 @@
-import SkeletonDetailsArticles from "@/components/skeleton/SkeletonDetailsArticle";
+/* eslint-disable @next/next/no-img-element */
 //import Image from "next/image";
+import SkeletonDetailsArticles from "@/components/skeleton/SkeletonDetailsArticle";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 

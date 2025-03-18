@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
@@ -122,7 +123,7 @@ export default async function Faq() {
                   }}
                   width={500}
                   height={300}
-                  layout="intrinsic"
+                  //layout="intrinsic"
                 />
               </div>
             </div>
