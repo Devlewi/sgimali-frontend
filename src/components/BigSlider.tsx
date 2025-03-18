@@ -55,8 +55,8 @@ function transformImageUrl(imageUrl: string): string {
   const fetchSlides = async () => {
     try {
       //${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides
-      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides`;
-      //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
+      //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/slides`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/slides`;
       
       // Construire l'URL complète pour les slides
       const res = await fetch(apiUrl, {

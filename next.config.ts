@@ -16,7 +16,7 @@ const nextConfig = {
       
     ],
     //domains: ['cpanel.sgi-mali.comm', 'localhost','sgi-mali.com','sgimali-frontend.vercel.app','www.sgi-mali.com'], // Ajoutez localhost ici
-    domains: ['cpanel.sgi-mali.com', 'localhost','www.sgi-mali.com','sgi-mali.com','sgimali-frontend.vercel.app'], // Ajoutez localhost ici
+    domains: ['cpanel.sgi-mali.com','www.cpanel.sgi-mali.com', 'localhost','www.sgi-mali.com','sgi-mali.com','sgimali-frontend.vercel.app'], // Ajoutez localhost ici
   },
   // D'autres configurations possibles si nécessaire
   async rewrites() {
