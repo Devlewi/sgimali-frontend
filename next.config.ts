@@ -10,7 +10,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cpanel.sgi-mali.comm', // Ajoute ce domaine
+        hostname: 'cpanel.sgi-mali.com', // Ajoute ce domaine
         pathname: '/wp-content/uploads/**', // Autorise les images depuis ce chemin spécifique
       },
       
