@@ -1,10 +1,7 @@
-// middleware.ts
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function middleware(request: NextRequest) {
-  // Rvoie directement un document HTML minimaliste et blanc
+export default function middleware() {
+  // Renvoie directement un document HTML blanc
   return new NextResponse(
     `<!DOCTYPE html>
     <html lang="fr">
@@ -19,7 +16,6 @@ export function middleware(request: NextRequest) {
       status: 200,
       headers: {
         "content-type": "text/html; charset=utf-8",
-        // Empêche la mise en cache par les navigateurs/CDN
         "cache-control": "no-store, max-age=0",
       },
     }
@@ -29,8 +25,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Intercepte absolument toutes les routes de l'application,
-     * sauf les fichiers statiques système (_next/static, favicon, images, etc.)
+     * Intercepte toutes les pages du site sauf le dossier _next statique et les favicons
      */
     "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
