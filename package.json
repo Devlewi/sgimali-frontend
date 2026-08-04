@@ -22,7 +22,7 @@
     "he": "^1.2.0",
     "http-proxy-middleware": "^3.0.3",
     "jquery": "^3.7.1",
-    "next": "15.0.3",
+    "next": "^15.5.22",
     "owl.carousel": "^2.3.4",
     "react": "^18.2.0",
     "react-awesome-slider": "^4.1.0",
