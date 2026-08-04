@@ -1,17 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(
-  req: NextRequest,
-  context: { params: Promise<{ path: string[] }> } // 1. path: string[] ici
-) {
-  // Récupération asynchrone des paramètres
-  const { path } = await context.params;
+export async function GET(req: Request, { params }: { params: Promise<{ path: string }>  }) {
+  // Assurez-vous que params est bien récupéré de manière asynchrone
+  const { path } = await params;  // Attendez params
 
   if (!path || !Array.isArray(path)) {
     return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
   }
 
+  //const targetUrl = `https://sgi.cynomedia-africa.com/wp-content/uploads/${path.join('/')}`;
   const targetUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-content/uploads/${path.join('/')}`;
+  
 
   console.log('Fetching URL:', targetUrl);
 
