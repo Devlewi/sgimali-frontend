@@ -71,8 +71,13 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
 
 async function getMediaUrlById(mediaId: number): Promise<string> {
   //const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/media/${mediaId}`; // Appel à votre route API proxy frontend
+
+  //${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/
   //   const apiUrl = `http://localhost:3000/api/media/${mediaId}`; // Endpoint local original localhost OK
+
+
+//const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/media/${mediaId}`; // Appel à votre route API proxy frontend
+const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy frontend
 
   // Effectuer la requête API
   const res = await fetch(apiUrl);
@@ -104,8 +109,12 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
     const filename = pathParts[pathParts.length - 1]; // Nom du fichier (ex. SupportSBFr090103.pdf)
 //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
     // Construire le chemin complet à passer à l'API proxy
-    const proxyUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/${year}/${month}/${filename}`;
+    
+    
+    //const proxyUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/${year}/${month}/${filename}`;
+    const proxyUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-content/uploads/${year}/${month}/${filename}`;
     //const proxyUrl = `http://localhost:3000/api/proxy/${year}/${month}/${filename}`;
+
 
     return proxyUrl; // Retourner l'URL masquée via le proxy
   } catch (error) {
@@ -125,7 +134,7 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
 
 // Fonction pour récupérer les données de l'publications
 async function getPublication(): Promise<PublicationData[]> {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/pages?per_page=30`;
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });

@@ -42,7 +42,8 @@ export const metadata: Metadata = {
 // Fonction pour récupérer les données de l'Actionnariat
 async function getActionnariat(): Promise<ActionnariatData[]> {
   //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages";
-  const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  //const apiUrl = "https://sgimali-frontend.vercel.app/api/pages?per_page=30";
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/pages?per_page=30`;
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });

@@ -39,7 +39,11 @@ const ClientCarousel = () => {
   // Fonction pour récupérer les données des clients depuis l'API
   const fetchClients = async () => {
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/clients`;
+      //https://sgi.cynomedia-africa.com/wp-json/wp/v2/clients
+      //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/pages?per_page=30`;
+      
+      //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/clients`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/clients`;
       const res = await fetch(apiUrl, {
         next: { revalidate: 60 },
       });

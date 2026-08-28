@@ -42,7 +42,8 @@ const NoServices = () => {
 
   const fetchBlocServicesData = async () => {
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+      //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/acf/v2/options/`;
 
       // Construire l'URL complète pour les slides
       const res = await fetch(apiUrl, {

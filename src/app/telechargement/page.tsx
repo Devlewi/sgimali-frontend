@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import HeaderPageSection from "@/components/HeaderPageSection";
 import SectionTitle from "@/components/SectionTitle";
 import SkeletonHeaderPageSection from "@/components/skeleton/SkeletonHeaderPageSection";
@@ -70,62 +71,41 @@ async function getMediaUrlById(mediaId: number): Promise<string> {
 */
 
 async function getMediaUrlById(mediaId: number): Promise<string> {
-  //const apiUrl = `https://sgi.cynomedia-africa.com/wp-json/wp/v2/media/${mediaId}`; // Appel à votre route API proxy backend wp
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/media/${mediaId}`; // Appel à votre route API proxy frontend
-  //   const apiUrl = `http://localhost:3000/api/media/${mediaId}`; // Endpoint local original localhost OK
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/media/${mediaId}`;
 
-  // Effectuer la requête API
-  const res = await fetch(apiUrl);
+  const res = await fetch(apiUrl, {
+    next: { revalidate: 60 },
+  });
 
   if (!res.ok) {
     const errorData = await res.text();
-    console.error(`API call failed for media ID ${mediaId}:`, errorData);
-    throw new Error(`Failed to fetch media with ID ${mediaId}: ${errorData}`);
+
+    console.error(
+      `API call failed for media ID ${mediaId}:`,
+      errorData
+    );
+
+    throw new Error(
+      `Failed to fetch media with ID ${mediaId}: ${errorData}`
+    );
   }
 
   const mediaData = await res.json();
-  // console.log(`Media data for ID ${mediaId}:`, mediaData); // Vérification des données
 
-  // Vérifier si fileUrl est valide
-  if (!mediaData.fileUrl || typeof mediaData.fileUrl !== "string") {
-    throw new Error(`Invalid fileUrl for media ID ${mediaId}`);
+  if (!mediaData.source_url || typeof mediaData.source_url !== "string") {
+    throw new Error(`Invalid source_url for media ID ${mediaId}`);
   }
 
-  try {
-    // Extraire le chemin du fichier à partir de l'URL complète
-    const urlPath = new URL(mediaData.fileUrl).pathname;
+  // On conserve volontairement le nom proxyUrl
+  const proxyUrl = mediaData.source_url;
 
-    // Séparer le chemin en parties pour extraire les segments de date et de fichier
-    const pathParts = urlPath.split("/");
-
-    // Extraire les informations pertinentes
-    const year = pathParts[pathParts.length - 3]; // Année (ex. 2024)
-    const month = pathParts[pathParts.length - 2]; // Mois (ex. 12)
-    const filename = pathParts[pathParts.length - 1]; // Nom du fichier (ex. SupportSBFr090103.pdf)
-//const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
-    // Construire le chemin complet à passer à l'API proxy
-    const proxyUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/proxy/${year}/${month}/${filename}`;
-    //const proxyUrl = `http://localhost:3000/api/proxy/${year}/${month}/${filename}`;
-
-    return proxyUrl; // Retourner l'URL masquée via le proxy
-  } catch (error) {
-    // Vérification du type de l'erreur et gestion appropriée
-    if (error instanceof Error) {
-      throw new Error(
-        `Error parsing fileUrl for media ID ${mediaId}: ${error.message}`
-      );
-    } else {
-      // Si ce n'est pas une instance de Error, gérer le cas générique
-      throw new Error(
-        `Unknown error occurred while parsing fileUrl for media ID ${mediaId}`
-      );
-    }
-  }
+  return proxyUrl;
 }
 
 // Fonction pour récupérer les données de l'telechargement
 async function getTelechargement(): Promise<TelechargementData[]> {
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/pages?per_page=30`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/pages?per_page=30`;
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },
   });
