@@ -32,9 +32,7 @@ type Post = {
 // Fonction pour récupérer les derniers articles
 async function getLastPosts(): Promise<Post[]> {
   //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/acf-options`;
-  //const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/latest-posts`;
-  //const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/latest-posts`;
-  const apiUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/wp-json/wp/v2/posts?orderby=date&per_page=3&_embed`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/latest-posts`;
 
   const res = await fetch(apiUrl, {
     next: { revalidate: 60 },

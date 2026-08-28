@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 import { Metadata } from "next";
 import Head from "next/head";
 import "animate.css";
