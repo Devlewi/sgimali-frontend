@@ -184,11 +184,10 @@ export default async function ArticleDetailPage({
                       </Link>
                       <span>/</span>
                       <span
-                        className="text-gray-800 font-medium truncate"
-                        style={{ fontWeight: 700 }}
-                      >
-                        &nbsp;{post.title.rendered}&nbsp;
-                      </span>
+  className="text-gray-800 font-medium truncate"
+  style={{ fontWeight: 700 }}
+  dangerouslySetInnerHTML={{ __html: `&nbsp;${post.title.rendered}&nbsp;` }}
+/>
                     </nav>
                     <br />
                     <img
@@ -205,11 +204,10 @@ export default async function ArticleDetailPage({
                     />
 
                     <h1
-                      className="text-3xl font-bold text-gray-800 mb-2"
-                      style={{ fontSize: 28 }}
-                    >
-                      {post.title.rendered}
-                    </h1>
+  className="text-3xl font-bold text-gray-800 mb-2"
+  style={{ fontSize: 28 }}
+  dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+/>
                     <div
                       className="text-sm text-gray-500 mb-4"
                       style={{ color: "#757575" }}
